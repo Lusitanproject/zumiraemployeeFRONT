@@ -14,21 +14,21 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  created_at  DateTime? @default(now())
-  updated_at  DateTime? @updatedAt
+  id         String    @id @default(uuid())
+  email      String    @unique
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
-  codes      AuthCode[]
+  codes AuthCode[]
 }
 
 model AuthCode {
-  id     Int       @id @default(autoincrement())
-  code        String
-  expires_at  DateTime
-  user_id     Int
-  created_at  DateTime? @default(now())
-  updated_at  DateTime? @updatedAt
+  id         String    @id @default(uuid())
+  code       String
+  expires_at DateTime
+  user_id    String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
-  User User[]
+  user User @relation(fields: [user_id], references: [id])
 }
