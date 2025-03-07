@@ -20,7 +20,7 @@ class AuthUserService {
 
         const storedCode = await prismaClient.authCode.findFirst({
             where: {
-                user_id: user.user_id,
+                user_id: user.id,
             },
             orderBy: {
                 expires_at: "desc",
@@ -37,7 +37,7 @@ class AuthUserService {
             },
             process.env.JWT_SECRET!,
             {
-                subject: String(user.user_id),
+                subject: String(user.id),
                 expiresIn: "30d",
             }
         );
@@ -45,7 +45,7 @@ class AuthUserService {
         console.log(`Authenticated user ${email}`);
 
         return {
-            id: user.user_id,
+            id: user.id,
             email: user.email,
             token: token,
         };

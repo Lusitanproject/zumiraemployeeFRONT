@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  user_id     Int       @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   email       String    @unique
   created_at  DateTime? @default(now())
   updated_at  DateTime? @updatedAt
@@ -23,10 +23,12 @@ model User {
 }
 
 model AuthCode {
-  code_id     Int       @id @default(autoincrement())
+  id     Int       @id @default(autoincrement())
   code        String
   expires_at  DateTime
   user_id     Int
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @updatedAt
 
   User User[]
 }

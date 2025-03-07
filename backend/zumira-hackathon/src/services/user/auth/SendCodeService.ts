@@ -45,7 +45,7 @@ class SendCodeService {
 
         await prismaClient.authCode.create({
             data: {
-                user_id: storedEmail.user_id,
+                user_id: storedEmail.id,
                 code: code,
                 expires_at: expires_at,
             },
