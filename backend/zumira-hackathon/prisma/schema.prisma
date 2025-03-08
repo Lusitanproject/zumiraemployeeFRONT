@@ -16,10 +16,17 @@ datasource db {
 model User {
   id         String    @id @default(uuid())
   email      String    @unique
+  name       String    
+  role       String
+  company_id String
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
 
-  codes AuthCode[]
+  codes               AuthCode[]
+  company             Company @relation(fields: [company_id], references: [id])
+  assessment_results  AssessmentResult[]
+
+  @@map("users")
 }
 
 model AuthCode {
@@ -31,4 +38,126 @@ model AuthCode {
   updated_at DateTime? @updatedAt
 
   user User @relation(fields: [user_id], references: [id])
+
+  @@map("auth_codes")
 }
+
+model Company {
+  id          String  @id @default(cuid())
+  name        String
+  email       String
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @updatedAt
+
+  users User[]
+
+  @@map("companies")
+}
+
+model Assessment {
+  id                  String    @id @default(cuid())
+  title               String
+  summary             String
+  description         String
+  assessment_scale_id String
+  created_at          DateTime? @default(now())
+  updated_at          DateTime? @updatedAt
+
+  assessment_scale    AssessmentScale @relation(fields: [assessment_scale_id], references: [id])
+  assessment_questions  AssessmentQuestion[]
+  assessment_results  AssessmentResult[]
+
+  @@map("assessments")
+}
+
+model AssessmentScale {
+  id          String    @id @default(uuid())
+  name        String 
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @updatedAt
+
+  assessments Assessment[]
+  self_monitoring_scales  SelfMonitoringScale[]
+
+  @@map("assessment_scales")
+}
+
+model AssessmentResult {
+  id                  String    @id @default(uuid())
+  score               Int
+  user_id             String
+  assessment_id       String
+  created_at          DateTime? @default(now())
+  updated_at          DateTime? @updatedAt
+
+  user                User      @relation(fields: [user_id], references: [id])
+  assessment          Assessment @relation(fields: [assessment_id], references: [id])
+
+  @@map("assessment_results")
+}
+
+model AssessmentQuestion {
+  id                  String    @id @default(uuid())
+  description         String
+  assessment_id       String    
+  created_at          DateTime? @default(now())
+  updated_at          DateTime? @updatedAt
+
+  assessment          Assessment @relation(fields: [assessment_id], references: [id])
+  assessment_question_answers AssessmentQuestionAnswer[]
+  assessment_question_choices AssessmentQuestionChoice[]
+
+  @@map("assessment_questions")
+}
+
+model AssessmentQuestionAnswer {
+  id                      String    @id @default(uuid())
+  value                   Int
+  assessment_question_id  String
+  user_id                 String
+  created_at              DateTime? @default(now())
+  updated_at              DateTime? @updatedAt
+
+  assessment_question     AssessmentQuestion @relation(fields: [assessment_question_id], references: [id])
+
+  @@map("assessment_question_answers")
+}
+
+model AssessmentQuestionChoice {
+  id                      String    @id @default(uuid())
+  label                   String
+  value                   Float
+  assessment_question_id  String
+  created_at              DateTime? @default(now())
+  updated_at              DateTime? @updatedAt
+
+  assessment_question     AssessmentQuestion @relation(fields: [assessment_question_id], references: [id])
+
+  @@map("assessment_question_choices")
+}
+
+model SelfMonitoringBlock {
+  id          String    @id @default(cuid())
+  title       String
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @updatedAt
+
+  self_monitoring_scales  SelfMonitoringScale[]
+
+  @@map("self_monitoring_blocks")
+}
+
+model SelfMonitoringScale {
+  self_monitoring_id  String
+  assessment_scale_id String
+  created_at          DateTime? @default(now())
+  updated_at          DateTime? @updatedAt
+
+  self_monitoring     SelfMonitoringBlock @relation(fields: [self_monitoring_id], references: [id])
+  assessment_scale    AssessmentScale @relation(fields: [assessment_scale_id], references: [id])
+
+  @@id([self_monitoring_id, assessment_scale_id])
+
+  @@map("self_monitoring_scales")
+}
+
