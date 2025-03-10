@@ -113,15 +113,17 @@ model AssessmentQuestion {
 }
 
 model AssessmentQuestionAnswer {
-  id                      String    @id @default(uuid())
-  value                   Int
-  assessmentQuestionId    String    @map("assessment_question_id")
-  userId                 String    @map("user_id")
-  createdAt              DateTime  @default(now()) @map("created_at")
-  updatedAt              DateTime  @updatedAt @map("updated_at")
+  id                          String    @id @default(uuid())
+  value                       Int
+  assessmentQuestionId        String    @map("assessment_question_id")
+  assessmentQuestionChoiceId  String    @map("assessment_question_choice_id")
+  userId                      String    @map("user_id")
+  createdAt                   DateTime  @default(now()) @map("created_at")
+  updatedAt                   DateTime  @updatedAt @map("updated_at")
 
-  assessmentQuestion     AssessmentQuestion @relation(fields: [assessmentQuestionId], references: [id])
-  user                   User @relation(fields: [userId], references: [id])
+  assessmentQuestion          AssessmentQuestion @relation(fields: [assessmentQuestionId], references: [id])
+  assessmentQuestionChoice    AssessmentQuestionChoice @relation(fields: [assessmentQuestionChoiceId], references: [id])
+  user                        User @relation(fields: [userId], references: [id])
 
   @@map("assessment_question_answers")
 }
@@ -131,10 +133,11 @@ model AssessmentQuestionChoice {
   label                   String
   value                   Float
   assessmentQuestionId    String    @map("assessment_question_id")
-  createdAt              DateTime  @default(now()) @map("created_at")
-  updatedAt              DateTime  @updatedAt @map("updated_at")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @updatedAt @map("updated_at")
 
-  assessmentQuestion     AssessmentQuestion @relation(fields: [assessmentQuestionId], references: [id])
+  assessmentQuestion      AssessmentQuestion @relation(fields: [assessmentQuestionId], references: [id])
+  assessmentQuestionAnswers AssessmentQuestionAnswer[]
 
   @@map("assessment_question_choices")
 }
