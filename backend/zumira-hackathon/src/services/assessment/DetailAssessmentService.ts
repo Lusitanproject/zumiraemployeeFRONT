@@ -96,8 +96,6 @@ class DetailAssessmentService {
             question.choices.push(choice);
         }
 
-        console.log(JSON.stringify(assessment, null, 2));
-
         return assessment;
     }
 }
