@@ -115,7 +115,6 @@ model AssessmentQuestion {
 
 model AssessmentQuestionAnswer {
   id                          String    @id @default(uuid())
-  value                       Int
   assessmentQuestionId        String    @map("assessment_question_id")
   assessmentQuestionChoiceId  String    @map("assessment_question_choice_id")
   userId                      String    @map("user_id")
