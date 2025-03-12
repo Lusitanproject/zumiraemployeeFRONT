@@ -71,14 +71,6 @@ class CreateResultService {
             throw new Error("One or more choices do not exist");
         }
 
-        await prismaClient.assessmentQuestionAnswer.createMany({
-            data: answers.map((a) => ({
-                userId: userId,
-                assessmentQuestionId: a.assessmentQuestionId,
-                assessmentQuestionChoiceId: a.assessmentQuestionChoiceId,
-            })),
-        });
-
         const result = await prismaClient.assessmentResult.create({
             data: {
                 userId,
@@ -89,6 +81,15 @@ class CreateResultService {
                 userId: true,
                 assessmentId: true,
             },
+        });
+
+        await prismaClient.assessmentQuestionAnswer.createMany({
+            data: answers.map((a) => ({
+                userId: userId,
+                assessmentQuestionId: a.assessmentQuestionId,
+                assessmentQuestionChoiceId: a.assessmentQuestionChoiceId,
+                assessmentResultId: result.id,
+            })),
         });
 
         return result;

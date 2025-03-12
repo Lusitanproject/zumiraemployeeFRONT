@@ -92,6 +92,7 @@ model AssessmentResult {
 
   user          User        @relation(fields: [userId], references: [id])
   assessment    Assessment  @relation(fields: [assessmentId], references: [id])
+  assessmentQuestionAnswers AssessmentQuestionAnswer[]
 
   @@map("assessment_results")
 }
@@ -117,12 +118,14 @@ model AssessmentQuestionAnswer {
   id                          String    @id @default(uuid())
   assessmentQuestionId        String    @map("assessment_question_id")
   assessmentQuestionChoiceId  String    @map("assessment_question_choice_id")
+  assessmentResultId          String    @map("assessment_result_id")
   userId                      String    @map("user_id")
   createdAt                   DateTime  @default(now()) @map("created_at")
   updatedAt                   DateTime  @updatedAt @map("updated_at")
 
   assessmentQuestion          AssessmentQuestion @relation(fields: [assessmentQuestionId], references: [id])
   assessmentQuestionChoice    AssessmentQuestionChoice @relation(fields: [assessmentQuestionChoiceId], references: [id])
+  assessmentResult            AssessmentResult @relation(fields: [assessmentResultId], references: [id])
   user                        User @relation(fields: [userId], references: [id])
 
   @@map("assessment_question_answers")
