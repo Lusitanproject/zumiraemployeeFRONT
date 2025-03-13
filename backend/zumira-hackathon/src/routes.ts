@@ -10,6 +10,7 @@ import { CreatePsychologicalDimensionController } from "./controllers/psychologi
 import { CreateQuestionController } from "./controllers/assessment/CreateQuestionController";
 import { ListAssessmentsController } from "./controllers/assessment/ListAssessmentsController";
 import { DetailAssessmentController } from "./controllers/assessment/DetailAssessmentController";
+import { CreateResultController } from "./controllers/assessment/CreateResultController";
 
 import { ListSelfMonitoringBlocksController } from "./controllers/selfMonitoringBlock/ListSelfMonitoringBlocksController";
 
@@ -26,6 +27,7 @@ router.post("/dimensions", isAuthenticated, new CreatePsychologicalDimensionCont
 router.get("/assessments", isAuthenticated, new ListAssessmentsController().handle);
 router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
 router.post("/assessments/questions", isAuthenticated, new CreateQuestionController().handle);
+router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 
 // ROTAS SELF MONITORING
 router.get("/self-monitoring", isAuthenticated, new ListSelfMonitoringBlocksController().handle);
