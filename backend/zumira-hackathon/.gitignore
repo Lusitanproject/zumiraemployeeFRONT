@@ -18,7 +18,7 @@ logs
 .DS_Store
 
 # Diretórios de build
-/dist
+# /dist
 /build
 
 # Arquivos de dependências específicas do sistema
@@ -29,6 +29,3 @@ logs
 .idea/
 *.swp
 *.swo
-
-# Migrações prisma
-migration.sql
