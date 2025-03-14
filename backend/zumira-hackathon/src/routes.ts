@@ -18,12 +18,14 @@ import { ListCompaniesController } from "./controllers/company/ListCompaniesCont
 import { CreateCompanyController } from "./controllers/company/CreateCompanyController";
 import { ListPsychologicalDimensionsController } from "./controllers/psychologicalDimension/ListPsychologicalDimensionsController";
 import { ListScalesController } from "./controllers/assessment/ListScalesController";
+import { CreateUserController } from "./controllers/user/CreateUserController";
 
 const router = Router();
 
 // ROTAS USER
 router.post("/auth/email", new SendCodeController().handle);
 router.post("/auth/verify", new AuthUserController().handle);
+router.post("/users", isAuthenticated, new CreateUserController().handle);
 
 // ROTAS PSYCHOLOGICAL DIMENSION
 router.post("/dimensions", isAuthenticated, new CreatePsychologicalDimensionController().handle);
