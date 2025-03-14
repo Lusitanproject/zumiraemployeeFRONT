@@ -4,7 +4,7 @@ import { ListCompaniesService } from "../../services/company/ListCompaniesServic
 
 class ListCompaniesController {
     async handle(req: Request, res: Response) {
-        // assertPermissions(req.user, "read-companies");
+        assertPermissions(req.user, "read-companies");
 
         const listCompanies = new ListCompaniesService();
         const companies = await listCompanies.execute();
