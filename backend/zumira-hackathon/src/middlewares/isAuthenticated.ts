@@ -6,7 +6,7 @@ interface Payload {
     sub: string;
 }
 
-async function getUserPermissions(userId: string) {
+async function getUserData(userId: string): Promise<Request["user"]> {
     const user = await prismaClient.user.findFirst({
         where: {
             id: userId,
@@ -26,7 +26,11 @@ async function getUserPermissions(userId: string) {
 
     if (!user) throw new Error("User does not exist");
 
-    return user.role.rolePermissions.map((p) => p.permission.slug);
+    return {
+        id: user.id,
+        role: user.role.slug,
+        permissions: user.role.rolePermissions.map((p) => p.permission.slug),
+    };
 }
 
 export async function isAuthenticated(req: Request, res: Response, next: NextFunction) {
@@ -45,10 +49,7 @@ export async function isAuthenticated(req: Request, res: Response, next: NextFun
         // Recuperar o id do token e armazenar numa variavel user dentro de req
         const userId = sub;
 
-        req.user = {
-            id: userId,
-            permissions: await getUserPermissions(userId),
-        };
+        req.user = await getUserData(userId);
 
         return next();
     } catch (err) {

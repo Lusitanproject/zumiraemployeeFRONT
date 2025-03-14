@@ -18,11 +18,11 @@ model User {
   email      String    @unique
   name       String    
   roleId     String
-  companyId  String    @map("company_id")
+  companyId  String?    @map("company_id")
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
 
-  company     Company   @relation(fields: [companyId], references: [id])
+  company     Company?   @relation(fields: [companyId], references: [id])
   role        Role      @relation(fields: [roleId], references: [id])
   codes       AuthCode[]
   assessmentResults  AssessmentResult[]
