@@ -94,31 +94,19 @@ model Company {
 }
 
 model Assessment {
-  id                String   @id @default(cuid())
-  title             String
-  summary           String
-  description       String
-  assessmentScaleId String   @map("assessment_scale_id")
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
+  id                    String   @id @default(cuid())
+  title                 String
+  summary               String
+  description           String
+  selfMonitoringBlockId String   @map("self_monitoring_block_id")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
 
-  assessmentScale     AssessmentScale      @relation(fields: [assessmentScaleId], references: [id])
+  selfMonitoringBlock SelfMonitoringBlock  @relation(fields: [selfMonitoringBlockId], references: [id])
   assessmentQuestions AssessmentQuestion[]
   assessmentResults   AssessmentResult[]
 
   @@map("assessments")
-}
-
-model AssessmentScale {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  assessments          Assessment[]
-  selfMonitoringScales SelfMonitoringScale[]
-
-  @@map("assessment_scales")
 }
 
 model AssessmentResult {
@@ -190,22 +178,9 @@ model SelfMonitoringBlock {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  selfMonitoringScales SelfMonitoringScale[]
+  assessments Assessment[]
 
   @@map("self_monitoring_blocks")
-}
-
-model SelfMonitoringScale {
-  selfMonitoringId  String   @map("self_monitoring_id")
-  assessmentScaleId String   @map("assessment_scale_id")
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
-
-  selfMonitoring  SelfMonitoringBlock @relation(fields: [selfMonitoringId], references: [id])
-  assessmentScale AssessmentScale     @relation(fields: [assessmentScaleId], references: [id])
-
-  @@id([selfMonitoringId, assessmentScaleId])
-  @@map("self_monitoring_scales")
 }
 
 model PsychologicalDimension {
