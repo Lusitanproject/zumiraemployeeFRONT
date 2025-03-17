@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChatMessage } from "../definitions";
-import { mockSendMessage, sendMessage } from "../actions";
+import { mockSendMessage } from "../actions";
 import { Messages } from "./messages";
 import { MessageInput } from "./message-input";
 import { Greeting } from "./greeting";
