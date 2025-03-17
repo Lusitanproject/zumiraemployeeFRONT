@@ -5,3 +5,9 @@ export type ChatMessage = {
 };
 
 export type ChatResponse = { text: string };
+
+export type MessageSuggestion = {
+    text: string;
+    color: string;
+    bgColor: string;
+};
