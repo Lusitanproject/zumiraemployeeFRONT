@@ -57,7 +57,7 @@ export function ChatUi({ username }: ChatUiProps) {
         <div className="flex flex-col size-full overflow-hidden justify-between">
             <Greeting name={username} closed={!!messages.length} />
             <Messages messages={messages} loadingResponse={loading} />
-            <MessageInput action={handleSubmit} disabled={loading} showSuggestions={!messages.length} />
+            <MessageInput action={handleSubmit} disabled={loading} />
         </div>
     );
 }
