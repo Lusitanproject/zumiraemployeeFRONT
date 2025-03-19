@@ -5,7 +5,6 @@ import { AssessmentQuestion, ManageQuestion } from "./definitions";
 import { decrypt } from "@/app/_lib/session";
 import { catchError } from "@/utils/error";
 import { Dimension } from "../../../dimensoes/definitions";
-import { ManageQuestionState } from "./context/types";
 
 type GetAssessmentQuestions =
   | { status: "ERROR"; message: string }
@@ -66,13 +65,10 @@ export async function getDimensionsByBlock(blockId: string): Promise<Dimension[]
   );
 
   if (error) {
-    console.log(error);
-    console.log("ola");
     return [];
   }
 
   if (!response.ok) {
-    console.log("oi");
     return [];
   }
 
@@ -126,8 +122,6 @@ export async function updateAssessmentQuestions(assessmentId: string, questions:
   }
 
   const parsed = (await response.json()) as UpdateAssessmentQuestions;
-
-  console.log(parsed);
 
   return parsed;
 }

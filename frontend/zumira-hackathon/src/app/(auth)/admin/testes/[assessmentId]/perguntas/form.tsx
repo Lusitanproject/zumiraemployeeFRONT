@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { ArrowDown, ArrowUp, Copy, Trash2 } from "lucide-react";
 
 import { AssessmentQuestion, ManageQuestionSchema } from "./definitions";
@@ -65,10 +65,6 @@ export function ManageQuestionsForm({ data, questions, dimensions }: ManageQuest
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
-
-  useEffect(() => {
-    // console.log(JSON.stringify(state, undefined, 2));
-  }, [state]);
 
   return (
     <div className="flex flex-col w-full">

@@ -2,9 +2,9 @@
 
 import { ActionDispatch } from "react";
 import { ManageQuestionAction } from "../context/types";
-import { AssessmentQuestion, ManageQuestion } from "../definitions";
+import { ManageQuestion } from "../definitions";
 import { Label } from "@/components/custom/label";
-import { CirclePlus, Plus, Trash2 } from "lucide-react";
+import { CirclePlus, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ButtonIcon } from "./button-icon";
 
