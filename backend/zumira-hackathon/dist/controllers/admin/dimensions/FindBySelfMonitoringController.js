@@ -6,15 +6,15 @@ const parseZodError_1 = require("../../../utils/parseZodError");
 const DimensionAdminService_1 = require("../../../services/admin/DimensionAdminService");
 const SelfMonitoringService_1 = require("../../../services/admin/SelfMonitoringService");
 const RequestParam = zod_1.z.object({
-    selfMonitoringBlockId: zod_1.z.string().cuid()
+    selfMonitoringBlockId: zod_1.z.string().cuid(),
 });
 class FindDimensionByBlockController {
     async handle(req, res) {
-        const { success, data, error } = RequestParam.safeParse(req.body);
+        const { success, data, error } = RequestParam.safeParse(req.params);
         if (!success) {
             return res.status(400).json({
                 status: "ERROR",
-                message: (0, parseZodError_1.parseZodError)(error)
+                message: (0, parseZodError_1.parseZodError)(error),
             });
         }
         const selfMonitoringAdminService = new SelfMonitoringService_1.SelfMonitoringAdminService();
@@ -22,7 +22,7 @@ class FindDimensionByBlockController {
         if (!monitoringBlockExists) {
             return res.status(400).json({
                 status: "ERROR",
-                message: "O bloco de automonitoramento informado não existe."
+                message: "O bloco de automonitoramento informado não existe.",
             });
         }
         const dimensionAdminService = new DimensionAdminService_1.DimensionAdminService();
