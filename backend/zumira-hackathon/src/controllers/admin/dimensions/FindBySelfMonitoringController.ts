@@ -6,31 +6,31 @@ import { DimensionAdminService } from "../../../services/admin/DimensionAdminSer
 import { SelfMonitoringAdminService } from "../../../services/admin/SelfMonitoringService";
 
 const RequestParam = z.object({
-  selfMonitoringBlockId: z.string().cuid()
-})
+  selfMonitoringBlockId: z.string().cuid(),
+});
 
 class FindDimensionByBlockController {
   async handle(req: Request, res: Response) {
-    const { success, data, error } = RequestParam.safeParse(req.body);
+    const { success, data, error } = RequestParam.safeParse(req.params);
 
-    if(!success) {
+    if (!success) {
       return res.status(400).json({
         status: "ERROR",
-        message: parseZodError(error)
-      })
+        message: parseZodError(error),
+      });
     }
 
     const selfMonitoringAdminService = new SelfMonitoringAdminService();
-    const monitoringBlockExists = await selfMonitoringAdminService.find(data.selfMonitoringBlockId)
+    const monitoringBlockExists = await selfMonitoringAdminService.find(data.selfMonitoringBlockId);
 
-    if(!monitoringBlockExists) {
+    if (!monitoringBlockExists) {
       return res.status(400).json({
         status: "ERROR",
-        message: "O bloco de automonitoramento informado não existe."
-      })
+        message: "O bloco de automonitoramento informado não existe.",
+      });
     }
 
-    const dimensionAdminService = new DimensionAdminService()
+    const dimensionAdminService = new DimensionAdminService();
     const dimensions = await dimensionAdminService.findBySelfMonitoring(data.selfMonitoringBlockId);
 
     return res.json({ status: "SUCCESS", data: { dimensions } });
