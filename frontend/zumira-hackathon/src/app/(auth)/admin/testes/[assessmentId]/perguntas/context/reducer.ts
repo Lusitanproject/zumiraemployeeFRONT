@@ -99,7 +99,11 @@ export function reducer(state: ManageQuestionState, action: ManageQuestionAction
 
       const empty: ManageQuestion = {
         key: v4(),
-        assessmentQuestionChoices: item.assessmentQuestionChoices.map((choice) => ({ ...choice, id: "", key: v4() })),
+        assessmentQuestionChoices: item.assessmentQuestionChoices.map((choice) => ({
+          ...choice,
+          id: undefined,
+          key: v4(),
+        })),
         description: item.description,
         index: state.questions.length,
         psychologicalDimensionId: item.psychologicalDimensionId,
