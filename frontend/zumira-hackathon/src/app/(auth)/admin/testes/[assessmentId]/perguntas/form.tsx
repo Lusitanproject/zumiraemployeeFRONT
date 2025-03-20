@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { ChoiceField } from "./components/choice";
 import { updateAssessmentQuestions } from "./actions";
+import { flushSync } from "react-dom";
 
 type ManageQuestionsFormProps = {
   questions: AssessmentQuestion[];
@@ -26,6 +27,8 @@ export function ManageQuestionsForm({ data, questions, dimensions }: ManageQuest
   const translated = translateQuestions(questions);
   const [state, dispatch] = useReducer(reducer, { questions: translated });
   const [invalidQuestions, setInvalidQuestions] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const sorted = state.questions.sort((a, b) => a.index - b.index);
 
@@ -33,7 +36,10 @@ export function ManageQuestionsForm({ data, questions, dimensions }: ManageQuest
     redirect(`/admin/testes/${data.id}`);
   }, []);
 
-  const handleUpdateQuestions = useCallback(() => {
+  const handleUpdateQuestions = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
     const invalid = [] as string[];
     for (const question of state.questions) {
       const { success } = ManageQuestionSchema.safeParse(question);
@@ -50,8 +56,11 @@ export function ManageQuestionsForm({ data, questions, dimensions }: ManageQuest
     setInvalidQuestions(invalid);
 
     if (!invalid.length) {
-      updateAssessmentQuestions(data.id, state.questions);
+      const response = await updateAssessmentQuestions(data.id, state.questions);
+      if (response.status === "ERROR") setError(response.message);
     }
+
+    setLoading(false);
   }, [state]);
 
   useEffect(() => {
@@ -132,8 +141,8 @@ export function ManageQuestionsForm({ data, questions, dimensions }: ManageQuest
         <Button size="xl" variant="outline" onClick={handleCancel}>
           Cancelar
         </Button>
-        <Button size="xl" variant="primary" onClick={handleUpdateQuestions}>
-          Salvar
+        <Button size="xl" variant="primary" onClick={handleUpdateQuestions} disabled={loading}>
+          {loading ? "Salvando..." : "Salvar"}
         </Button>
       </div>
     </div>
