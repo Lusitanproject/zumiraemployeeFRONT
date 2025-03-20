@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers";
-import { AssessmentDetail, GetAssessmentData } from "./definitions";
+import { AssessmentDetail, GetAssessmentData } from "../definitions";
 import { decrypt } from "@/app/_lib/session";
 import { catchError } from "@/utils/error";
 import { isAfter, subYears } from "date-fns";
