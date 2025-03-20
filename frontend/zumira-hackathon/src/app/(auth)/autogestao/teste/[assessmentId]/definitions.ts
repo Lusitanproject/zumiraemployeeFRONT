@@ -25,15 +25,33 @@ export type AssessmentQuestion = {
   }>
 }
 
+export const AssessmentQuestionChoicesSchema = z.array(z.object({
+  assessmentQuestionId: z.string().uuid(),
+  assessmentQuestionChoiceId: z.string().uuid()
+}))
 
-export const AnswerAssessment = z.object({
-
+export const SaveAssessmentAnswerSchema = z.object({
+  assessmentId: z.string().cuid(),
+  answers: AssessmentQuestionChoicesSchema
 })
+
+export type AssessmentQuestionChoices = z.infer<typeof AssessmentQuestionChoicesSchema>
+export type SaveAssessmentAnswer = z.infer<typeof SaveAssessmentAnswerSchema>;
 
 export type FormState =
   | {
     errors?: {
-      email?: string[]
+      assessmentId?: string[],
+      answers?: string[]
     }
   }
   | undefined
+
+  export type MutateAssessmentResult = {
+    status: "SUCCESS",
+    data: {
+      id: string
+      userId: string
+      assessmentId: string
+    }
+  }
