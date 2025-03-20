@@ -131,10 +131,22 @@ class UpdateFeedbackService {
                 selfMonitoringBlockId,
             },
             select: {
-                id: true,
                 text: true,
                 userId: true,
-                selfMonitoringBlockId: true,
+                selfMonitoringBlock: {
+                    select: {
+                        id: true,
+                        title: true,
+                        summary: true,
+                        icon: true,
+                        pyschologicalDimensions: {
+                            select: {
+                                name: true,
+                                acronym: true,
+                            },
+                        },
+                    },
+                },
             },
         });
         return selfMonitorigFeedback;
