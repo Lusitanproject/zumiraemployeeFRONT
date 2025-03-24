@@ -1,18 +1,28 @@
 export type GetFeedback = {
-    status: "SUCCESS" | "ERROR";
-    data?: {
-        text: string;
-        userId: string;
-        selfMonitoringBlock: {
-            id: string;
-            title: string;
-            summary: string;
-            icon: string;
-            pyschologicalDimensions: {
-                name: string;
-                acronym: string;
-            }[];
-        };
-    };
-    message?: string;
+  status: "SUCCESS" | "ERROR";
+  data?: {
+    items: {
+      id: string;
+      text: string;
+      assessment: {
+        id: string;
+        title: string;
+        psychologicalDimensions: {
+          id: string;
+          name: string;
+          acronym: string;
+        }[];
+      };
+      selfMonitoringBlock: {
+        id: string;
+        title: string;
+        psychologicalDimensions: {
+          id: string;
+          name: string;
+          acronym: string;
+        }[];
+      };
+    }[];
+  };
+  message?: string;
 };

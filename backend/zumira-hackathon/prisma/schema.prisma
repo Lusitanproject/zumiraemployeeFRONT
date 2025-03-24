@@ -13,6 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Operation {
+  SUM
+  AVERAGE
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -27,7 +32,7 @@ model User {
   codes                     AuthCode[]
   assessmentResults         AssessmentResult[]
   assessmentQuestionAnswers AssessmentQuestionAnswer[]
-  selfMonitoringFeedbacks   SelfMonitoringFeedback[]
+  assessmentFeedbacks       AssessmentFeedback[]
 
   @@map("users")
 }
@@ -95,17 +100,20 @@ model Company {
 }
 
 model Assessment {
-  id                    String   @id @default(cuid())
+  id                    String    @id @default(cuid())
   title                 String
   summary               String
   description           String?
-  selfMonitoringBlockId String   @map("self_monitoring_block_id")
-  createdAt             DateTime @default(now()) @map("created_at")
-  updatedAt             DateTime @updatedAt @map("updated_at")
+  openaiAssistantId     String?
+  operationType         Operation @default(AVERAGE) @map("operation_type")
+  selfMonitoringBlockId String    @map("self_monitoring_block_id")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
 
   selfMonitoringBlock SelfMonitoringBlock  @relation(fields: [selfMonitoringBlockId], references: [id])
   assessmentQuestions AssessmentQuestion[]
   assessmentResults   AssessmentResult[]
+  assessmentFeedbacks AssessmentFeedback[]
 
   @@map("assessments")
 }
@@ -174,17 +182,15 @@ model AssessmentQuestionChoice {
 }
 
 model SelfMonitoringBlock {
-  id                String   @id @default(cuid())
-  title             String
-  summary           String?
-  icon              String?
-  openaiAssistantId String?
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
+  id        String   @id @default(cuid())
+  title     String
+  summary   String?
+  icon      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   assessments             Assessment[]
-  pyschologicalDimensions PsychologicalDimension[]
-  selfMonitoringFeedbacks SelfMonitoringFeedback[]
+  psychologicalDimensions PsychologicalDimension[]
 
   @@map("self_monitoring_blocks")
 }
@@ -203,16 +209,16 @@ model PsychologicalDimension {
   @@map("psychological_dimensions")
 }
 
-model SelfMonitoringFeedback {
-  id                    String   @id @default(uuid())
-  text                  String
-  userId                String
-  selfMonitoringBlockId String   @map("self_monitoring_block_id")
-  createdAt             DateTime @default(now()) @map("created_at")
-  updatedAt             DateTime @updatedAt @map("updated_at")
+model AssessmentFeedback {
+  id           String   @id @default(uuid())
+  text         String
+  userId       String
+  assessmentId String   @map("assessment_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 
-  user                User                @relation(fields: [userId], references: [id])
-  selfMonitoringBlock SelfMonitoringBlock @relation(fields: [selfMonitoringBlockId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+  assessment Assessment @relation(fields: [assessmentId], references: [id])
 
-  @@map("self_monitoring_feedback")
+  @@map("assessment_feedback")
 }
