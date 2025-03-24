@@ -32,7 +32,7 @@ import { ListAllSelfMonitoringBlocksController } from "./controllers/admin/self-
 import { CreateSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/CreateSelfMonitoringBlockController";
 import { EditSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/EditSelfMonitoringBlockController";
 import { FindSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindSelfMonitoringBlockController";
-import { UpdateFeedbackController } from "./controllers/selfMonitoringBlock/UpdateFeedbackController";
+import { GenerateFeedbackController } from "./controllers/assessment/GenerateFeedbackController";
 import { DetailFeedbackController } from "./controllers/selfMonitoringBlock/DetailFeedbackController";
 
 import { FindAllCompaniesController } from "./controllers/admin/companies/FindAllCompaniesController";
@@ -70,6 +70,7 @@ router.post("/assessments/questions", isAuthenticated, new CreateQuestionControl
 router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 router.put("/assessments/questions/:id", isAuthenticated, new UpdateQuestionsController().handle);
 router.put("/assessments/:id", isAuthenticated, new UpdateAssessmentController().handle);
+router.post("/assessments/feedback/:id", isAuthenticated, new GenerateFeedbackController().handle);
 
 // ROTAS QUESTIONS
 router.get("/questions/:assessmentId", isAuthenticated, new FindQuestionByAssessmentController().handle);
@@ -80,7 +81,6 @@ router.get("/self-monitoring/admin", isAuthenticated, new ListAllSelfMonitoringB
 router.post("/self-monitoring/admin", isAuthenticated, new CreateSelfMonitoringBlocksController().handle);
 router.put("/self-monitoring/admin/:id", isAuthenticated, new EditSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin/:id", isAuthenticated, new FindSelfMonitoringBlocksController().handle);
-router.post("/self-monitoring/feedback/:id", isAuthenticated, new UpdateFeedbackController().handle);
 router.get("/self-monitoring/feedback/:id", isAuthenticated, new DetailFeedbackController().handle);
 
 // ROTAS COMPANY

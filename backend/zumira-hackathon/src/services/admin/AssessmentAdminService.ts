@@ -10,18 +10,20 @@ class AssessmentAdminService {
         title: true,
         description: true,
         summary: true,
-        selfMonitoringBlockId: true
-      }
-    })
+        selfMonitoringBlockId: true,
+        openaiAssistantId: true,
+        operationType: true,
+      },
+    });
 
-    return assessment
+    return assessment;
   }
   async update({ id, ...data }: UpdateAssessment) {
     const assessment = await prismaClient.assessment.update({
       where: { id },
-      data
-    })
-    return assessment
+      data,
+    });
+    return assessment;
   }
 }
 

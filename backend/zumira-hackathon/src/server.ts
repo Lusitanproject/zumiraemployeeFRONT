@@ -11,19 +11,21 @@ app.use(cors());
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	if (err instanceof Error) {
-		return res.status(400).json({
-			status: "ERROR",
-			message: err.message,
-		});
-	}
+  console.error(err.stack);
 
-	return res.status(500).json({
-		status: "ERROR",
-		message: "Internal server error.",
-	});
+  if (err instanceof Error) {
+    return res.status(400).json({
+      status: "ERROR",
+      message: err.message,
+    });
+  }
+
+  return res.status(500).json({
+    status: "ERROR",
+    message: "Internal server error.",
+  });
 });
 
 app.listen(process.env.PORT, () => {
-	console.log(`\nServer hosted in localhost:${process.env.PORT}\n`);
+  console.log(`\nServer hosted in localhost:${process.env.PORT}\n`);
 });

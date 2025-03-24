@@ -79,18 +79,7 @@ export function SelfMonitoringBlockForm({ data }: FormProps) {
           />
           {!!errors?.summary && <span className="text-sm text-error-500">{errors.summary}</span>}
         </div>
-        <div className="pb-3">
-          <Label htmlFor="assistantId">ID do assistente OpenAi (devolutivas)</Label>
-          <Input
-            id="assistantId"
-            name="assistantId"
-            value={formData.openaiAssistantId ?? ""}
-            onChange={(e) => {
-              setFormData((current) => ({ ...current, openaiAssistantId: e.target.value }));
-            }}
-          />
-          {!!errors?.title && <span className="text-sm text-error-500">{errors.title}</span>}
-        </div>
+        <div className="pb-3">{!!errors?.title && <span className="text-sm text-error-500">{errors.title}</span>}</div>
         <IconField
           value={formData.icon as IconName}
           onChange={(e) => {

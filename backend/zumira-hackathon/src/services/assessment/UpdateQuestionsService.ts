@@ -22,6 +22,8 @@ interface UpdateQuestionsRequest {
 
 class UpdateQuestionsService {
   async execute({ assessmentId, questions }: UpdateQuestionsRequest) {
+    const startTime = new Date();
+
     const oldQuestions = await prismaClient.assessmentQuestion.findMany({
       where: {
         assessmentId,
@@ -40,7 +42,6 @@ class UpdateQuestionsService {
     for (const question of questions) {
       if (!question.id) {
         // Create new question and choices
-        console.log(`Creating question ${question.index}`);
         const createdQuestion = await prismaClient.assessmentQuestion.create({
           data: {
             assessmentId: assessmentId,
@@ -75,7 +76,6 @@ class UpdateQuestionsService {
           storedQuestion.psychologicalDimensionId !== question.psychologicalDimensionId;
 
         if (updated) {
-          console.log(`Updating question ${question.index}`);
           await prismaClient.assessmentQuestion.update({
             where: {
               id: question.id,
@@ -91,7 +91,6 @@ class UpdateQuestionsService {
         for (const choice of question.choices) {
           if (!choice.id) {
             // Create new choices
-            console.log(`Creating choice ${question.index}:${choice.index}`);
             await prismaClient.assessmentQuestionChoice.create({
               data: {
                 index: choice.index,
@@ -116,7 +115,6 @@ class UpdateQuestionsService {
               storedChoice.value !== choice.value;
 
             if (updated) {
-              console.log(`Updating choice ${question.index}:${choice.index}`);
               await prismaClient.assessmentQuestionChoice.update({
                 where: {
                   id: choice.id,
@@ -133,7 +131,6 @@ class UpdateQuestionsService {
       }
     }
 
-    console.log(`Deleting removed questions`);
     await prismaClient.assessmentQuestion.deleteMany({
       where: {
         id: {
@@ -141,7 +138,6 @@ class UpdateQuestionsService {
         },
       },
     });
-    console.log(`Deleting removed choices`);
     await prismaClient.assessmentQuestionChoice.deleteMany({
       where: {
         id: {
@@ -149,6 +145,10 @@ class UpdateQuestionsService {
         },
       },
     });
+
+    const endTime = new Date();
+    const timeDiffInSeconds = (endTime.getTime() - startTime.getTime()) / 1000;
+    console.log(`Updated assessment ${assessmentId} questions in ${timeDiffInSeconds} seconds`);
   }
 }
 
