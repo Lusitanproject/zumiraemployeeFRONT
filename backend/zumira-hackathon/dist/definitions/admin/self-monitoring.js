@@ -6,14 +6,12 @@ exports.CreateSelfMonitoringBlockSchema = zod_1.z.object({
     title: zod_1.z.string().min(1),
     summary: zod_1.z.string(),
     icon: zod_1.z.string(),
-    openaiAssistantId: zod_1.z.string().optional()
 });
 exports.EditSelfMonitoringBlockSchema = zod_1.z.object({
     title: zod_1.z.string().min(1).optional(),
     summary: zod_1.z.string().optional(),
     icon: zod_1.z.string().optional(),
-    openaiAssistantId: zod_1.z.string().optional()
 });
 exports.FindSelfMonitoringSchema = zod_1.z.object({
-    id: zod_1.z.string().cuid()
+    id: zod_1.z.string().cuid(),
 });
