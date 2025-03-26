@@ -3,16 +3,16 @@ import { cookies } from "next/headers";
 import { AvatarThumb } from "./avatar-thumb";
 
 export async function Avatar() {
-  const cookie = await cookies()
-  const session = decrypt(cookie.get('session')?.value)
+  const cookie = await cookies();
+  const session = decrypt(cookie.get("session")?.value);
 
   if (!session) {
-    return <></>
+    return <></>;
   }
 
   return (
     <div className="w-12 h-12">
-      <AvatarThumb user={session.name} />
+      <AvatarThumb user={session.name} role={session.role} />
     </div>
-  )
+  );
 }
