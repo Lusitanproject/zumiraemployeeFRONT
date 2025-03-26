@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Mail } from "lucide-react";
 import logo from "../../../../public/logo-zumira.png";
 import { VerifyCodeForm } from "./form";
+import { ResendButton } from "./components/resend-button";
 
 export default function Verificar() {
   return (
@@ -13,10 +14,12 @@ export default function Verificar() {
         </div>
         <h3 className="text-4xl text-gray-700 font-bold mb-4">Verifique seu email</h3>
         <p className="text-lg text-center text-gray-700 tracking-tight">
-          Enviamos um <span className="font-bold">código de verificação para seu e-mail.</span> Digite o código abaixo para continuar.
+          Enviamos um <span className="font-bold">código de verificação para seu e-mail.</span> Digite o código abaixo
+          para continuar.
         </p>
       </div>
       <VerifyCodeForm />
+      <ResendButton />
     </div>
-  )
+  );
 }
