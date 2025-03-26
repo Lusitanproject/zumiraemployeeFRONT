@@ -4,7 +4,6 @@ exports.DetailFeedbackController = void 0;
 const zod_1 = require("zod");
 const parseZodError_1 = require("../../utils/parseZodError");
 const DetailFeedbackService_1 = require("../../services/selfMonitoringBlock/DetailFeedbackService");
-const UpdateFeedbackService_1 = require("../../services/selfMonitoringBlock/UpdateFeedbackService");
 const DetailFeedbackSchema = zod_1.z.object({
     id: zod_1.z.string().cuid(),
 });
@@ -17,12 +16,6 @@ class DetailFeedbackController {
         const userId = req.user.id;
         const detailFeedback = new DetailFeedbackService_1.DetailFeedbackService();
         let feedback = await detailFeedback.execute({ userId, selfMonitoringBlockId });
-        // Temporary
-        if (!feedback) {
-            console.log("Generating feedback");
-            const updateFeedback = new UpdateFeedbackService_1.UpdateFeedbackService();
-            feedback = await updateFeedback.execute({ userId, selfMonitoringBlockId });
-        }
         return res.json({ status: "SUCCESS", data: feedback });
     }
 }

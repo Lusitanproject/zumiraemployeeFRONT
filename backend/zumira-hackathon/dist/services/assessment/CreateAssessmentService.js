@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAssessmentService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 class CreateAssessmentService {
-    async execute({ title, summary, description, selfMonitoringBlockId }) {
+    async execute({ title, summary, description, selfMonitoringBlockId, operationType, openaiAssistantId, }) {
         const block = await prisma_1.default.selfMonitoringBlock.findFirst({
             where: {
                 id: selfMonitoringBlockId,
@@ -20,6 +20,8 @@ class CreateAssessmentService {
                 summary,
                 description,
                 selfMonitoringBlockId,
+                operationType,
+                openaiAssistantId,
             },
             select: {
                 id: true,

@@ -9,14 +9,12 @@ const CompanyAdminService_1 = require("../../../services/admin/CompanyAdminServi
 const users_1 = require("../../../definitions/admin/users");
 class CreateUserController {
     async handle(req, res) {
-        console.log("body", req.body);
         (0, assertPermissions_1.assertPermissions)(req.user, "manage-users");
-        console.log("managed permission");
         const { success, data, error } = users_1.CreateUserSchema.safeParse(req.body);
         if (!success) {
             return res.status(400).json({
                 status: "ERROR",
-                message: (0, parseZodError_1.parseZodError)(error)
+                message: (0, parseZodError_1.parseZodError)(error),
             });
         }
         const { name, email, roleId, companyId } = data;
@@ -25,13 +23,13 @@ class CreateUserController {
         if (!role) {
             return res.status(400).json({
                 status: "ERROR",
-                message: "O perfil de usuário informado é inválido"
+                message: "O perfil de usuário informado é inválido",
             });
         }
         if (role.slug === "admin" && req.user.role !== "admin") {
             return res.status(400).json({
                 status: "ERROR",
-                message: "O usuário não tem permissão para realizar essa operação."
+                message: "O usuário não tem permissão para realizar essa operação.",
             });
         }
         if (companyId) {
@@ -40,7 +38,7 @@ class CreateUserController {
             if (!company) {
                 return res.status(400).json({
                     status: "ERROR",
-                    message: "A empresa informada não é válida"
+                    message: "A empresa informada não é válida",
                 });
             }
         }
@@ -49,7 +47,7 @@ class CreateUserController {
         if (emailExists) {
             return res.status(400).json({
                 status: "ERROR",
-                message: "Já exista uma conta em uso com o email informado"
+                message: "Já exista uma conta em uso com o email informado",
             });
         }
         const user = await userService.create({ name, email, roleId, companyId });

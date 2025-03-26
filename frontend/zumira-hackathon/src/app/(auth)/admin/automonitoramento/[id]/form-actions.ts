@@ -11,7 +11,6 @@ export type Payload = {
   title: string;
   icon?: string;
   summary?: string;
-  openaiAssistantId?: string;
 };
 
 export async function saveSelfMonitoringBlock(data: Payload) {

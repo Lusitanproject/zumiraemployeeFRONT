@@ -14,15 +14,17 @@ class AssessmentAdminService {
                 title: true,
                 description: true,
                 summary: true,
-                selfMonitoringBlockId: true
-            }
+                selfMonitoringBlockId: true,
+                openaiAssistantId: true,
+                operationType: true,
+            },
         });
         return assessment;
     }
     async update({ id, ...data }) {
         const assessment = await prisma_1.default.assessment.update({
             where: { id },
-            data
+            data,
         });
         return assessment;
     }

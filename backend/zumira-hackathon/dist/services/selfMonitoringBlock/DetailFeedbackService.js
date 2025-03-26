@@ -7,24 +7,43 @@ exports.DetailFeedbackService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 class DetailFeedbackService {
     async execute({ userId, selfMonitoringBlockId }) {
-        const feedback = await prisma_1.default.selfMonitoringFeedback.findFirst({
+        const feedbacks = await prisma_1.default.assessmentFeedback.findMany({
             where: {
-                selfMonitoringBlockId,
                 userId,
+                assessment: {
+                    selfMonitoringBlockId,
+                },
             },
             select: {
+                id: true,
                 text: true,
-                userId: true,
-                selfMonitoringBlock: {
+                createdAt: true,
+                assessment: {
                     select: {
                         id: true,
                         title: true,
-                        summary: true,
-                        icon: true,
-                        pyschologicalDimensions: {
+                        selfMonitoringBlock: {
                             select: {
-                                name: true,
-                                acronym: true,
+                                id: true,
+                                title: true,
+                                psychologicalDimensions: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        acronym: true,
+                                    },
+                                },
+                            },
+                        },
+                        assessmentQuestions: {
+                            select: {
+                                psychologicalDimension: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        acronym: true,
+                                    },
+                                },
                             },
                         },
                     },
@@ -33,8 +52,29 @@ class DetailFeedbackService {
             orderBy: {
                 createdAt: "desc",
             },
+            distinct: ["assessmentId"],
         });
-        return feedback;
+        const formattedFeedbacks = feedbacks.map((f) => ({
+            id: f.id,
+            text: f.text,
+            assessment: {
+                id: f.assessment.id,
+                title: f.assessment.title,
+                psychologicalDimensions: [
+                    // Cria uma lista com dimensões únicas
+                    ...new Map(f.assessment.assessmentQuestions.map((q) => [
+                        q.psychologicalDimension.id,
+                        {
+                            id: q.psychologicalDimension.id,
+                            name: q.psychologicalDimension.name,
+                            acronym: q.psychologicalDimension.acronym,
+                        },
+                    ])).values(),
+                ],
+            },
+            selfMonitoringBlock: f.assessment.selfMonitoringBlock,
+        }));
+        return { items: formattedFeedbacks };
     }
 }
 exports.DetailFeedbackService = DetailFeedbackService;
