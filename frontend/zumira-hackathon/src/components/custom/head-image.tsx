@@ -4,8 +4,23 @@ interface HeadImageProps {
 }
 
 export function HeadImage({ size = "medium", fadeColor = "var(--color-white)" }: HeadImageProps) {
-  const width = size === "small" ? 221 : size === "large" ? 598 : 396;
-  const height = size === "small" ? 183 : size === "large" ? 612 : 330;
+  let width;
+  let height;
+
+  switch (size) {
+    case "small":
+      width = 221;
+      height = 183;
+      break;
+    case "medium":
+      width = 396;
+      height = 330;
+      break;
+    case "large":
+      width = 598;
+      height = 612;
+      break;
+  }
 
   const gradientId = btoa(fadeColor);
 
