@@ -1,0 +1,43 @@
+import prismaClient from "../../../prisma";
+
+class ListFeedbackService {
+  async execute(userId: string) {
+    const recentFeedbacks = await prismaClient.assessmentFeedback.groupBy({
+      by: ["assessmentId"],
+      where: {
+        userId,
+      },
+      _max: {
+        createdAt: true,
+      },
+    });
+
+    const validFeedbacks = recentFeedbacks
+      .filter(({ _max }) => _max.createdAt !== null)
+      .map(({ assessmentId, _max }) => ({
+        assessmentId,
+        createdAt: _max.createdAt as Date,
+      }));
+
+    const feedbacks = await prismaClient.assessmentFeedback.findMany({
+      where: {
+        OR: validFeedbacks,
+      },
+      select: {
+        id: true,
+        text: true,
+        assessment: {
+          select: {
+            title: true,
+            summary: true,
+            description: true,
+          },
+        },
+      },
+    });
+
+    return { items: feedbacks };
+  }
+}
+
+export { ListFeedbackService };

@@ -56,7 +56,6 @@ async function messageAssistant(message, assistantId) {
 }
 class GenerateFeedbackService {
     async execute({ userId, assessmentId }) {
-        console.log(`Generating feedback for assessment ${assessmentId}`);
         const latestResult = await prisma_1.default.assessmentResult.findFirst({
             where: {
                 assessmentId,
@@ -126,6 +125,7 @@ class GenerateFeedbackService {
             .join(", ");
         if (!message)
             throw new Error("No values to send");
+        console.log(`Generating feedback for assessment ${assessmentId} with assistant ${assessment.openaiAssistantId}`);
         const response = await messageAssistant(message, assessment.openaiAssistantId);
         const assessmentFeeedback = await prisma_1.default.assessmentFeedback.create({
             data: {
