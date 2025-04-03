@@ -9,6 +9,7 @@ import { getFormAnswersData } from "./actions/util";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { redirect, RedirectType } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 
 type AssessmentFormProps = {
   data: AssessmentDetail;
@@ -39,7 +40,11 @@ export function AssessmentForm({ assessmentId, data }: AssessmentFormProps) {
     <div className="w-full flex flex-col overflow-scroll">
       <div className="flex flex-col pt-4 pb-8 border-b border-gray-200">
         <h2 className="text-2xl text-gray-700 font-medium mb-8">{data.title}</h2>
-        {!!data.description && <p className="text-base leading-6 text-gray-600">{data.description}</p>}
+        {!!data.description && (
+          <div className="text-base leading-6 text-gray-600 prose lg:prose-xl markdown">
+            <ReactMarkdown>{data.description}</ReactMarkdown>
+          </div>
+        )}
       </div>
 
       <form className="w-full flex flex-col flex-1 md:pb-24" action={handleSumbit}>

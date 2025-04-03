@@ -62,7 +62,7 @@ export function AssessmentModal({ id, title, summary, lastCompleted, children }:
           <div className="absolute -top-[84px] w-[8.25rem] h-[8.25rem] bg-primary-50 left-1/2 -translate-x-1/2 shadow-xl rounded-4xl flex items-center justify-center">
             <User className="size-16" />
           </div>
-          <div className="flex flex-row">
+          <div className="flex flex-row justify-between">
             <AlertDialogCancel className="w-8 h-8 flex items-center justify-center border-0">
               <SquareX className="size-6 text-gray-400" />
             </AlertDialogCancel>
