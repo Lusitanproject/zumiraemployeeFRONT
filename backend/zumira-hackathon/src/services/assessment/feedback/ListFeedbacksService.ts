@@ -1,6 +1,6 @@
 import prismaClient from "../../../prisma";
 
-class ListFeedbackService {
+class ListFeedbacksService {
   async execute(userId: string) {
     const recentFeedbacks = await prismaClient.assessmentFeedback.groupBy({
       by: ["assessmentId"],
@@ -40,4 +40,4 @@ class ListFeedbackService {
   }
 }
 
-export { ListFeedbackService };
+export { ListFeedbacksService };

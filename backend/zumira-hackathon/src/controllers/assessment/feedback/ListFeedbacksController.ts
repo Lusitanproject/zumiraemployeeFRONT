@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import { ListFeedbackService } from "../../../services/assessment/feedback/ListFeedbacksService";
+import { ListFeedbacksService } from "../../../services/assessment/feedback/ListFeedbacksService";
 
-class ListFeedbackController {
+class ListFeedbacksController {
   async handle(req: Request, res: Response) {
     const userId = req.user.id;
 
-    const listFeedbacks = new ListFeedbackService();
-    const data = await listFeedbacks.execute(userId);
+    const ListFeedbackss = new ListFeedbacksService();
+    const data = await ListFeedbackss.execute(userId);
 
     return res.json({ status: "SUCCESS", data: data });
   }
 }
 
-export { ListFeedbackController };
+export { ListFeedbacksController };
