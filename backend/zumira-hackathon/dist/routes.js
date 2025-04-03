@@ -33,6 +33,7 @@ const FindAllCompaniesController_1 = require("./controllers/admin/companies/Find
 const CreateCompanyController_1 = require("./controllers/company/CreateCompanyController");
 const FindBySelfMonitoringController_1 = require("./controllers/admin/dimensions/FindBySelfMonitoringController");
 const FindCompanyController_1 = require("./controllers/admin/companies/FindCompanyController");
+const ListFeedbacksController_1 = require("./controllers/assessment/feedback/ListFeedbacksController");
 const router = (0, express_1.Router)();
 exports.router = router;
 // ROTAS AUTH
@@ -52,6 +53,7 @@ router.get("/dimensions", isAuthenticated_1.isAuthenticated, new FindAllDimensio
 router.get("/dimensions/:selfMonitoringBlockId", isAuthenticated_1.isAuthenticated, new FindBySelfMonitoringController_1.FindDimensionByBlockController().handle);
 // ROTAS ASSESSMENT
 router.get("/assessments", isAuthenticated_1.isAuthenticated, new ListAssessmentsController_1.ListAssessmentsController().handle);
+router.get("/assessments/feedback", isAuthenticated_1.isAuthenticated, new ListFeedbacksController_1.ListFeedbacksController().handle);
 router.get("/assessments/:id", isAuthenticated_1.isAuthenticated, new DetailAssessmentController_1.DetailAssessmentController().handle);
 router.get("/assessments/admin/:id", isAuthenticated_1.isAuthenticated, new AssessmentDetailForAdminController_1.AssessmentDetailForAdminController().handle);
 router.post("/assessments", isAuthenticated_1.isAuthenticated, new CreateAssessmentController_1.CreateAssessmentController().handle);
