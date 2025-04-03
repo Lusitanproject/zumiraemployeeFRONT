@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChatContext, ChatMessage, Feedback } from "../definitions";
+import { ChatContext, ChatMessage } from "../definitions";
 import { sendMessage } from "../actions";
 import { Messages } from "./messages";
 import { MessageInput } from "./message-input";
