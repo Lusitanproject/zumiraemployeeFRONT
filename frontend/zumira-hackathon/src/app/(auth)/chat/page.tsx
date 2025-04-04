@@ -1,13 +1,18 @@
 import { cookies } from "next/headers";
 import { ChatUi } from "./components/chat-ui";
 import { decrypt } from "@/app/_lib/session";
+import { getFeedbacks } from "./actions";
 
 export default async function Chat() {
-    const cookie = await cookies();
-    const session = decrypt(cookie.get("session")?.value);
+  const cookie = await cookies();
+  const session = decrypt(cookie.get("session")?.value);
+  const feedbacks = (await getFeedbacks()).data;
 
-    // Combinação de nome+role é provisória e causará inconsistências
-    return (
-        <ChatUi username={session?.name ?? "Usuário"} chatId={session ? session?.name + session?.role : undefined} />
-    );
+  // Combinação de nome+role é provisória e causará inconsistências
+  return (
+    <ChatUi
+      context={{ username: session?.name ?? "Usuário", feedbacks: feedbacks }}
+      chatId={session ? session?.name + session?.role : undefined}
+    />
+  );
 }

@@ -39,6 +39,7 @@ import { FindAllCompaniesController } from "./controllers/admin/companies/FindAl
 import { CreateCompanyController } from "./controllers/company/CreateCompanyController";
 import { FindDimensionByBlockController } from "./controllers/admin/dimensions/FindBySelfMonitoringController";
 import { FindCompanyController } from "./controllers/admin/companies/FindCompanyController";
+import { ListFeedbacksController } from "./controllers/assessment/feedback/ListFeedbacksController";
 
 const router = Router();
 
@@ -63,6 +64,7 @@ router.get("/dimensions/:selfMonitoringBlockId", isAuthenticated, new FindDimens
 
 // ROTAS ASSESSMENT
 router.get("/assessments", isAuthenticated, new ListAssessmentsController().handle);
+router.get("/assessments/feedback", isAuthenticated, new ListFeedbacksController().handle);
 router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
 router.get("/assessments/admin/:id", isAuthenticated, new AssessmentDetailForAdminController().handle);
 router.post("/assessments", isAuthenticated, new CreateAssessmentController().handle);
