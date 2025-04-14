@@ -165,6 +165,10 @@
     line-height: 1.5rem;
   }
 
+  .markdown hr {
+    margin: 1rem 0 !important;
+  }
+
   .ProseMirror:focus {
     outline: none;
   }
@@ -172,6 +176,7 @@
   .ProseMirror {
     padding: 0.25rem 0.75rem !important;
     min-height: 10rem;
+    max-height: 60vh;
     overflow: scroll;
   }
 
