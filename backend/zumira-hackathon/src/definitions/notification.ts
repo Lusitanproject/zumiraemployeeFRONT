@@ -8,4 +8,10 @@ export const CreateNotificationSchema = z.object({
   userIds: z.array(z.string().uuid()),
 });
 
+export const ListNotificationsSchema = z.object({
+  filter: z.enum(["recent", "unread"] as const),
+});
+
 export type CreateNotificationRequest = z.infer<typeof CreateNotificationSchema>;
+
+export type ListNotificationsRequest = { userId: string } & z.infer<typeof ListNotificationsSchema>;

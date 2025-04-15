@@ -46,6 +46,7 @@ import { EditDimensionController } from "./controllers/admin/dimensions/EditDime
 import { ListNationalitiesController } from "./controllers/nationality/ListNationalitiesController";
 
 import { CreateNotificationController } from "./controllers/notification/CreateNotificationController";
+import { ListNotificationsController } from "./controllers/notification/ListNotificationsController";
 
 const router = Router();
 
@@ -107,5 +108,6 @@ router.get("/nationalities", isAuthenticated, new ListNationalitiesController().
 
 // ROTAS NOTIFICATION
 router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
+router.get("/notifications/:filter", isAuthenticated, new ListNotificationsController().handle);
 
 export { router };
