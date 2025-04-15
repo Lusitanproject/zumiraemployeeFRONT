@@ -42,7 +42,10 @@ import { FindCompanyController } from "./controllers/admin/companies/FindCompany
 import { ListFeedbacksController } from "./controllers/assessment/feedback/ListFeedbacksController";
 import { FindDimensionController } from "./controllers/admin/dimensions/FindDimensionController";
 import { EditDimensionController } from "./controllers/admin/dimensions/EditDimensionController";
+
 import { ListNationalitiesController } from "./controllers/nationality/ListNationalitiesController";
+
+import { CreateNotificationController } from "./controllers/notification/CreateNotificationController";
 
 const router = Router();
 
@@ -101,5 +104,8 @@ router.post("/companies", isAuthenticated, new CreateCompanyController().handle)
 
 // ROTAS NATIONALITY
 router.get("/nationalities", isAuthenticated, new ListNationalitiesController().handle);
+
+// ROTAS NOTIFICATION
+router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
 
 export { router };
