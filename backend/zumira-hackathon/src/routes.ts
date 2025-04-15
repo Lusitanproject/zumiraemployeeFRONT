@@ -49,6 +49,7 @@ import { CreateNotificationController } from "./controllers/notification/CreateN
 import { ListNotificationsController } from "./controllers/notification/ListNotificationsController";
 import { ReadNotificationController } from "./controllers/notification/ReadNotificationController";
 import { DeleteNotificationController } from "./controllers/notification/DeleteNotificationController";
+import { DetailNotificationController } from "./controllers/notification/DetailNotificationController";
 
 const router = Router();
 
@@ -110,8 +111,9 @@ router.get("/nationalities", isAuthenticated, new ListNationalitiesController().
 
 // ROTAS NOTIFICATION
 router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
-router.get("/notifications/:filter", isAuthenticated, new ListNotificationsController().handle);
 router.put("/notifications/:notificationId/read", isAuthenticated, new ReadNotificationController().handle);
 router.delete("/notifications/:notificationId", isAuthenticated, new DeleteNotificationController().handle);
+router.get("/notifications", isAuthenticated, new ListNotificationsController().handle);
+router.get("/notifications/:notificationId", isAuthenticated, new DetailNotificationController().handle);
 
 export { router };
