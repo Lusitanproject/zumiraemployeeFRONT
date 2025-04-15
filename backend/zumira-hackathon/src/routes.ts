@@ -47,6 +47,7 @@ import { ListNationalitiesController } from "./controllers/nationality/ListNatio
 
 import { CreateNotificationController } from "./controllers/notification/CreateNotificationController";
 import { ListNotificationsController } from "./controllers/notification/ListNotificationsController";
+import { ReadNotificationController } from "./controllers/notification/ReadNotificationController";
 
 const router = Router();
 
@@ -109,5 +110,6 @@ router.get("/nationalities", isAuthenticated, new ListNationalitiesController().
 // ROTAS NOTIFICATION
 router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
 router.get("/notifications/:filter", isAuthenticated, new ListNotificationsController().handle);
+router.put("/notifications/:notificationId/read", isAuthenticated, new ReadNotificationController().handle);
 
 export { router };

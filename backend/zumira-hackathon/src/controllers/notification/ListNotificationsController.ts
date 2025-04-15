@@ -9,8 +9,10 @@ class ListNotificationsController {
 
     if (!success) throw new Error(parseZodError(error));
 
+    const userId = req.user.id;
+
     const listNotifications = new ListNotificationsService();
-    const notifications = await listNotifications.execute({ userId: req.user.id, ...data });
+    const notifications = await listNotifications.execute({ userId, ...data });
 
     return res.json({ status: "SUCCESS", data: notifications });
   }
