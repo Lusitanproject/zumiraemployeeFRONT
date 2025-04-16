@@ -13,7 +13,6 @@ class NotificationAdminService {
         title: true,
         summary: true,
         content: true,
-        notificationTypeId: true,
         notificationType: {
           select: {
             id: true,
@@ -25,7 +24,7 @@ class NotificationAdminService {
       },
     });
 
-    return notifications;
+    return { notifications };
   }
 
   async findByType(notificationTypeId: string) {
@@ -36,7 +35,6 @@ class NotificationAdminService {
         title: true,
         summary: true,
         content: true,
-        notificationTypeId: true,
         notificationType: {
           select: {
             id: true,
@@ -48,7 +46,7 @@ class NotificationAdminService {
       },
     });
 
-    return notifications;
+    return { notifications };
   }
 
   async create({ title, summary, content, notificationTypeId, userIds }: CreateNotificationRequest) {
