@@ -8,13 +8,13 @@ const CreateCodeSchema = z.object({
 
 class SendCodeController {
 	async handle(req: Request, res: Response) {
-		const { success, data, error } = CreateCodeSchema.safeParse(req.body);
+		const { success, data } = CreateCodeSchema.safeParse(req.body);
 		try {
 			if (!success) {
 				return res.status(400).json({
 					status: "ERROR",
-					message: "Email inválido"
-				})
+					message: "Email inválido",
+				});
 			}
 
 			const { email } = data;
@@ -24,8 +24,8 @@ class SendCodeController {
 		} catch {
 			return res.status(500).json({
 				status: "ERROR",
-				message: "Erro interno"
-			})			
+				message: "Erro interno",
+			});
 		}
 	}
 }
