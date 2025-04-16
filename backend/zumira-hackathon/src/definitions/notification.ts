@@ -16,7 +16,7 @@ export const NotificationIdSchema = z.object({
   notificationId: z.string().cuid(),
 });
 
-export const EditNotificationSchema = z.object({
+export const UpdateNotificationSchema = z.object({
   notificationId: z.string().cuid(),
   title: z.string().nonempty(),
   summary: z.string().nonempty(),
@@ -34,4 +34,4 @@ export type DeleteNotificationRequest = z.infer<typeof NotificationIdSchema>;
 
 export type DetailNotificationRequest = z.infer<typeof NotificationIdSchema>;
 
-export type EditNotificationRequest = z.infer<typeof EditNotificationSchema>;
+export type UpdateNotificationRequest = z.infer<typeof UpdateNotificationSchema>;
