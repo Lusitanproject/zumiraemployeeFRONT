@@ -27,9 +27,9 @@ export const AssessmentSchema = z.object({
           label: z.string(),
           value: z.number(),
           index: z.number().int(),
-        }),
+        })
       ),
-    }),
+    })
   ),
 });
 
@@ -86,7 +86,7 @@ export const AssessmentQuestionSchema = z.object({
       label: z.string().min(1),
       value: z.number(),
       index: z.number().int(),
-    }),
+    })
   ),
 });
 
@@ -99,4 +99,24 @@ export const NationalitySchema = z.object({
     .regex(/^[a-z]{2}-[a-z]{2}$/i, {
       message: "Acronym must be in the format xx-yy (e.g., pt-br, en-us)",
     }),
+});
+
+export const NotificationSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string().min(1),
+  summary: z.string().min(1),
+  content: z.string().min(1),
+  notificationType: z.object({
+    id: z.string().cuid(),
+    name: z.string().min(1),
+    priority: z.number().int(),
+    color: z.string().regex(/^#([0-9a-f]{3}){1,2}$/i), // #RGB ou #RRGGBB
+  }),
+});
+
+export const NotificationTypeSchema = z.object({
+  id: z.string().cuid(),
+  name: z.string().min(1),
+  priority: z.number().int(),
+  color: z.string().regex(/^#([0-9a-f]{3}){1,2}$/i),
 });

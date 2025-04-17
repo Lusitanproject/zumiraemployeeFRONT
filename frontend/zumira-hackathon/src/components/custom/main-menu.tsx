@@ -12,7 +12,8 @@ export type MenuIcon =
   | "layout-grid"
   | "clipboard-list"
   | "building-2"
-  | "brain";
+  | "brain"
+  | "mails";
 
 export type MenuLink = {
   href: string;
@@ -42,7 +43,7 @@ export function MainMenu({ expanded, menu }: MainMenuProps) {
                 "h-12 items-center justify-center": !expanded,
                 "border-b border-gray-100/20 rounded-none pr-0": pathname.indexOf(item.href) !== 0,
                 "text-gray-500": pathname.indexOf(item.href) === 0,
-              },
+              }
             )}
           >
             <DynamicIcon name={item.icon} size={20} className="flex-shrink-0" />
