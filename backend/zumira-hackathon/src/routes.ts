@@ -45,12 +45,14 @@ import { EditDimensionController } from "./controllers/admin/dimensions/EditDime
 
 import { ListNationalitiesController } from "./controllers/nationality/ListNationalitiesController";
 
-import { CreateNotificationController } from "./controllers/notification/CreateNotificationController";
 import { ListNotificationsController } from "./controllers/notification/ListNotificationsController";
 import { ReadNotificationController } from "./controllers/notification/ReadNotificationController";
-import { DeleteNotificationController } from "./controllers/notification/DeleteNotificationController";
 import { DetailNotificationController } from "./controllers/notification/DetailNotificationController";
-import { EditNotificationController } from "./controllers/notification/EditNotificationController";
+import { CreateNotificationController } from "./controllers/admin/notifications/CreateNotificationController";
+import { UpdateNotificationController } from "./controllers/admin/notifications/UpdateNotificationController";
+import { DeleteNotificationController } from "./controllers/admin/notifications/DeleteNotificationController";
+import { FindAllNotificationsController } from "./controllers/admin/notifications/FindAllNotificationsController";
+import { FindAllTypesController } from "./controllers/admin/notifications/FindAllTypesController";
 
 const router = Router();
 
@@ -99,7 +101,7 @@ router.get("/self-monitoring/feedback/:id", isAuthenticated, new DetailFeedbackC
 router.get(
   "/self-monitoring/dimensions/:selfMonitoringBlockId",
   isAuthenticated,
-  new FindDimensionByBlockController().handle,
+  new FindDimensionByBlockController().handle
 );
 
 // ROTAS COMPANY
@@ -112,8 +114,10 @@ router.get("/nationalities", isAuthenticated, new ListNationalitiesController().
 
 // ROTAS NOTIFICATION
 router.get("/notifications", isAuthenticated, new ListNotificationsController().handle);
+router.get("/notifications/admin", isAuthenticated, new FindAllNotificationsController().handle);
+router.get("/notifications/admin/types", isAuthenticated, new FindAllTypesController().handle);
 router.get("/notifications/:notificationId", isAuthenticated, new DetailNotificationController().handle);
-router.put("/notifications/:notificationId", isAuthenticated, new EditNotificationController().handle);
+router.put("/notifications/:notificationId", isAuthenticated, new UpdateNotificationController().handle);
 router.put("/notifications/:notificationId/read", isAuthenticated, new ReadNotificationController().handle);
 router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
 router.delete("/notifications/:notificationId", isAuthenticated, new DeleteNotificationController().handle);
