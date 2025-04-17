@@ -1,75 +1,55 @@
-import axios from "axios";
 import prismaClient from "../../prisma";
+import OpenAI from "openai";
+import { ResponseInputItem } from "openai/resources/responses/responses";
 
 interface GenerateFeedbackRequest {
   userId: string;
   assessmentId: string;
 }
 
-async function messageAssistant(message: string, assistantId: string) {
-  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+async function sendMessage(instructions: string | null, message: string) {
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
 
-  if (!OPENAI_API_KEY) {
-    throw new Error("Invalid configuration: OPENAI_API_KEY was not defined.");
-  }
+  const instructionsObj = {
+    role: "system",
+    content: [
+      {
+        type: "input_text",
+        text: instructions,
+      },
+    ],
+  } as ResponseInputItem;
 
-  const headers = {
-    Authorization: `Bearer ${OPENAI_API_KEY}`,
-    "Content-Type": "application/json",
-    "OpenAI-Beta": "assistants=v2",
-  };
+  const response = await openai.responses.create({
+    model: "gpt-4.1",
+    input: [
+      ...(instructions ? [instructionsObj] : []),
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text: message,
+          },
+        ],
+      },
+    ],
+    text: {
+      format: {
+        type: "text",
+      },
+    },
+    reasoning: {},
+    tools: [],
+    temperature: 1,
+    max_output_tokens: 2048,
+    top_p: 1,
+    store: true,
+  });
 
-  try {
-    // Criar um novo thread
-    const threadResponse = await axios.post("https://api.openai.com/v1/threads", {}, { headers });
-    const threadId = threadResponse.data.id;
-
-    // Enviar mensagem ao thread
-    await axios.post(
-      `https://api.openai.com/v1/threads/${threadId}/messages`,
-      { role: "user", content: `${message}` },
-      { headers }
-    );
-
-    // Iniciar execução do assistente
-    const runResponse = await axios.post(
-      `https://api.openai.com/v1/threads/${threadId}/runs`,
-      { assistant_id: assistantId, response_format: "auto" },
-      { headers }
-    );
-    const runId = runResponse.data.id;
-
-    // Aguardar finalização da execução
-    let status = "in_progress";
-    while (status === "in_progress" || status === "queued") {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      const runCheck = await axios.get(`https://api.openai.com/v1/threads/${threadId}/runs/${runId}`, {
-        headers,
-      });
-
-      status = runCheck.data.status;
-      if (status === "failed") {
-        throw new Error();
-      }
-    }
-
-    // Obter resposta do assistente
-    const messagesResponse = await axios.get(`https://api.openai.com/v1/threads/${threadId}/messages`, {
-      headers,
-    });
-
-    const responseText = messagesResponse.data.data.find(
-      (msg: { role: string; content: { text: { value: string } }[] }) => msg.role === "assistant"
-    )?.content[0]?.text.value;
-    if (!responseText) {
-      throw new Error();
-    } else {
-      return { text: responseText };
-    }
-  } catch {
-    throw new Error("Something went wrong");
-  }
+  return response;
 }
 
 class GenerateFeedbackService {
@@ -113,7 +93,7 @@ class GenerateFeedbackService {
         },
       },
     });
-    if (!assessment?.feedbackInstructions) throw new Error("No assistant registered for this assessment");
+    if (!assessment) throw new Error("Assessment does not exist");
 
     const dimensions = [] as { data: { id: string; name: string }; values: number[] }[];
     assessment.assessmentQuestions.map((q) => {
@@ -146,13 +126,13 @@ class GenerateFeedbackService {
       .join(", ");
     if (!message) throw new Error("No values to send");
 
-    console.log(`Generating feedback for assessment ${assessmentId} with assistant ${assessment.feedbackInstructions}`);
+    console.log(`Generating feedback for assessment ${assessmentId}`);
 
-    const response = await messageAssistant(message, assessment.feedbackInstructions);
+    const response = await sendMessage(assessment.feedbackInstructions, message);
 
     const assessmentFeeedback = await prismaClient.assessmentFeedback.create({
       data: {
-        text: response.text,
+        text: response.output_text,
         userId,
         assessmentId,
       },
@@ -163,6 +143,8 @@ class GenerateFeedbackService {
         assessmentId: true,
       },
     });
+
+    console.log(`Done generating feedback for assessment ${assessmentId}`);
 
     return assessmentFeeedback;
   }
