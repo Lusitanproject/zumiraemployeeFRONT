@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { NotificationIdSchema } from "../../definitions/notification";
-import { parseZodError } from "../../utils/parseZodError";
-import { DeleteNotificationService } from "../../services/notification/DeleteNotificationService";
+import { parseZodError } from "../../../utils/parseZodError";
+import { NotificationIdSchema } from "../../../definitions/notification";
+import { NotificationAdminService } from "../../../services/admin/NotificationAdminService";
 
 class DeleteNotificationController {
   async handle(req: Request, res: Response) {
@@ -9,8 +9,8 @@ class DeleteNotificationController {
 
     if (!success) throw new Error(parseZodError(error));
 
-    const service = new DeleteNotificationService();
-    await service.execute(data);
+    const service = new NotificationAdminService();
+    await service.delete(data);
 
     return res.json({ status: "SUCCESS", data: {} });
   }

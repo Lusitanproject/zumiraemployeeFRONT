@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { CreateNotificationSchema } from "../../definitions/notification";
-import { parseZodError } from "../../utils/parseZodError";
-import { CreateNotificationService } from "../../services/notification/CreateNotificationService";
+import { CreateNotificationSchema } from "../../../definitions/notification";
+import { parseZodError } from "../../../utils/parseZodError";
+import { NotificationAdminService } from "../../../services/admin/NotificationAdminService";
 
 class CreateNotificationController {
   async handle(req: Request, res: Response) {
@@ -9,8 +9,8 @@ class CreateNotificationController {
 
     if (!success) throw new Error(parseZodError(error));
 
-    const notify = new CreateNotificationService();
-    const notification = await notify.execute(data);
+    const notify = new NotificationAdminService();
+    const notification = await notify.create(data);
 
     return res.json({ status: "SUCCESS", data: notification });
   }
