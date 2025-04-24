@@ -28,7 +28,7 @@ const CreateSelfMonitoringBlockController_1 = require("./controllers/admin/self-
 const EditSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/EditSelfMonitoringBlockController");
 const FindSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/FindSelfMonitoringBlockController");
 const GenerateUserFeedbackController_1 = require("./controllers/assessment/GenerateUserFeedbackController");
-const DetailFeedbackController_1 = require("./controllers/selfMonitoringBlock/DetailFeedbackController");
+const DetailUserFeedbackController_1 = require("./controllers/selfMonitoringBlock/DetailUserFeedbackController");
 const FindAllCompaniesController_1 = require("./controllers/admin/companies/FindAllCompaniesController");
 const CreateCompanyController_1 = require("./controllers/company/CreateCompanyController");
 const FindBySelfMonitoringController_1 = require("./controllers/admin/dimensions/FindBySelfMonitoringController");
@@ -82,7 +82,7 @@ router.get("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new Find
 router.post("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new CreateSelfMonitoringBlockController_1.CreateSelfMonitoringBlocksController().handle);
 router.put("/self-monitoring/admin/:id", isAuthenticated_1.isAuthenticated, new EditSelfMonitoringBlockController_1.EditSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin/:id", isAuthenticated_1.isAuthenticated, new FindSelfMonitoringBlockController_1.FindSelfMonitoringBlocksController().handle);
-router.get("/self-monitoring/feedback/:id", isAuthenticated_1.isAuthenticated, new DetailFeedbackController_1.DetailUserFeedbackController().handle);
+router.get("/self-monitoring/feedback/:id", isAuthenticated_1.isAuthenticated, new DetailUserFeedbackController_1.DetailUserFeedbackController().handle);
 router.get("/self-monitoring/dimensions/:selfMonitoringBlockId", isAuthenticated_1.isAuthenticated, new FindBySelfMonitoringController_1.FindDimensionByBlockController().handle);
 // ROTAS COMPANY
 router.get("/companies", isAuthenticated_1.isAuthenticated, new FindAllCompaniesController_1.FindAllCompaniesController().handle);
