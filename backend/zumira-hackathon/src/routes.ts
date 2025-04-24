@@ -109,7 +109,7 @@ router.get(
 
 // ROTAS COMPANY
 router.get("/companies", isAuthenticated, new FindAllCompaniesController().handle);
-router.get("/companies/feedbacks/:companyId", isAuthenticated, new FindAllFeedbacksController().handle);
+router.get("/companies/feedback", isAuthenticated, new FindAllFeedbacksController().handle);
 router.get("/companies/:companyId", isAuthenticated, new FindCompanyController().handle);
 router.post("/companies", isAuthenticated, new CreateCompanyController().handle);
 
