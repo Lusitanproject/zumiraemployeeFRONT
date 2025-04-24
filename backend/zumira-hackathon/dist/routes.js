@@ -27,8 +27,8 @@ const FindAllSelfMonitoringBlocksController_1 = require("./controllers/admin/sel
 const CreateSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/CreateSelfMonitoringBlockController");
 const EditSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/EditSelfMonitoringBlockController");
 const FindSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/FindSelfMonitoringBlockController");
-const GenerateFeedbackController_1 = require("./controllers/assessment/GenerateFeedbackController");
-const DetailFeedbackController_1 = require("./controllers/selfMonitoringBlock/DetailFeedbackController");
+const GenerateUserFeedbackController_1 = require("./controllers/assessment/GenerateUserFeedbackController");
+const DetailUserFeedbackController_1 = require("./controllers/selfMonitoringBlock/DetailUserFeedbackController");
 const FindAllCompaniesController_1 = require("./controllers/admin/companies/FindAllCompaniesController");
 const CreateCompanyController_1 = require("./controllers/company/CreateCompanyController");
 const FindBySelfMonitoringController_1 = require("./controllers/admin/dimensions/FindBySelfMonitoringController");
@@ -73,7 +73,7 @@ router.post("/assessments/questions", isAuthenticated_1.isAuthenticated, new Cre
 router.post("/assessments/results", isAuthenticated_1.isAuthenticated, new CreateResultController_1.CreateResultController().handle);
 router.put("/assessments/questions/:id", isAuthenticated_1.isAuthenticated, new UpdateQuestionsController_1.UpdateQuestionsController().handle);
 router.put("/assessments/:id", isAuthenticated_1.isAuthenticated, new UpdateAssessmentController_1.UpdateAssessmentController().handle);
-router.post("/assessments/feedback/:id", isAuthenticated_1.isAuthenticated, new GenerateFeedbackController_1.GenerateFeedbackController().handle);
+router.post("/assessments/feedback/:id", isAuthenticated_1.isAuthenticated, new GenerateUserFeedbackController_1.GenerateUserFeedbackController().handle);
 // ROTAS QUESTIONS
 router.get("/questions/:assessmentId", isAuthenticated_1.isAuthenticated, new FindQuestionByAssessmentController_1.FindQuestionByAssessmentController().handle);
 // ROTAS SELF MONITORING
@@ -82,7 +82,7 @@ router.get("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new Find
 router.post("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new CreateSelfMonitoringBlockController_1.CreateSelfMonitoringBlocksController().handle);
 router.put("/self-monitoring/admin/:id", isAuthenticated_1.isAuthenticated, new EditSelfMonitoringBlockController_1.EditSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin/:id", isAuthenticated_1.isAuthenticated, new FindSelfMonitoringBlockController_1.FindSelfMonitoringBlocksController().handle);
-router.get("/self-monitoring/feedback/:id", isAuthenticated_1.isAuthenticated, new DetailFeedbackController_1.DetailFeedbackController().handle);
+router.get("/self-monitoring/feedback/:id", isAuthenticated_1.isAuthenticated, new DetailUserFeedbackController_1.DetailUserFeedbackController().handle);
 router.get("/self-monitoring/dimensions/:selfMonitoringBlockId", isAuthenticated_1.isAuthenticated, new FindBySelfMonitoringController_1.FindDimensionByBlockController().handle);
 // ROTAS COMPANY
 router.get("/companies", isAuthenticated_1.isAuthenticated, new FindAllCompaniesController_1.FindAllCompaniesController().handle);
