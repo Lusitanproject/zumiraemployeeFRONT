@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Bell } from "lucide-react";
 
-import logo from "../../../public/logo-zumira.png";
+import logo from "../../../public/logo--green.svg";
 import { Avatar } from "./avatar";
 import { PageTitle } from "./page-title";
 

@@ -32,8 +32,9 @@ import { ListAllSelfMonitoringBlocksController } from "./controllers/admin/self-
 import { CreateSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/CreateSelfMonitoringBlockController";
 import { EditSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/EditSelfMonitoringBlockController";
 import { FindSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindSelfMonitoringBlockController";
-import { GenerateFeedbackController } from "./controllers/assessment/GenerateFeedbackController";
-import { DetailFeedbackController } from "./controllers/selfMonitoringBlock/DetailFeedbackController";
+import { GenerateUserFeedbackController } from "./controllers/assessment/GenerateUserFeedbackController";
+import { GenerateCompanyFeedbackController } from "./controllers/assessment/GenerateCompanyFeedbackController";
+import { DetailUserFeedbackController } from "./controllers/selfMonitoringBlock/DetailUserFeedbackController";
 
 import { FindAllCompaniesController } from "./controllers/admin/companies/FindAllCompaniesController";
 import { CreateCompanyController } from "./controllers/company/CreateCompanyController";
@@ -53,6 +54,7 @@ import { UpdateNotificationController } from "./controllers/admin/notifications/
 import { DeleteNotificationController } from "./controllers/admin/notifications/DeleteNotificationController";
 import { FindAllNotificationsController } from "./controllers/admin/notifications/FindAllNotificationsController";
 import { FindAllTypesController } from "./controllers/admin/notifications/FindAllTypesController";
+import { FindAllFeedbacksController } from "./controllers/admin/companies/FindAllFeedbacksController";
 
 const router = Router();
 
@@ -86,7 +88,8 @@ router.post("/assessments/questions", isAuthenticated, new CreateQuestionControl
 router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 router.put("/assessments/questions/:id", isAuthenticated, new UpdateQuestionsController().handle);
 router.put("/assessments/:id", isAuthenticated, new UpdateAssessmentController().handle);
-router.post("/assessments/feedback/:id", isAuthenticated, new GenerateFeedbackController().handle);
+router.post("/assessments/feedback/users/:id", isAuthenticated, new GenerateUserFeedbackController().handle);
+router.post("/assessments/feedback/companies/:id", isAuthenticated, new GenerateCompanyFeedbackController().handle);
 
 // ROTAS QUESTIONS
 router.get("/questions/:assessmentId", isAuthenticated, new FindQuestionByAssessmentController().handle);
@@ -97,7 +100,7 @@ router.get("/self-monitoring/admin", isAuthenticated, new ListAllSelfMonitoringB
 router.post("/self-monitoring/admin", isAuthenticated, new CreateSelfMonitoringBlocksController().handle);
 router.put("/self-monitoring/admin/:id", isAuthenticated, new EditSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin/:id", isAuthenticated, new FindSelfMonitoringBlocksController().handle);
-router.get("/self-monitoring/feedback/:id", isAuthenticated, new DetailFeedbackController().handle);
+router.get("/self-monitoring/feedback/:id", isAuthenticated, new DetailUserFeedbackController().handle);
 router.get(
   "/self-monitoring/dimensions/:selfMonitoringBlockId",
   isAuthenticated,
@@ -106,6 +109,7 @@ router.get(
 
 // ROTAS COMPANY
 router.get("/companies", isAuthenticated, new FindAllCompaniesController().handle);
+router.get("/companies/feedback", isAuthenticated, new FindAllFeedbacksController().handle);
 router.get("/companies/:companyId", isAuthenticated, new FindCompanyController().handle);
 router.post("/companies", isAuthenticated, new CreateCompanyController().handle);
 
