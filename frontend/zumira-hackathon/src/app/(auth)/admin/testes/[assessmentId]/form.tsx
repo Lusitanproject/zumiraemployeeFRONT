@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   AssessmentSummary,
@@ -33,7 +33,8 @@ export function AssessmentForm({ data, blocks, nationalities }: FormProps) {
         summary: data.summary,
         description: data.description,
         selfMonitoringBlockId: data.selfMonitoringBlockId,
-        feedbackInstructions: data.feedbackInstructions,
+        userFeedbackInstructions: data.userFeedbackInstructions,
+        companyFeedbackInstructions: data.companyFeedbackInstructions,
         operationType: data.operationType,
         nationalityId: data.nationalityId,
       }
@@ -72,6 +73,11 @@ export function AssessmentForm({ data, blocks, nationalities }: FormProps) {
       redirect(`/admin/testes/${data.id}/perguntas`);
     }
   }, [data]);
+
+  useEffect(() => {
+    console.log(data);
+    console.log(formData);
+  }, [formData, data]);
 
   return (
     <div className="w-full py-4 md:pt-4 md:pb-24">
@@ -138,18 +144,33 @@ export function AssessmentForm({ data, blocks, nationalities }: FormProps) {
           {!!errors?.nationalityId && <span className="text-sm text-error-500">{errors.nationalityId}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="instructions">Instruções para IA de devolutiva</Label>
+          <Label htmlFor="instructions-u">Instruções para IA de devolutiva individual</Label>
           <Textarea
-            id="instructions"
-            name="instructions"
-            value={formData.feedbackInstructions ?? ""}
+            id="instructions-u"
+            name="instructions-u"
+            value={formData.userFeedbackInstructions ?? ""}
             onChange={(e) => {
-              setFormData((current) => ({ ...current, feedbackInstructions: e.target.value }));
+              setFormData((current) => ({ ...current, userFeedbackInstructions: e.target.value }));
             }}
             className="h-40"
           />
-          {!!errors?.feedbackInstructions && (
-            <span className="text-sm text-error-500">{errors.feedbackInstructions}</span>
+          {!!errors?.userFeedbackInstructions && (
+            <span className="text-sm text-error-500">{errors.userFeedbackInstructions}</span>
+          )}
+        </div>
+        <div className="pb-3">
+          <Label htmlFor="instructions-g">Instruções para IA de devolutiva de grupo</Label>
+          <Textarea
+            id="instructions-g"
+            name="instructions-g"
+            value={formData.companyFeedbackInstructions ?? ""}
+            onChange={(e) => {
+              setFormData((current) => ({ ...current, companyFeedbackInstructions: e.target.value }));
+            }}
+            className="h-40"
+          />
+          {!!errors?.companyFeedbackInstructions && (
+            <span className="text-sm text-error-500">{errors.companyFeedbackInstructions}</span>
           )}
         </div>
         <div className="pb-3 flex flex-row gap-10">
