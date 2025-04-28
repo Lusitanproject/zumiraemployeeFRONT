@@ -3,6 +3,7 @@ export type CompanyFeedback = {
   text: string;
   companyId: string;
   assessmentId: string;
+  respondents: number;
   createdAt: string;
   updatedAt: string;
   assessment: {

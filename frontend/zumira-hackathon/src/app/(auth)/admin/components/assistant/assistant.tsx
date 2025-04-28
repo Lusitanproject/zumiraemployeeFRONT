@@ -17,7 +17,7 @@ interface AssistantProps {
 
 export function Assistant({ companyFeedbacks, username, chatbotId }: AssistantProps) {
   const context = companyFeedbacks.map((f) => ({
-    content: `TESTE: ${f.assessment.title}\nRESULTADO/DEVOLUTIVA: ${f.text}`,
+    content: `TESTE: ${f.assessment.title}\nRESULTADO/DEVOLUTIVA: ${f.text}\nTOTAL DE RESPONDENTES: ${f.respondents}`,
     role: "user",
   })) as ChatMessage[];
 
