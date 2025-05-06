@@ -1,27 +1,19 @@
-import { getFeedback } from "./actions";
+import { getResults } from "./actions";
 import { Feedback } from "./components/feedback";
 import { NoData } from "./components/no-data";
 import { Processing } from "./components/processing";
 
 export default async function Devolutiva({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const feedback = (await getFeedback(id)).data;
+  const results = (await getResults(id)).data?.items;
 
   let content;
-  if (feedback?.items.length) {
-    content = (
-      <Feedback
-        key={feedback.items[0].id}
-        title={feedback.items[0].assessment.title}
-        subtitle={feedback.items[0].assessment.psychologicalDimensions.map((d) => d.name).join(", ")}
-        text={feedback.items[0].text}
-        answeredAt={feedback.items[0].answeredAt}
-      />
-    );
-  } else if (feedback?.processing.length) {
-    content = <Processing />;
-  } else {
+  if (!results?.length) {
     content = <NoData selfMonitoringBlockId={id} />;
+  } else if (results[0].feedback) {
+    content = <Feedback data={results[0]} />;
+  } else {
+    content = <Processing />;
   }
 
   return <div className="flex size-full py-10">{content}</div>;

@@ -24,6 +24,8 @@ import { CreateResultController } from "./controllers/assessment/CreateResultCon
 import { AssessmentDetailForAdminController } from "./controllers/assessment/AssessmentDetailForAdminController";
 import { UpdateAssessmentController } from "./controllers/admin/assessments/UpdateAssessmentController";
 import { UpdateQuestionsController } from "./controllers/assessment/UpdateQuestionsController";
+import { GenerateUserFeedbackController } from "./controllers/assessment/GenerateUserFeedbackController";
+import { GenerateCompanyFeedbackController } from "./controllers/assessment/GenerateCompanyFeedbackController";
 
 import { FindQuestionByAssessmentController } from "./controllers/admin/assessments/FindQuestionByAssessmentController";
 
@@ -32,15 +34,13 @@ import { ListAllSelfMonitoringBlocksController } from "./controllers/admin/self-
 import { CreateSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/CreateSelfMonitoringBlockController";
 import { EditSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/EditSelfMonitoringBlockController";
 import { FindSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindSelfMonitoringBlockController";
-import { GenerateUserFeedbackController } from "./controllers/assessment/GenerateUserFeedbackController";
-import { GenerateCompanyFeedbackController } from "./controllers/assessment/GenerateCompanyFeedbackController";
-import { DetailUserFeedbackController } from "./controllers/selfMonitoringBlock/DetailUserFeedbackController";
+import { ListSelfMonitoringBlockResultsController } from "./controllers/selfMonitoringBlock/ListSelfMonitoringBlockResultsController";
 
 import { FindAllCompaniesController } from "./controllers/admin/companies/FindAllCompaniesController";
 import { CreateCompanyController } from "./controllers/company/CreateCompanyController";
-import { FindDimensionByBlockController } from "./controllers/admin/dimensions/FindBySelfMonitoringController";
 import { FindCompanyController } from "./controllers/admin/companies/FindCompanyController";
-import { ListFeedbacksController } from "./controllers/assessment/feedback/ListFeedbacksController";
+
+import { FindDimensionByBlockController } from "./controllers/admin/dimensions/FindBySelfMonitoringController";
 import { FindDimensionController } from "./controllers/admin/dimensions/FindDimensionController";
 import { EditDimensionController } from "./controllers/admin/dimensions/EditDimensionController";
 
@@ -55,6 +55,7 @@ import { DeleteNotificationController } from "./controllers/admin/notifications/
 import { FindAllNotificationsController } from "./controllers/admin/notifications/FindAllNotificationsController";
 import { FindAllTypesController } from "./controllers/admin/notifications/FindAllTypesController";
 import { FindAllFeedbacksController } from "./controllers/admin/companies/FindAllFeedbacksController";
+import { ListResultsController } from "./controllers/assessment/ListResultsController";
 
 const router = Router();
 
@@ -80,7 +81,7 @@ router.put("/dimensions/:psychologicalDimensionId", isAuthenticated, new EditDim
 
 // ROTAS ASSESSMENT
 router.get("/assessments", isAuthenticated, new ListAssessmentsController().handle);
-router.get("/assessments/feedback", isAuthenticated, new ListFeedbacksController().handle);
+router.get("/assessments/results", isAuthenticated, new ListResultsController().handle);
 router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
 router.get("/assessments/admin/:id", isAuthenticated, new AssessmentDetailForAdminController().handle);
 router.post("/assessments", isAuthenticated, new CreateAssessmentController().handle);
@@ -100,7 +101,11 @@ router.get("/self-monitoring/admin", isAuthenticated, new ListAllSelfMonitoringB
 router.post("/self-monitoring/admin", isAuthenticated, new CreateSelfMonitoringBlocksController().handle);
 router.put("/self-monitoring/admin/:id", isAuthenticated, new EditSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin/:id", isAuthenticated, new FindSelfMonitoringBlocksController().handle);
-router.get("/self-monitoring/feedback/:id", isAuthenticated, new DetailUserFeedbackController().handle);
+router.get(
+  "/self-monitoring/results/:selfMonitoringBlockId",
+  isAuthenticated,
+  new ListSelfMonitoringBlockResultsController().handle
+);
 router.get(
   "/self-monitoring/dimensions/:selfMonitoringBlockId",
   isAuthenticated,
