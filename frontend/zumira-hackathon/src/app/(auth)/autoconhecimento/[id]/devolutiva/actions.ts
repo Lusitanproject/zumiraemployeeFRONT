@@ -3,13 +3,13 @@
 import { decrypt } from "@/app/_lib/session";
 import { catchError } from "@/utils/error";
 import { cookies } from "next/headers";
-import { GetFeedback } from "./definitions";
+import { GetResults } from "./definitions";
 
-export async function getFeedback(selfMonitoringBlockId: string): Promise<GetFeedback> {
+export async function getResults(selfMonitoringBlockId: string): Promise<GetResults> {
   const cookie = await cookies();
   const session = decrypt(cookie.get("session")?.value);
 
-  const url = `${process.env.API_BASE_URL}/self-monitoring/feedback/${selfMonitoringBlockId}`;
+  const url = `${process.env.API_BASE_URL}/self-monitoring/results/${selfMonitoringBlockId}`;
   const [error, response] = await catchError(
     fetch(url, {
       method: "GET",
@@ -17,7 +17,7 @@ export async function getFeedback(selfMonitoringBlockId: string): Promise<GetFee
         "Content-Type": "application/json",
         Authorization: `Bearer ${session?.token}`,
       },
-    }),
+    })
   );
 
   if (error) {
@@ -28,7 +28,7 @@ export async function getFeedback(selfMonitoringBlockId: string): Promise<GetFee
     return { status: "ERROR", message: response.statusText };
   }
 
-  const parsed = (await response.json()) as GetFeedback;
+  const parsed = (await response.json()) as GetResults;
 
   return parsed;
 }

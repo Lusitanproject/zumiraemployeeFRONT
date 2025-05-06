@@ -106,17 +106,12 @@ class GenerateUserFeedbackService {
 
     const response = await sendMessage(result.assessment.userFeedbackInstructions, message);
 
-    const assessmentFeeedback = await prismaClient.userAssessmentFeedback.create({
-      data: {
-        text: response.output_text,
-        userId,
-        assessmentId,
+    const assessmentFeeedback = await prismaClient.assessmentResult.update({
+      where: {
+        id: result.id,
       },
-      select: {
-        id: true,
-        text: true,
-        userId: true,
-        assessmentId: true,
+      data: {
+        feedback: response.output_text,
       },
     });
 
