@@ -21,20 +21,19 @@ const CreateResultController_1 = require("./controllers/assessment/CreateResultC
 const AssessmentDetailForAdminController_1 = require("./controllers/assessment/AssessmentDetailForAdminController");
 const UpdateAssessmentController_1 = require("./controllers/admin/assessments/UpdateAssessmentController");
 const UpdateQuestionsController_1 = require("./controllers/assessment/UpdateQuestionsController");
+const GenerateUserFeedbackController_1 = require("./controllers/assessment/GenerateUserFeedbackController");
+const GenerateCompanyFeedbackController_1 = require("./controllers/assessment/GenerateCompanyFeedbackController");
 const FindQuestionByAssessmentController_1 = require("./controllers/admin/assessments/FindQuestionByAssessmentController");
 const ListSelfMonitoringBlocksController_1 = require("./controllers/selfMonitoringBlock/ListSelfMonitoringBlocksController");
 const FindAllSelfMonitoringBlocksController_1 = require("./controllers/admin/self-monitoring/FindAllSelfMonitoringBlocksController");
 const CreateSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/CreateSelfMonitoringBlockController");
 const EditSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/EditSelfMonitoringBlockController");
 const FindSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/FindSelfMonitoringBlockController");
-const GenerateUserFeedbackController_1 = require("./controllers/assessment/GenerateUserFeedbackController");
-const GenerateCompanyFeedbackController_1 = require("./controllers/assessment/GenerateCompanyFeedbackController");
-const DetailUserFeedbackController_1 = require("./controllers/selfMonitoringBlock/DetailUserFeedbackController");
+const ListSelfMonitoringBlockResultsController_1 = require("./controllers/selfMonitoringBlock/ListSelfMonitoringBlockResultsController");
 const FindAllCompaniesController_1 = require("./controllers/admin/companies/FindAllCompaniesController");
 const CreateCompanyController_1 = require("./controllers/company/CreateCompanyController");
-const FindBySelfMonitoringController_1 = require("./controllers/admin/dimensions/FindBySelfMonitoringController");
 const FindCompanyController_1 = require("./controllers/admin/companies/FindCompanyController");
-const ListFeedbacksController_1 = require("./controllers/assessment/feedback/ListFeedbacksController");
+const FindBySelfMonitoringController_1 = require("./controllers/admin/dimensions/FindBySelfMonitoringController");
 const FindDimensionController_1 = require("./controllers/admin/dimensions/FindDimensionController");
 const EditDimensionController_1 = require("./controllers/admin/dimensions/EditDimensionController");
 const ListNationalitiesController_1 = require("./controllers/nationality/ListNationalitiesController");
@@ -47,6 +46,9 @@ const DeleteNotificationController_1 = require("./controllers/admin/notification
 const FindAllNotificationsController_1 = require("./controllers/admin/notifications/FindAllNotificationsController");
 const FindAllTypesController_1 = require("./controllers/admin/notifications/FindAllTypesController");
 const FindAllFeedbacksController_1 = require("./controllers/admin/companies/FindAllFeedbacksController");
+const ListResultsController_1 = require("./controllers/assessment/ListResultsController");
+const UpdateResultRatingsController_1 = require("./controllers/admin/assessments/UpdateResultRatingsController");
+const FindResultRatingsByAssessmentController_1 = require("./controllers/admin/assessments/FindResultRatingsByAssessmentController");
 const router = (0, express_1.Router)();
 exports.router = router;
 // ROTAS AUTH
@@ -67,25 +69,29 @@ router.get("/dimensions/:psychologicalDimensionId", isAuthenticated_1.isAuthenti
 router.put("/dimensions/:psychologicalDimensionId", isAuthenticated_1.isAuthenticated, new EditDimensionController_1.EditDimensionController().handle);
 // ROTAS ASSESSMENT
 router.get("/assessments", isAuthenticated_1.isAuthenticated, new ListAssessmentsController_1.ListAssessmentsController().handle);
-router.get("/assessments/feedback", isAuthenticated_1.isAuthenticated, new ListFeedbacksController_1.ListFeedbacksController().handle);
 router.get("/assessments/:id", isAuthenticated_1.isAuthenticated, new DetailAssessmentController_1.DetailAssessmentController().handle);
 router.get("/assessments/admin/:id", isAuthenticated_1.isAuthenticated, new AssessmentDetailForAdminController_1.AssessmentDetailForAdminController().handle);
 router.post("/assessments", isAuthenticated_1.isAuthenticated, new CreateAssessmentController_1.CreateAssessmentController().handle);
-router.post("/assessments/questions", isAuthenticated_1.isAuthenticated, new CreateQuestionController_1.CreateQuestionController().handle);
-router.post("/assessments/results", isAuthenticated_1.isAuthenticated, new CreateResultController_1.CreateResultController().handle);
-router.put("/assessments/questions/:id", isAuthenticated_1.isAuthenticated, new UpdateQuestionsController_1.UpdateQuestionsController().handle);
-router.put("/assessments/:id", isAuthenticated_1.isAuthenticated, new UpdateAssessmentController_1.UpdateAssessmentController().handle);
 router.post("/assessments/feedback/users/:id", isAuthenticated_1.isAuthenticated, new GenerateUserFeedbackController_1.GenerateUserFeedbackController().handle);
 router.post("/assessments/feedback/companies/:id", isAuthenticated_1.isAuthenticated, new GenerateCompanyFeedbackController_1.GenerateCompanyFeedbackController().handle);
+router.put("/assessments/:id", isAuthenticated_1.isAuthenticated, new UpdateAssessmentController_1.UpdateAssessmentController().handle);
 // ROTAS QUESTIONS
-router.get("/questions/:assessmentId", isAuthenticated_1.isAuthenticated, new FindQuestionByAssessmentController_1.FindQuestionByAssessmentController().handle);
+router.post("/assessments/questions", isAuthenticated_1.isAuthenticated, new CreateQuestionController_1.CreateQuestionController().handle);
+router.put("/assessments/questions/:id", isAuthenticated_1.isAuthenticated, new UpdateQuestionsController_1.UpdateQuestionsController().handle);
+router.get("/assessments/questions/:assessmentId", isAuthenticated_1.isAuthenticated, new FindQuestionByAssessmentController_1.FindQuestionByAssessmentController().handle);
+// ROTAS RESULTS
+router.get("/assessments/results", isAuthenticated_1.isAuthenticated, new ListResultsController_1.ListResultsController().handle);
+router.post("/assessments/results", isAuthenticated_1.isAuthenticated, new CreateResultController_1.CreateResultController().handle);
+// ROTAS RESULT RATINGS
+router.get("/assessments/ratings/:id", isAuthenticated_1.isAuthenticated, new FindResultRatingsByAssessmentController_1.FindResultRatingsByAssessmentController().handle);
+router.put("/assessments/ratings/:id", isAuthenticated_1.isAuthenticated, new UpdateResultRatingsController_1.UpdateResultRatingsController().handle);
 // ROTAS SELF MONITORING
 router.get("/self-monitoring", isAuthenticated_1.isAuthenticated, new ListSelfMonitoringBlocksController_1.ListSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new FindAllSelfMonitoringBlocksController_1.ListAllSelfMonitoringBlocksController().handle);
 router.post("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new CreateSelfMonitoringBlockController_1.CreateSelfMonitoringBlocksController().handle);
 router.put("/self-monitoring/admin/:id", isAuthenticated_1.isAuthenticated, new EditSelfMonitoringBlockController_1.EditSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin/:id", isAuthenticated_1.isAuthenticated, new FindSelfMonitoringBlockController_1.FindSelfMonitoringBlocksController().handle);
-router.get("/self-monitoring/feedback/:id", isAuthenticated_1.isAuthenticated, new DetailUserFeedbackController_1.DetailUserFeedbackController().handle);
+router.get("/self-monitoring/results/:selfMonitoringBlockId", isAuthenticated_1.isAuthenticated, new ListSelfMonitoringBlockResultsController_1.ListSelfMonitoringBlockResultsController().handle);
 router.get("/self-monitoring/dimensions/:selfMonitoringBlockId", isAuthenticated_1.isAuthenticated, new FindBySelfMonitoringController_1.FindDimensionByBlockController().handle);
 // ROTAS COMPANY
 router.get("/companies", isAuthenticated_1.isAuthenticated, new FindAllCompaniesController_1.FindAllCompaniesController().handle);
