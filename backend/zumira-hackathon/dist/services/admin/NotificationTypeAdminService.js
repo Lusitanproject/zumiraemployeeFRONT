@@ -27,7 +27,7 @@ class NotificationTypeAdminService {
                 color: true,
             },
         });
-        return { types };
+        return { items: types };
     }
 }
 exports.NotificationTypeAdminService = NotificationTypeAdminService;

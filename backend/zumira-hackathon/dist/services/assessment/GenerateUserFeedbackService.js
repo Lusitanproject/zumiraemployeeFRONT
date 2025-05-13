@@ -4,9 +4,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GenerateUserFeedbackService = void 0;
+const client_1 = require("@prisma/client");
 const prisma_1 = __importDefault(require("../../prisma"));
 const openai_1 = __importDefault(require("openai"));
-async function sendMessage(instructions, message) {
+const devLog_1 = require("../../utils/devLog");
+const assessmentResultInclude = client_1.Prisma.validator()({
+    include: {
+        assessment: {
+            include: {
+                assessmentResultRatings: true,
+                selfMonitoringBlock: true,
+            },
+        },
+        assessmentQuestionAnswers: {
+            include: {
+                assessmentQuestionChoice: true,
+                assessmentQuestion: {
+                    include: {
+                        psychologicalDimension: true,
+                    },
+                },
+            },
+        },
+    },
+});
+function createMessage(result) {
+    const dimensionAnswersValues = {};
+    result.assessmentQuestionAnswers.map((answer) => {
+        const dimension = answer.assessmentQuestion.psychologicalDimension.name;
+        if (!dimensionAnswersValues[dimension])
+            dimensionAnswersValues[dimension] = [];
+        dimensionAnswersValues[dimension].push(answer.assessmentQuestionChoice.value);
+    });
+    const message = Object.entries(dimensionAnswersValues)
+        .map(([dimension, values]) => {
+        const sum = values.reduce((sum, v) => sum + v, 0);
+        const average = sum / values.length;
+        switch (result.assessment.operationType) {
+            case "SUM":
+                return `${dimension}: ${sum.toFixed(2)}`;
+            case "AVERAGE":
+                return `${dimension}: ${average.toFixed(2)}`;
+        }
+    })
+        .join(", ");
+    (0, devLog_1.devLog)(message);
+    return message;
+}
+async function generateResponse(assessmentId, instructions, message, ratings) {
     const openai = new openai_1.default({
         apiKey: process.env.OPENAI_API_KEY,
     });
@@ -33,19 +78,76 @@ async function sendMessage(instructions, message) {
                 ],
             },
         ],
-        text: {
-            format: {
-                type: "text",
+        tools: [
+            {
+                type: "function",
+                name: "generate_feedback",
+                description: "Devolutiva do teste psicológico, interpretando os resultados de seus domínios avaliados e identificando níveis de risco associados.",
+                parameters: {
+                    type: "object",
+                    required: ["feedback", "identifiedRating", "generateAlert"],
+                    properties: {
+                        feedback: {
+                            type: "string",
+                            description: "Texto longo, completo e detalhado da devolutiva de acordo com a interpretação dos resultados. Utilize markdown.",
+                        },
+                        identifiedRating: {
+                            type: "string",
+                            description: "Classificação baseada nos escores.",
+                            enum: ratings.map((r) => r.name),
+                        },
+                        generateAlert: {
+                            type: "boolean",
+                            description: "Indica se é necessário gerar um alerta com base na classificação identificada.",
+                        },
+                    },
+                    additionalProperties: false,
+                },
+                strict: true,
             },
+        ],
+        tool_choice: {
+            type: "function",
+            name: "generate_feedback",
         },
-        reasoning: {},
-        tools: [],
-        temperature: 1,
-        max_output_tokens: 2048,
-        top_p: 1,
-        store: true,
+        max_output_tokens: 4096,
     });
     return response;
+}
+async function storeFeedback(result, feedback, rating) {
+    await prisma_1.default.assessmentResult.update({
+        where: {
+            id: result.id,
+        },
+        data: {
+            feedback,
+            assessmentResultRatingId: rating.id,
+        },
+    });
+}
+async function createAlert(result, rating, userId) {
+    await prisma_1.default.alert.create({
+        data: {
+            assessmentResultId: result.id,
+            assessmentResultRatingId: rating.id,
+        },
+    });
+    const notification = await prisma_1.default.notification.create({
+        data: {
+            title: `Alerta de devolutiva`,
+            summary: `Sua devolutiva para ${result.assessment.title} gerou um alerta.`,
+            content: `Ao analisar seus resultados, identificamos **${rating.name}** para **${result.assessment.title}**.
+
+Veja mais sobre sua devolutiva [aqui](https://www.zumira.com.br/autoconhecimento/${result.assessment.selfMonitoringBlock.id}/devolutiva).`,
+            notificationTypeId: rating.notificationTypeId,
+        },
+    });
+    await prisma_1.default.notificationRecipient.create({
+        data: {
+            notificationId: notification.id,
+            userId,
+        },
+    });
 }
 class GenerateUserFeedbackService {
     async execute({ userId, assessmentId }) {
@@ -54,62 +156,27 @@ class GenerateUserFeedbackService {
                 assessmentId,
                 userId,
             },
-            include: {
-                assessment: true,
-                assessmentQuestionAnswers: {
-                    include: {
-                        assessmentQuestionChoice: true,
-                        assessmentQuestion: {
-                            include: {
-                                psychologicalDimension: true,
-                            },
-                        },
-                    },
-                },
-            },
+            include: assessmentResultInclude.include,
             orderBy: {
                 createdAt: "desc",
             },
         });
         if (!result)
             throw new Error("No results for this assessment");
-        const dimensionAnswersValues = {};
-        result.assessmentQuestionAnswers.map((answer) => {
-            const dimension = answer.assessmentQuestion.psychologicalDimension.name;
-            if (!dimensionAnswersValues[dimension])
-                dimensionAnswersValues[dimension] = [];
-            dimensionAnswersValues[dimension].push(answer.assessmentQuestionChoice.value);
-        });
-        const message = Object.entries(dimensionAnswersValues)
-            .map(([dimension, values]) => {
-            const sum = values.reduce((sum, v) => sum + v, 0);
-            const average = sum / values.length;
-            switch (result.assessment.operationType) {
-                case "SUM":
-                    return `${dimension}: ${sum.toFixed(2)}`;
-                case "AVERAGE":
-                    return `${dimension}: ${average.toFixed(2)}`;
-            }
-        })
-            .join(", ");
+        const message = createMessage(result);
         if (!message)
             throw new Error("No values to send");
-        console.log(`Generating user feedback for assessment ${assessmentId}`);
-        const response = await sendMessage(result.assessment.userFeedbackInstructions, message);
-        const assessmentFeeedback = await prisma_1.default.userAssessmentFeedback.create({
-            data: {
-                text: response.output_text,
-                userId,
-                assessmentId,
-            },
-            select: {
-                id: true,
-                text: true,
-                userId: true,
-                assessmentId: true,
-            },
-        });
-        return assessmentFeeedback;
+        const response = await generateResponse(assessmentId, result.assessment.userFeedbackInstructions, message, result.assessment.assessmentResultRatings);
+        // Workaround para a tipagem desatualizada da resposta da openai (nao tem .arguments)
+        const toolCall = response.output[0];
+        const args = JSON.parse(toolCall.arguments);
+        const rating = result.assessment.assessmentResultRatings.find((r) => r.name === args.identifiedRating);
+        if (!rating)
+            throw new Error(`Rating "${args.identifiedRating}" does not exist`);
+        await storeFeedback(result, args.feedback, rating);
+        if (args.generateAlert)
+            await createAlert(result, rating, userId);
+        return args;
     }
 }
 exports.GenerateUserFeedbackService = GenerateUserFeedbackService;

@@ -1,35 +1,20 @@
-export type GetFeedback = {
+export type Result = {
+  id: string;
+  feedback: null | string;
+  resultRating: null;
+  assessment: {
+    id: string;
+    title: string;
+    summary: string;
+    psychologicalDimensions: string[];
+  };
+  answeredAt: string;
+};
+
+export type GetResults = {
   status: "SUCCESS" | "ERROR";
   data?: {
-    items: {
-      id: string;
-      text: string;
-      assessment: {
-        id: string;
-        title: string;
-        psychologicalDimensions: {
-          id: string;
-          name: string;
-          acronym: string;
-        }[];
-      };
-      selfMonitoringBlock: {
-        id: string;
-        title: string;
-        psychologicalDimensions: {
-          id: string;
-          name: string;
-          acronym: string;
-        }[];
-      };
-      answeredAt: Date;
-    }[];
-    processing: {
-      id: string;
-      title: string;
-      summary: string;
-      description: string;
-    }[];
+    items: Result[];
   };
   message?: string;
 };

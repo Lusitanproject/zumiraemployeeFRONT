@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateAssessmentSchema = exports.CreateAssessmentSchema = void 0;
+exports.UpdateRatingsSchema = exports.UpdateAssessmentSchema = exports.CreateAssessmentSchema = void 0;
 const client_1 = require("@prisma/client");
 const zod_1 = require("zod");
 exports.CreateAssessmentSchema = zod_1.z.object({
@@ -22,4 +22,11 @@ exports.UpdateAssessmentSchema = zod_1.z.object({
     companyFeedbackInstructions: zod_1.z.string().optional(),
     operationType: zod_1.z.nativeEnum(client_1.Operation),
     nationalityId: zod_1.z.string().cuid(),
+});
+exports.UpdateRatingsSchema = zod_1.z.object({
+    ratings: zod_1.z.array(zod_1.z.object({
+        id: zod_1.z.string().uuid().optional(),
+        name: zod_1.z.string().nonempty(),
+        notificationTypeId: zod_1.z.string().cuid(),
+    })),
 });

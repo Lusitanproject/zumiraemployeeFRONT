@@ -4,6 +4,8 @@ export function getPageName(url: string): string {
       return "Autogestão";
     case "/autoconhecimento":
       return "Autoconhecimento";
+    case "/notificacoes":
+      return "Notificações";
     default:
       return "Zumira 3.0";
   }

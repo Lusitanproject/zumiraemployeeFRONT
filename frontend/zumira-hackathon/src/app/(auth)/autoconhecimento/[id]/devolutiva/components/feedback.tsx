@@ -4,15 +4,15 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import Markdown from "react-markdown";
+import { Result } from "../definitions";
 
 interface FeedbackProps {
-  title: string;
-  subtitle: string;
-  text: string;
-  answeredAt: Date;
+  data: Result;
 }
 
-export function Feedback({ title, subtitle, text, answeredAt }: FeedbackProps) {
+export function Feedback({ data }: FeedbackProps) {
+  const subtitle = data.assessment.psychologicalDimensions.join(", ");
+
   const [showAll, setShowAll] = useState<boolean>(false);
 
   function formatDate(date: Date): string {
@@ -28,14 +28,14 @@ export function Feedback({ title, subtitle, text, answeredAt }: FeedbackProps) {
       className={`relative flex flex-col size-full justify-between ${showAll ? "overflow-visible" : "overflow-hidden"}`}
     >
       <div className="flex flex-col justify-start">
-        <h1 className="text-lg text-gray-600 leading-7 font-bold">{title}</h1>
+        <h1 className="text-lg text-gray-600 leading-7 font-bold">{data.assessment.title}</h1>
         <h2 className="text-base text-gray-600 leading-6 font-semibold">{subtitle}</h2>
         <div className="markdown prose lg:prose-xl">
-          <Markdown>{text}</Markdown>
+          <Markdown>{data.feedback}</Markdown>
         </div>
         <hr className="text-gray-300 my-3" />
         <footer className="text-base text-gray-600 leading-4 font-semibold">
-          Teste realizado em {formatDate(new Date(answeredAt))}
+          Teste realizado em {formatDate(new Date(data.answeredAt))}
         </footer>
       </div>
       <div
