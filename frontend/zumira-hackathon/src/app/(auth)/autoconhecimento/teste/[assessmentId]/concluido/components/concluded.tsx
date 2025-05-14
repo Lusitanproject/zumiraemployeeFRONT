@@ -23,7 +23,7 @@ export function Concluded({ assessmentId }: ConcludedProps) {
         <Button
           variant="primary"
           size="lg"
-          onClick={() => redirect(`/autogestao/teste/${assessmentId}/devolutiva`, RedirectType.replace)}
+          onClick={() => redirect(`/autoconhecimento/teste/${assessmentId}/devolutiva`, RedirectType.replace)}
         >
           <span>Ver minha devolutiva</span>
         </Button>

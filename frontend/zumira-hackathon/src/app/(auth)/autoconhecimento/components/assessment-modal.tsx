@@ -15,7 +15,7 @@ export type AssessmentModalProps = {
 
 export function AssessmentModal({ id, title, summary, open, onClose }: AssessmentModalProps) {
   const handleOpenAssessment = useCallback(() => {
-    redirect(`/autogestao/teste/${id}`, RedirectType.push);
+    redirect(`/autoconhecimento/teste/${id}`, RedirectType.push);
   }, [id]);
 
   return (

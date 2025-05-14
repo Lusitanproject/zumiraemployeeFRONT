@@ -69,6 +69,6 @@ export async function saveAnswersAction(tate: FormState, formData: FormData): Pr
       },
     });
 
-    redirect(`/autogestao/teste/${data.assessmentId}/concluido`, RedirectType.replace);
+    redirect(`/autoconhecimento/teste/${data.assessmentId}/concluido`, RedirectType.replace);
   }
 }

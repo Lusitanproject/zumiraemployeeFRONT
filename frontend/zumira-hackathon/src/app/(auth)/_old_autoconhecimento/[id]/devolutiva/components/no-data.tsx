@@ -6,29 +6,29 @@ import { ChevronRight } from "lucide-react";
 import { redirect } from "next/navigation";
 
 interface NoDataProps {
-  assessmentId: string;
+  selfMonitoringBlockId: string;
 }
 
-export function NoData({ assessmentId }: NoDataProps) {
+export function NoData({ selfMonitoringBlockId }: NoDataProps) {
   return (
     <div className="flex size-full justify-center items-center">
       <div className="flex flex-col h-full w-96 sm:justify-center justify-between items-center">
         <HeadImage size="small" />
         <div className="flex flex-col size-fit">
           <h1 className="sm:text-4xl text-3xl font-bold text-center sm:leading-11 leading-9 text-gray-800">
-            Ainda não possuimos informações disponíveis
+            Ainda não possui informação disponivel
           </h1>
           <p className="text-lg leading-7 text-center text-gray-600">
-            Realize essa avaliação para receber a devolutiva
+            Realize a autoavaliação dessa área para receber a devolutiva
           </p>
         </div>
         <Button
           variant="primary"
           size="xxl"
           className="w-full mt-8"
-          onClick={() => redirect(`/autogestao/teste/${assessmentId}`)}
+          onClick={() => redirect(`/autoconhecimento?avaliacao=${selfMonitoringBlockId}`)}
         >
-          <span>Fazer Avaliação</span>
+          <span>Fazer Autoavaliação</span>
           <ChevronRight className="size-6" />
         </Button>
       </div>
