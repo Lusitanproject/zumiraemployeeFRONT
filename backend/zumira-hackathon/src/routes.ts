@@ -59,6 +59,7 @@ import { ListResultsController } from "./controllers/assessment/ListResultsContr
 import { UpdateResultRatingsController } from "./controllers/admin/assessments/UpdateResultRatingsController";
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
 import { DetailResultController } from "./controllers/assessment/DetailResultController";
+import { FindFilteredResultsController } from "./controllers/admin/assessments/FindFilteredResultsController";
 
 const router = Router();
 
@@ -82,6 +83,12 @@ router.get("/dimensions", isAuthenticated, new FindAllDimensionsController().han
 router.get("/dimensions/:psychologicalDimensionId", isAuthenticated, new FindDimensionController().handle);
 router.put("/dimensions/:psychologicalDimensionId", isAuthenticated, new EditDimensionController().handle);
 
+// ROTAS RESULTS
+router.get("/assessments/results", isAuthenticated, new ListResultsController().handle);
+router.get("/assessments/results/admin", isAuthenticated, new FindFilteredResultsController().handle);
+router.get("/assessments/results/:id", isAuthenticated, new DetailResultController().handle);
+router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
+
 // ROTAS ASSESSMENT
 router.get("/assessments", isAuthenticated, new ListAssessmentsController().handle);
 router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
@@ -95,11 +102,6 @@ router.put("/assessments/:id", isAuthenticated, new UpdateAssessmentController()
 router.post("/assessments/questions", isAuthenticated, new CreateQuestionController().handle);
 router.put("/assessments/questions/:id", isAuthenticated, new UpdateQuestionsController().handle);
 router.get("/assessments/questions/:assessmentId", isAuthenticated, new FindQuestionByAssessmentController().handle);
-
-// ROTAS RESULTS
-router.get("/assessments/results", isAuthenticated, new ListResultsController().handle);
-router.get("/assessments/results/:id", isAuthenticated, new DetailResultController().handle);
-router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 
 // ROTAS RESULT RATINGS
 router.get("/assessments/ratings/:id", isAuthenticated, new FindResultRatingsByAssessmentController().handle);

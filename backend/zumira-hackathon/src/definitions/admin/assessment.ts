@@ -36,6 +36,12 @@ export const UpdateRatingsSchema = z.object({
   ),
 });
 
+export const FindFilteredResultsSchema = z.object({
+  assessmentId: z.string().cuid(),
+  companyId: z.string().cuid().optional(),
+});
+
 export type CreateAssessment = z.infer<typeof CreateAssessmentSchema>;
 export type UpdateAssessment = z.infer<typeof UpdateAssessmentSchema>;
 export type UpdateRatingsRequest = z.infer<typeof UpdateRatingsSchema> & { assessmentId: string };
+export type FindFilteredAlertsRequest = z.infer<typeof FindFilteredResultsSchema>;
