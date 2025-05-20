@@ -161,9 +161,9 @@ model AssessmentResult {
 
 model AssessmentResultRating {
   id           String   @unique @default(uuid())
-  risk         String   @default("Novo risco") // TODO: REMOVER NA PROXIMA MIGRATION
-  profile      String   @default("Novo perfil")
-  color        String   @default("#FFFFFF")
+  risk         String
+  profile      String
+  color        String
   assessmentId String   @map("assessment_id")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
@@ -310,7 +310,7 @@ model NotificationRecipient {
 }
 
 model Alert {
-  id                       String   @unique @default(uuid())
+  id                       String   @id @default(uuid())
   assessmentResultId       String   @map("assessment_result_id")
   assessmentResultRatingId String   @map("assessment_result_rating_id")
   createdAt                DateTime @default(now()) @map("created_at")
