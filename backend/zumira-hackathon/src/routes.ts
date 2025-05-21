@@ -60,6 +60,9 @@ import { UpdateResultRatingsController } from "./controllers/admin/assessments/U
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
 import { DetailResultController } from "./controllers/assessment/DetailResultController";
 import { FindFilteredResultsController } from "./controllers/admin/assessments/FindFilteredResultsController";
+import { FindNotificationTypeController } from "./controllers/admin/notifications/FindNotificationTypeController";
+import { CreateNotificationTypeController } from "./controllers/admin/notifications/CreateNotificationTypeController";
+import { UpdateNotificationTypeController } from "./controllers/admin/notifications/UpdateNotificationTypeController";
 
 const router = Router();
 
@@ -137,10 +140,13 @@ router.get("/nationalities", isAuthenticated, new ListNationalitiesController().
 router.get("/notifications", isAuthenticated, new ListNotificationsController().handle);
 router.get("/notifications/admin", isAuthenticated, new FindAllNotificationsController().handle);
 router.get("/notifications/admin/types", isAuthenticated, new FindAllTypesController().handle);
+router.get("/notifications/admin/types/:id", isAuthenticated, new FindNotificationTypeController().handle);
 router.get("/notifications/:notificationId", isAuthenticated, new DetailNotificationController().handle);
 router.put("/notifications/:notificationId", isAuthenticated, new UpdateNotificationController().handle);
 router.put("/notifications/:notificationId/read", isAuthenticated, new ReadNotificationController().handle);
+router.put("/notifications/admin/types/:id", isAuthenticated, new UpdateNotificationTypeController().handle);
 router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
+router.post("/notifications/admin/types", isAuthenticated, new CreateNotificationTypeController().handle);
 router.delete("/notifications/:notificationId", isAuthenticated, new DeleteNotificationController().handle);
 
 export { router };
