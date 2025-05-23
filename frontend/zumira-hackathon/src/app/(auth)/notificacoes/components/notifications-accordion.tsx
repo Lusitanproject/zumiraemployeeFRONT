@@ -1,13 +1,24 @@
-import { NotificationCard } from "@/components/custom/notifications/notification-card";
+"use client";
+
 import { Notification, NotificationFull } from "../definitions";
 import { cn } from "@/lib/utils";
+import { NotificationCard } from "./notification-card";
+import { useEffect, useState } from "react";
 
 interface NotificationsListProps {
   data: Notification[];
   current?: NotificationFull;
 }
 
-export function NotificationsList({ data, current }: NotificationsListProps) {
+export function NotificationsAccordion({ data, current }: NotificationsListProps) {
+  const [openItem, setOpenItem] = useState<string | null>(current?.id ?? null);
+
+  useEffect(() => {
+    if (current) {
+      document.getElementById(current.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [current]);
+
   if (!data.length) {
     return (
       <div className="flex size-full justify-center items-center">
@@ -21,7 +32,7 @@ export function NotificationsList({ data, current }: NotificationsListProps) {
   }
 
   return (
-    <div className={cn("flex flex-col pt-1.5 gap-3 overflow-scroll", current ? "sm:w-[13.5rem] w-full" : "w-full")}>
+    <div className={cn("flex flex-col pt-1.5 gap-3 overflow-scroll w-full")}>
       {data
         .toSorted(
           (a, b) =>
@@ -34,7 +45,16 @@ export function NotificationsList({ data, current }: NotificationsListProps) {
             notification.read = true;
           }
 
-          return <NotificationCard key={notification.id} notification={notification} selected={isCurrent} />;
+          return (
+            <NotificationCard
+              id={notification.id}
+              key={notification.id}
+              notification={notification}
+              open={notification.id === openItem}
+              onOpen={(id) => setOpenItem(id)}
+              onClose={(id) => setOpenItem((prev) => (prev === id ? null : prev))}
+            />
+          );
         })}
     </div>
   );

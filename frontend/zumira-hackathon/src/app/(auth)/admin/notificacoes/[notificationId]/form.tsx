@@ -42,6 +42,8 @@ export function NotificationForm({ data, types }: FormProps) {
 
     if (!validation.success) {
       setErrors(validation.error.flatten().fieldErrors);
+      setLoading(false);
+      return;
     }
 
     const payload = {

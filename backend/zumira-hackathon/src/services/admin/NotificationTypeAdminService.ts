@@ -1,3 +1,4 @@
+import { CreateNotificationTypeRequest, UpdateNotificationTypeRequest } from "../../definitions/admin/notification";
 import prismaClient from "../../prisma";
 
 class NotificationTypeAdminService {
@@ -25,6 +26,16 @@ class NotificationTypeAdminService {
       },
     });
     return { items: types };
+  }
+
+  async create(data: CreateNotificationTypeRequest) {
+    const type = await prismaClient.notificationType.create({ data });
+    return type;
+  }
+
+  async update(data: UpdateNotificationTypeRequest) {
+    const type = await prismaClient.notificationType.update({ where: { id: data.id }, data });
+    return type;
   }
 }
 
