@@ -54,6 +54,8 @@ const FindFilteredResultsController_1 = require("./controllers/admin/assessments
 const FindNotificationTypeController_1 = require("./controllers/admin/notifications/FindNotificationTypeController");
 const CreateNotificationTypeController_1 = require("./controllers/admin/notifications/CreateNotificationTypeController");
 const UpdateNotificationTypeController_1 = require("./controllers/admin/notifications/UpdateNotificationTypeController");
+const ListAlertsController_1 = require("./controllers/alert/ListAlertsController");
+const ReadAlertController_1 = require("./controllers/alert/ReadAlertController");
 const router = (0, express_1.Router)();
 exports.router = router;
 // ROTAS AUTH
@@ -77,6 +79,16 @@ router.get("/assessments/results", isAuthenticated_1.isAuthenticated, new ListRe
 router.get("/assessments/results/admin", isAuthenticated_1.isAuthenticated, new FindFilteredResultsController_1.FindFilteredResultsController().handle);
 router.get("/assessments/results/:id", isAuthenticated_1.isAuthenticated, new DetailResultController_1.DetailResultController().handle);
 router.post("/assessments/results", isAuthenticated_1.isAuthenticated, new CreateResultController_1.CreateResultController().handle);
+// ROTAS QUESTIONS
+router.post("/assessments/questions", isAuthenticated_1.isAuthenticated, new CreateQuestionController_1.CreateQuestionController().handle);
+router.put("/assessments/questions/:id", isAuthenticated_1.isAuthenticated, new UpdateQuestionsController_1.UpdateQuestionsController().handle);
+router.get("/assessments/questions/:assessmentId", isAuthenticated_1.isAuthenticated, new FindQuestionByAssessmentController_1.FindQuestionByAssessmentController().handle);
+// ROTAS RESULT RATINGS
+router.get("/assessments/ratings/:id", isAuthenticated_1.isAuthenticated, new FindResultRatingsByAssessmentController_1.FindResultRatingsByAssessmentController().handle);
+router.put("/assessments/ratings/:id", isAuthenticated_1.isAuthenticated, new UpdateResultRatingsController_1.UpdateResultRatingsController().handle);
+// ROTAS ALERTS
+router.get("/assessments/alerts", isAuthenticated_1.isAuthenticated, new ListAlertsController_1.ListAlertsController().handle);
+router.put("/assessments/alerts/:id/read", isAuthenticated_1.isAuthenticated, new ReadAlertController_1.ReadAlertController().handle);
 // ROTAS ASSESSMENT
 router.get("/assessments", isAuthenticated_1.isAuthenticated, new ListAssessmentsController_1.ListAssessmentsController().handle);
 router.get("/assessments/:id", isAuthenticated_1.isAuthenticated, new DetailAssessmentController_1.DetailAssessmentController().handle);
@@ -85,13 +97,6 @@ router.post("/assessments", isAuthenticated_1.isAuthenticated, new CreateAssessm
 router.post("/assessments/feedback/users/:id", isAuthenticated_1.isAuthenticated, new GenerateUserFeedbackController_1.GenerateUserFeedbackController().handle);
 router.post("/assessments/feedback/companies/:id", isAuthenticated_1.isAuthenticated, new GenerateCompanyFeedbackController_1.GenerateCompanyFeedbackController().handle);
 router.put("/assessments/:id", isAuthenticated_1.isAuthenticated, new UpdateAssessmentController_1.UpdateAssessmentController().handle);
-// ROTAS QUESTIONS
-router.post("/assessments/questions", isAuthenticated_1.isAuthenticated, new CreateQuestionController_1.CreateQuestionController().handle);
-router.put("/assessments/questions/:id", isAuthenticated_1.isAuthenticated, new UpdateQuestionsController_1.UpdateQuestionsController().handle);
-router.get("/assessments/questions/:assessmentId", isAuthenticated_1.isAuthenticated, new FindQuestionByAssessmentController_1.FindQuestionByAssessmentController().handle);
-// ROTAS RESULT RATINGS
-router.get("/assessments/ratings/:id", isAuthenticated_1.isAuthenticated, new FindResultRatingsByAssessmentController_1.FindResultRatingsByAssessmentController().handle);
-router.put("/assessments/ratings/:id", isAuthenticated_1.isAuthenticated, new UpdateResultRatingsController_1.UpdateResultRatingsController().handle);
 // ROTAS SELF MONITORING
 router.get("/self-monitoring", isAuthenticated_1.isAuthenticated, new ListSelfMonitoringBlocksController_1.ListSelfMonitoringBlocksController().handle);
 router.get("/self-monitoring/admin", isAuthenticated_1.isAuthenticated, new FindAllSelfMonitoringBlocksController_1.ListAllSelfMonitoringBlocksController().handle);
