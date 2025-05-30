@@ -1,21 +1,20 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Markdown from "react-markdown";
-import { Notification } from "../definitions";
+import { Alert } from "../definitions";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-interface NotificationCardProps {
-  notification: Notification;
+interface AlertCardProps {
+  alert: Alert;
   id?: string;
   open?: boolean;
   onOpen?: (id: string) => void;
   onClose?: (id: string) => void;
 }
 
-export function NotificationCard({ notification, id, open, onOpen, onClose }: NotificationCardProps) {
+export function AlertCard({ alert, id, open, onOpen, onClose }: AlertCardProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState<number>();
 
@@ -46,45 +45,37 @@ export function NotificationCard({ notification, id, open, onOpen, onClose }: No
         open ? "border-primary-300" : "border-gray-100 hover:bg-[#E7F8EA]"
       )}
     >
-      <h1 className="text-gray-500 text-xs leading-[1.125rem] text-start">{notification.title}</h1>
+      <h1 className="text-gray-500 text-xs leading-[1.125rem] text-start">Alerta de risco</h1>
       <hr className="text-gray-200" />
-      <p className="text-gray-700 text-sm leading-5 text-start">{notification.summary}</p>
+      <p className="text-gray-700 text-sm leading-5 text-start">
+        O resultado de uma das suas avaliações gerou um alerta: <strong>{alert.assessmentResultRating.risk}</strong>
+      </p>
 
       <div className="relative flex duration-300 overflow-clip" style={{ height: open ? contentHeight : 0 }}>
-        <div
-          ref={contentRef}
-          className={cn("absolute flex w-full", {
-            "prose markdown": notification.content,
-            "justify-center": notification.actionUrl,
-          })}
-        >
-          {notification.actionUrl ? (
-            <Link href={notification.actionUrl}>
-              <Button className="mt-4" variant="secondary" size="lg">
-                Ir para detalhes
-              </Button>
-            </Link>
-          ) : (
-            <Markdown>{notification.content}</Markdown>
-          )}
+        <div ref={contentRef} className={cn("absolute flex w-full justify-center")}>
+          <Link href={`/autoconhecimento/teste/${alert.assessmentResultRating.assessment.id}/devlutiva`}>
+            <Button className="mt-4" variant="secondary" size="lg">
+              Ir para detalhes
+            </Button>
+          </Link>
         </div>
       </div>
 
       <span className="flex w-full text-[10px] leading-[18px] text-right text-gray-400 justify-end">
-        {formatDate(notification.receivedAt)}
+        {formatDate(alert.createdAt)}
       </span>
 
       <button
         className="w-fit text-xs leading-[18px] text-gray-400 text-start cursor-pointer underline"
-        onClick={() => (open ? onClose?.(notification.id) : onOpen?.(notification.id))}
+        onClick={() => (open ? onClose?.(alert.id) : onOpen?.(alert.id))}
       >
         Ver {open ? "menos" : "mais"}
       </button>
 
-      {!notification.read && (
+      {!alert.read && (
         <div
           className="absolute right-0 top-0 -translate-y-1/3 rounded-full size-2"
-          style={{ backgroundColor: notification.notificationType.color }}
+          style={{ backgroundColor: alert.assessmentResultRating.color }}
         />
       )}
     </section>

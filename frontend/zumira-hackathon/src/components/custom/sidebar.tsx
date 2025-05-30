@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-import { CircleArrowLeft } from "lucide-react";
+import { ChevronsLeftRight, ChevronsRightLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MainMenu, MenuLink } from "./main-menu";
 import { Button } from "../ui/button";
@@ -24,13 +24,20 @@ export function Sidebar({ menuItems }: SidebarProps) {
         {
           "px-12 w-[18rem]": expanded,
           "px-4 w-[5rem]": !expanded,
-        },
+        }
       )}
     >
       <div className="w-full flex flex-col">
         <div className={cn("w-full flex justify-center mb-14", { "justify-end": expanded })}>
-          <button className="w-6 h-6" onClick={handleToggleExpanded}>
-            <CircleArrowLeft className="text-primary-300" />
+          <button
+            className="flex size-6 border-2 border-primary-300 p-0.5 justify-center items-center rounded-full cursor-pointer"
+            onClick={handleToggleExpanded}
+          >
+            {expanded ? (
+              <ChevronsRightLeft className="text-primary-300" strokeWidth={3} />
+            ) : (
+              <ChevronsLeftRight className="text-primary-300" strokeWidth={3} />
+            )}
           </button>
         </div>
         <MainMenu expanded={expanded} menu={menuItems} />

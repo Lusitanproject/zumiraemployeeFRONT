@@ -63,6 +63,8 @@ import { FindFilteredResultsController } from "./controllers/admin/assessments/F
 import { FindNotificationTypeController } from "./controllers/admin/notifications/FindNotificationTypeController";
 import { CreateNotificationTypeController } from "./controllers/admin/notifications/CreateNotificationTypeController";
 import { UpdateNotificationTypeController } from "./controllers/admin/notifications/UpdateNotificationTypeController";
+import { ListAlertsController } from "./controllers/alert/ListAlertsController";
+import { ReadAlertController } from "./controllers/alert/ReadAlertController";
 
 const router = Router();
 
@@ -92,15 +94,6 @@ router.get("/assessments/results/admin", isAuthenticated, new FindFilteredResult
 router.get("/assessments/results/:id", isAuthenticated, new DetailResultController().handle);
 router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 
-// ROTAS ASSESSMENT
-router.get("/assessments", isAuthenticated, new ListAssessmentsController().handle);
-router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
-router.get("/assessments/admin/:id", isAuthenticated, new AssessmentDetailForAdminController().handle);
-router.post("/assessments", isAuthenticated, new CreateAssessmentController().handle);
-router.post("/assessments/feedback/users/:id", isAuthenticated, new GenerateUserFeedbackController().handle);
-router.post("/assessments/feedback/companies/:id", isAuthenticated, new GenerateCompanyFeedbackController().handle);
-router.put("/assessments/:id", isAuthenticated, new UpdateAssessmentController().handle);
-
 // ROTAS QUESTIONS
 router.post("/assessments/questions", isAuthenticated, new CreateQuestionController().handle);
 router.put("/assessments/questions/:id", isAuthenticated, new UpdateQuestionsController().handle);
@@ -109,6 +102,19 @@ router.get("/assessments/questions/:assessmentId", isAuthenticated, new FindQues
 // ROTAS RESULT RATINGS
 router.get("/assessments/ratings/:id", isAuthenticated, new FindResultRatingsByAssessmentController().handle);
 router.put("/assessments/ratings/:id", isAuthenticated, new UpdateResultRatingsController().handle);
+
+// ROTAS ALERTS
+router.get("/assessments/alerts", isAuthenticated, new ListAlertsController().handle);
+router.put("/assessments/alerts/:id/read", isAuthenticated, new ReadAlertController().handle);
+
+// ROTAS ASSESSMENT
+router.get("/assessments", isAuthenticated, new ListAssessmentsController().handle);
+router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
+router.get("/assessments/admin/:id", isAuthenticated, new AssessmentDetailForAdminController().handle);
+router.post("/assessments", isAuthenticated, new CreateAssessmentController().handle);
+router.post("/assessments/feedback/users/:id", isAuthenticated, new GenerateUserFeedbackController().handle);
+router.post("/assessments/feedback/companies/:id", isAuthenticated, new GenerateCompanyFeedbackController().handle);
+router.put("/assessments/:id", isAuthenticated, new UpdateAssessmentController().handle);
 
 // ROTAS SELF MONITORING
 router.get("/self-monitoring", isAuthenticated, new ListSelfMonitoringBlocksController().handle);

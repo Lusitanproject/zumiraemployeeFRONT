@@ -1,16 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Notification } from "./definitions";
+import { Alert } from "../definitions";
 import Link from "next/link";
-import { readNotification } from "./actions";
+import { readAlert } from "../actions";
 
-interface NotificationCardProps {
-  notification: Notification;
+interface AlertCardProps {
+  alert: Alert;
   selected?: boolean;
+  onClose?: () => void;
 }
 
-export function NotificationCard({ notification, selected }: NotificationCardProps) {
+export function AlertCard({ alert, selected, onClose }: AlertCardProps) {
   function formatDate(dateInput: Date | string | number): string {
     const date = new Date(dateInput);
 
@@ -26,8 +27,11 @@ export function NotificationCard({ notification, selected }: NotificationCardPro
 
   return (
     <Link
-      href={notification.actionUrl ?? `/notificacoes?id=${notification.id}`}
-      onClick={() => readNotification(notification.id)}
+      href={`/autoconhecimento/teste/${alert.assessmentResultRating.assessment.id}/devolutiva`}
+      onClick={() => {
+        readAlert(alert.id);
+        onClose?.();
+      }}
     >
       <section
         className={cn(
@@ -35,18 +39,20 @@ export function NotificationCard({ notification, selected }: NotificationCardPro
           selected ? "bg-[#E7F8EA]" : "hover:bg-[#E7F8EA]"
         )}
       >
-        <h1 className="text-gray-500 text-xs leading-[1.125rem] text-start">{notification.title}</h1>
+        <h1 className="text-gray-500 text-xs leading-[1.125rem] text-start">Alerta de risco</h1>
         <hr className="text-gray-200" />
-        <p className="text-gray-700 text-sm leading-5 text-start">{notification.summary}</p>
+        <p className="text-gray-700 text-sm leading-5 text-start">
+          O resultado de uma das suas avaliações gerou um alerta: <strong>{alert.assessmentResultRating.risk}</strong>
+        </p>
         <span className="flex w-full text-[10px] leading-[18px] text-right text-gray-400 justify-end">
-          {formatDate(notification.receivedAt)}
+          {formatDate(alert.createdAt)}
         </span>
         <span className="w-full text-xs leading-[18px] underline text-gray-400 text-star">Ver mais</span>
 
-        {!notification.read && (
+        {!alert.read && (
           <div
-            className="absolute right-0 top-0 -translate-y-1/3 rounded-full size-2"
-            style={{ backgroundColor: notification.notificationType.color }}
+            className="absolute right-0 top-0 -translate-y-1/3 rounded-full size-2 border-1 border-gray-200"
+            style={{ backgroundColor: alert.assessmentResultRating.color }}
           />
         )}
       </section>
