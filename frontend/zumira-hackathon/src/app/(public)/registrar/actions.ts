@@ -64,7 +64,7 @@ export async function getNationalities() {
     })
   );
 
-  if (error) {
+  if (error || !response.ok) {
     return [];
   }
 
