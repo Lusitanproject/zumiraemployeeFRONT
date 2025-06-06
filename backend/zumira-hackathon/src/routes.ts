@@ -5,7 +5,8 @@ import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 
-import { CreateUserController } from "./controllers/admin/users/CreateUserController";
+import { CreateUserController as AdminCreateUserController } from "./controllers/admin/users/CreateUserController";
+import { CreateUserController } from "./controllers/user/CreateUserController";
 import { ListUsersByCompanyController } from "./controllers/admin/users/ListUsersByCompanyController";
 import { ListAllUsersController } from "./controllers/admin/users/ListAllUsersController";
 import { FindUserController } from "./controllers/admin/users/FindUserController";
@@ -66,6 +67,18 @@ import { UpdateNotificationTypeController } from "./controllers/admin/notificati
 import { ListAlertsController } from "./controllers/alert/ListAlertsController";
 import { ReadAlertController } from "./controllers/alert/ReadAlertController";
 
+import { CreateActChatbotController } from "./controllers/admin/act-chatbots/CreateActChatbotController";
+import { FindActChatbotController } from "./controllers/admin/act-chatbots/FindActChatbotController";
+import { UpdateActChatbotController } from "./controllers/admin/act-chatbots/UpdateActChatbotController";
+import { ReorderActChatbotsController } from "./controllers/admin/act-chatbots/ReorderActChatbotsController";
+import { CreateActConversationController } from "./controllers/actChatbot/CreateActConversationController";
+import { GetActConversationController } from "./controllers/actChatbot/GetActConversationController";
+import { GetActsDataController } from "./controllers/actChatbot/GetActsDataController";
+import { MessageActChatbotController } from "./controllers/actChatbot/MessageActChatbotController";
+import { MoveToNextActController } from "./controllers/actChatbot/MoveToNextActController";
+import { FindAllActChatbotsController } from "./controllers/admin/act-chatbots/FindAllActChatbotsController";
+import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
+
 const router = Router();
 
 // ROTAS AUTH
@@ -73,8 +86,9 @@ router.post("/auth/email", new SendCodeController().handle);
 router.post("/auth/verify", new AuthUserController().handle);
 
 // ROTAS USERS
-router.post("/users", isAuthenticated, new CreateUserController().handle);
-router.put("/users/:id", isAuthenticated, new UpdateUserController().handle);
+router.post("/users", new CreateUserController().handle);
+router.post("/users/admin", isAuthenticated, new AdminCreateUserController().handle);
+router.put("/users/admin/:id", isAuthenticated, new UpdateUserController().handle);
 router.get("/users", isAuthenticated, new ListAllUsersController().handle);
 router.get("/users/:userId", isAuthenticated, new FindUserController().handle);
 router.get("/users/company/:companyId", isAuthenticated, new ListUsersByCompanyController().handle);
@@ -112,6 +126,7 @@ router.get("/assessments", isAuthenticated, new ListAssessmentsController().hand
 router.get("/assessments/:id", isAuthenticated, new DetailAssessmentController().handle);
 router.get("/assessments/admin/:id", isAuthenticated, new AssessmentDetailForAdminController().handle);
 router.post("/assessments", isAuthenticated, new CreateAssessmentController().handle);
+router.post("/assessments/admin/duplicate/:id", isAuthenticated, new DuplicateAssessmentController().handle);
 router.post("/assessments/feedback/users/:id", isAuthenticated, new GenerateUserFeedbackController().handle);
 router.post("/assessments/feedback/companies/:id", isAuthenticated, new GenerateCompanyFeedbackController().handle);
 router.put("/assessments/:id", isAuthenticated, new UpdateAssessmentController().handle);
@@ -140,7 +155,7 @@ router.get("/companies/:companyId", isAuthenticated, new FindCompanyController()
 router.post("/companies", isAuthenticated, new CreateCompanyController().handle);
 
 // ROTAS NATIONALITY
-router.get("/nationalities", isAuthenticated, new ListNationalitiesController().handle);
+router.get("/nationalities", new ListNationalitiesController().handle);
 
 // ROTAS NOTIFICATION
 router.get("/notifications", isAuthenticated, new ListNotificationsController().handle);
@@ -154,5 +169,17 @@ router.put("/notifications/admin/types/:id", isAuthenticated, new UpdateNotifica
 router.post("/notifications", isAuthenticated, new CreateNotificationController().handle);
 router.post("/notifications/admin/types", isAuthenticated, new CreateNotificationTypeController().handle);
 router.delete("/notifications/:notificationId", isAuthenticated, new DeleteNotificationController().handle);
+
+// ROTAS ACTS
+router.get("/acts/admin", isAuthenticated, new FindAllActChatbotsController().handle);
+router.get("/acts/admin/:id", isAuthenticated, new FindActChatbotController().handle);
+router.put("/acts/admin/reorder", isAuthenticated, new ReorderActChatbotsController().handle);
+router.put("/acts/admin/:id", isAuthenticated, new UpdateActChatbotController().handle);
+router.post("/acts/admin", isAuthenticated, new CreateActChatbotController().handle);
+router.get("/acts", isAuthenticated, new GetActsDataController().handle);
+router.get("/acts/conversations", isAuthenticated, new GetActConversationController().handle);
+router.put("/acts/next", isAuthenticated, new MoveToNextActController().handle);
+router.post("/acts/message", isAuthenticated, new MessageActChatbotController().handle);
+router.post("/acts/new-conversation", isAuthenticated, new CreateActConversationController().handle);
 
 export { router };
