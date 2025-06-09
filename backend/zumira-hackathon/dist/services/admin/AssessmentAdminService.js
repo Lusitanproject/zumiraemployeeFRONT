@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssessmentAdminService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
+const error_1 = require("../../error");
 class AssessmentAdminService {
     async find(assessmentId) {
         const assessment = await prisma_1.default.assessment.findUnique({
@@ -43,7 +44,7 @@ class AssessmentAdminService {
             },
         });
         if (!assessment)
-            throw new Error("Assessment does not exist");
+            throw new error_1.PublicError("Avaliação não existe");
         const originalTitle = assessment.title.replace(/\s\(\d+\)$/, ""); // Remove o número de clone "(x)"
         const existingClones = (await prisma_1.default.$queryRaw `
       SELECT title FROM assessments 

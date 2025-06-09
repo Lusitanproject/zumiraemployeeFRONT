@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoveToNextActService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
+const error_1 = require("../../error");
 class MoveToNextActService {
     async execute(userId) {
         const user = await prisma_1.default.user.findFirst({
@@ -16,11 +17,11 @@ class MoveToNextActService {
             },
         });
         if (!user)
-            throw new Error("User not found");
+            throw new error_1.PublicError("Usuário não encontrado");
         if (!user.currentActChatbot)
-            throw new Error("User is not assigned to any acts");
+            throw new error_1.PublicError("Usuário não está atribuído a nenhum ato");
         if (!user.currentActChatbot.nextActChatbotId)
-            throw new Error("No more acts remaining");
+            throw new error_1.PublicError("Não há mais atos restantes");
         const currentActMessages = await prisma_1.default.actConversationMessage.findMany({
             where: {
                 actConversation: {
@@ -30,7 +31,7 @@ class MoveToNextActService {
             },
         });
         if (!currentActMessages.length)
-            throw new Error("User has not started the current act");
+            throw new error_1.PublicError("Usuário não iniciou o ato atual");
         await prisma_1.default.user.update({
             where: {
                 id: userId,
