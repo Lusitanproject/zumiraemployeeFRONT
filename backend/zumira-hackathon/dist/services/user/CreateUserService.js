@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
+const error_1 = require("../../error");
 class CreateUserService {
     async execute(data) {
         const userExists = await prisma_1.default.user.findFirst({
@@ -13,14 +14,14 @@ class CreateUserService {
             },
         });
         if (userExists)
-            throw new Error("User already exists");
+            throw new error_1.PublicError("Usuário já existe");
         const role = await prisma_1.default.role.findFirst({
             where: {
                 slug: "user",
             },
         });
         if (!role)
-            throw new Error("Internal error");
+            throw new Error("Cargo usuario não encontrado");
         const user = await prisma_1.default.user.create({
             data: {
                 ...data,

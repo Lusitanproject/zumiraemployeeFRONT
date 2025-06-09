@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReadAlertService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
+const error_1 = require("../../error");
 class ReadAlertService {
     async execute({ id }) {
         const alert = await prisma_1.default.alert.findFirst({
@@ -25,7 +26,7 @@ class ReadAlertService {
             },
         });
         if (!alert)
-            throw new Error("Alert does not exist");
+            throw new error_1.PublicError("Alerta não existe");
         await prisma_1.default.alert.updateMany({
             where: {
                 assessmentResult: {

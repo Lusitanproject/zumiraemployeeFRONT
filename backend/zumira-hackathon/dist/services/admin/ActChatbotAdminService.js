@@ -7,6 +7,7 @@ exports.ActChatbotAdminService = void 0;
 const client_1 = require("@prisma/client");
 const prisma_1 = __importDefault(require("../../prisma"));
 const getFirstActChatbot_1 = require("../../utils/getFirstActChatbot");
+const error_1 = require("../../error");
 class ActChatbotAdminService {
     async find(id) {
         const bot = await prisma_1.default.actChatbot.findFirst({
@@ -98,7 +99,7 @@ class ActChatbotAdminService {
     async reorder({ chatbots }) {
         const bots = await prisma_1.default.actChatbot.findMany();
         if (chatbots.length !== bots.length)
-            throw new Error("All chatbots must be sent");
+            throw new error_1.PublicError("Todos os chatbots devem ser enviados");
         const botsMap = new Map();
         chatbots.forEach((cb) => botsMap.set(cb.nextActChatbotId, cb.id));
         // O loop tenta caminhar por todos os ids seguindo a estrutura passada na requisição para verificar se todos estão contectados linearmente
@@ -109,7 +110,7 @@ class ActChatbotAdminService {
             aux = botsMap.get(aux);
         } while (aux !== undefined);
         if (count < chatbots.length)
-            throw new Error("Chatbots must all be linked continuously");
+            throw new error_1.PublicError("Os chatbots devem estar todos conectados continuamente");
         const queryString = client_1.Prisma.sql `
       UPDATE act_chatbots
       SET next_act_chatbot_id = CASE id

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageActChatbotService = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 const generateOpenAiResponse_1 = require("../../utils/generateOpenAiResponse");
+const error_1 = require("../../error");
 class MessageActChatbotService {
     async execute({ content, actConversationId, userId }) {
         const conv = await prisma_1.default.actConversation.findFirst({
@@ -18,7 +19,7 @@ class MessageActChatbotService {
             },
         });
         if (!conv)
-            throw new Error("Conversation does not exist");
+            throw new error_1.PublicError("Conversa não existe");
         await prisma_1.default.actConversationMessage.create({
             data: {
                 actConversationId,
