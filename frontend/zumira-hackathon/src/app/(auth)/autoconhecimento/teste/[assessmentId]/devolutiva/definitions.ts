@@ -18,7 +18,7 @@ interface Assessment {
 }
 
 interface Nationality {
-  acronymn: string;
+  acronym: string;
   name: string;
 }
 

@@ -29,7 +29,7 @@ class DetailResultService {
             nationality: {
               select: {
                 name: true,
-                acronymn: true,
+                acronym: true,
               },
             },
             selfMonitoringBlock: {
