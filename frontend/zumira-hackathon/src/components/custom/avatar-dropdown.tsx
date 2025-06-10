@@ -28,7 +28,7 @@ function DropdownNavItem({ url, label, isCurrent, onClose }: DropdownNavItemProp
 
   return (
     <button
-      className="w-full px-3 py-2 text-center bg-white hover:bg-black/5 text-sm font-medium flex flex-row items-center justify-between text-gray-400 hover:text-blue-950 disabled:text-blue-950"
+      className="cursor-pointer w-full px-3 py-2 text-center bg-white hover:bg-black/5 text-sm font-medium flex flex-row items-center justify-between text-gray-400 hover:text-blue-950 disabled:text-blue-950"
       disabled={isCurrent}
       onClick={() => handleRedirect(url)}
     >
@@ -65,7 +65,7 @@ export function AvatarDropdown({ open, userRole, onClose }: AvatarDropdownProps)
           </>
         )}
         <button
-          className="w-full px-3 py-2 text-center bg-white hover:bg-error-100 text-sm font-medium text-error-600 flex items-center"
+          className="cursor-pointer w-full px-3 py-2 text-center bg-white hover:bg-error-100 text-sm font-medium text-error-600 flex items-center"
           onClick={async () => {
             await logout();
           }}

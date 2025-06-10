@@ -1,6 +1,5 @@
 "use client";
 
-import { CustomIcon, IconName } from "@/components/custom/icon";
 import { ActChatbot } from "../definitions";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useDebouncedCallback } from "use-debounce";
 import { reorderChatbots } from "../actions";
 import { toast } from "sonner";
+import { DynamicIcon, IconName } from "lucide-react/dynamic";
 
 type ActsListProps = {
   data: ActChatbot[];
@@ -69,7 +69,7 @@ export function ActsList({ data }: ActsListProps) {
             <span className="text-gray-400 text-lg">#{index + 1}</span>
             <div className="flex justify-start">
               <div className="size-[50px] rounded-xl bg-primary-50 flex items-center justify-center">
-                <CustomIcon name={item.icon as IconName} className="size-6" />
+                <DynamicIcon name={item.icon as IconName} className="size-6" />
               </div>
             </div>
             <div className="flex flex-col">
