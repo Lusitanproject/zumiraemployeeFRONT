@@ -50,7 +50,7 @@ class DetailAssessmentService {
         },
         nationality: {
           select: {
-            acronymn: true,
+            acronym: true,
             name: true,
           },
         },

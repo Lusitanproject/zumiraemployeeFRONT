@@ -23,6 +23,7 @@ export async function getSidebarContent() {
     { href: "/admin/notificacoes", label: "Notificações", role: "admin", icon: "mails" },
     { href: "/admin/alertas", label: "Alertas", role: "admin", icon: "circle-alert" },
     { href: "/admin/atos", label: "Atos", role: "admin", icon: "messages-square" },
+    { href: "/admin/nacionalidades", label: "Nacionalidades", role: "admin", icon: "earth" },
   ] as const;
 
   const menu: MenuLink[] = links

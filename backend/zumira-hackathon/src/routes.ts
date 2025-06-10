@@ -66,6 +66,10 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { CreateNationalityController } from "./controllers/admin/nationalities/CreateNationalityController";
+import { FindAllNationalitiesController } from "./controllers/admin/nationalities/FindAllNationalitiesController";
+import { FindNationalityController } from "./controllers/admin/nationalities/FindNationalityController";
+import { UpdateNationalityController } from "./controllers/admin/nationalities/UpdateNationalityController";
 
 const router = Router();
 
@@ -144,6 +148,10 @@ router.post("/companies", isAuthenticated, new CreateCompanyController().handle)
 
 // ROTAS NATIONALITY
 router.get("/nationalities", new ListNationalitiesController().handle);
+router.post("/nationalities/admin", isAuthenticated, new CreateNationalityController().handle);
+router.get("/nationalities/admin", isAuthenticated, new FindAllNationalitiesController().handle);
+router.get("/nationalities/admin/:id", isAuthenticated, new FindNationalityController().handle);
+router.put("/nationalities/admin/:id", isAuthenticated, new UpdateNationalityController().handle);
 
 // ROTAS NOTIFICATION
 router.get("/notifications", isAuthenticated, new ListNotificationsController().handle);
