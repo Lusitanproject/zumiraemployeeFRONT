@@ -18,7 +18,7 @@ export function ActsMenu({ data }: ActsMenuProps) {
 
   return (
     <>
-      <Link href="/chat/novo">
+      <Link className="flex w-full justify-center" href="/chat/novo">
         <Button variant="primary">
           <div className="flex flex-row gap-2 items-center">
             <Plus className="size-5 flex-none flex" />

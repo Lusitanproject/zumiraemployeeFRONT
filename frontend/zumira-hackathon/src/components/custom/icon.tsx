@@ -13,11 +13,6 @@ export const ICONS = [
   "accomplishment",
   "purpose",
   "self",
-  "leaf",
-  "star",
-  "file-heart",
-  "drama",
-  "loader",
 ] as const;
 type AllIcons = typeof ICONS;
 export type IconName = AllIcons[number];

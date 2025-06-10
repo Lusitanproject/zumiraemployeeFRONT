@@ -5,12 +5,12 @@ import { FormErrors, INITIAL_VALUE, ManageActChatbot, ManageActChatbotSchema } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/custom/label";
 import { Textarea } from "@/components/ui/textarea";
-import { IconField } from "./components/icons";
-import { IconName } from "@/components/custom/icon";
+import { IconField } from "../../components/icons";
 import { Button } from "@/components/ui/button";
 import { saveActChatbot } from "./form-actions";
 import { redirect } from "next/navigation";
 import { ActChatbot } from "../definitions";
+import { IconName } from "lucide-react/dynamic";
 
 type FormProps = {
   data: ActChatbot | null;
@@ -92,6 +92,7 @@ export function ActChatbotForm({ data }: FormProps) {
         </div>
         <IconField
           value={formData.icon as IconName}
+          icons={["leaf", "star", "file-heart", "drama", "loader"]}
           onChange={(e) => {
             setFormData((current) => ({ ...current, icon: e }));
           }}
