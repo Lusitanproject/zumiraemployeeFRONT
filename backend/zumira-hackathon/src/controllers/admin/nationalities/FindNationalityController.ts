@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { NationalityAdminService } from "../../../services/admin/NationalityAdminService";
+
 import { RequestParamsIdCUID } from "../../../definitions/common";
+import { NationalityAdminService } from "../../../services/admin/NationalityAdminService";
 import { parseZodError } from "../../../utils/parseZodError";
 
 class FindNationalityController {

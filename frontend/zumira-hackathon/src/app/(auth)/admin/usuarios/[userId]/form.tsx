@@ -1,18 +1,18 @@
 "use client";
 
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import { Label } from "@/components/custom/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { deleteUser } from "./actions";
 import { Company, FormErrors, INITIAL_VALUE, ManageUser, ManageUserSchema, Role, User } from "./definitions";
 import { saveUser } from "./form-actions";
-import { deleteUser } from "./actions";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { toast } from "sonner";
 
 type FormProps = {
   data: User | null;

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
+import { RequestParamsIdUUID } from "../../../definitions/common";
 import { UserAdminService } from "../../../services/admin/UserAdminService";
 import { parseZodError } from "../../../utils/parseZodError";
-import { RequestParamsIdUUID } from "../../../definitions/common";
 
 class DeleteUserController {
   async handle(req: Request, res: Response) {

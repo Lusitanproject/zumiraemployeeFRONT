@@ -1,12 +1,12 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { decrypt } from "@/app/_lib/session";
 import { catchError } from "@/utils/error";
 
 import { Company, GetCompaniesResponse, GetRolesResponse, GetUserResponse, Role, User } from "./definitions";
-import { redirect } from "next/navigation";
 
 export async function getUserData(userId: string | null): Promise<User | null> {
   if (userId === null) {

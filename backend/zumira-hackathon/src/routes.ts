@@ -24,6 +24,10 @@ import { EditDimensionController } from "./controllers/admin/dimensions/EditDime
 import { FindAllDimensionsController } from "./controllers/admin/dimensions/FindAllDimensionController";
 import { FindDimensionByBlockController } from "./controllers/admin/dimensions/FindBySelfMonitoringController";
 import { FindDimensionController } from "./controllers/admin/dimensions/FindDimensionController";
+import { CreateNationalityController } from "./controllers/admin/nationalities/CreateNationalityController";
+import { FindAllNationalitiesController } from "./controllers/admin/nationalities/FindAllNationalitiesController";
+import { FindNationalityController } from "./controllers/admin/nationalities/FindNationalityController";
+import { UpdateNationalityController } from "./controllers/admin/nationalities/UpdateNationalityController";
 import { CreateNotificationController } from "./controllers/admin/notifications/CreateNotificationController";
 import { CreateNotificationTypeController } from "./controllers/admin/notifications/CreateNotificationTypeController";
 import { DeleteNotificationController } from "./controllers/admin/notifications/DeleteNotificationController";
@@ -38,6 +42,7 @@ import { EditSelfMonitoringBlocksController } from "./controllers/admin/self-mon
 import { ListAllSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindAllSelfMonitoringBlocksController";
 import { FindSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindSelfMonitoringBlockController";
 import { CreateUserController as AdminCreateUserController } from "./controllers/admin/users/CreateUserController";
+import { DeleteUserController } from "./controllers/admin/users/DeleteUserController";
 import { FindUserController } from "./controllers/admin/users/FindUserController";
 import { ListAllUsersController } from "./controllers/admin/users/ListAllUsersController";
 import { ListUsersByCompanyController } from "./controllers/admin/users/ListUsersByCompanyController";
@@ -66,11 +71,6 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { CreateNationalityController } from "./controllers/admin/nationalities/CreateNationalityController";
-import { FindAllNationalitiesController } from "./controllers/admin/nationalities/FindAllNationalitiesController";
-import { FindNationalityController } from "./controllers/admin/nationalities/FindNationalityController";
-import { UpdateNationalityController } from "./controllers/admin/nationalities/UpdateNationalityController";
-import { DeleteUserController } from "./controllers/admin/users/DeleteUserController";
 
 const router = Router();
 

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { NationalityAdminService } from "../../../services/admin/NationalityAdminService";
+
 import { CreateNationalitySchema } from "../../../definitions/admin/nationality";
+import { NationalityAdminService } from "../../../services/admin/NationalityAdminService";
 import { parseZodError } from "../../../utils/parseZodError";
-import { error } from "console";
 
 class CreateNationalityController {
   async handle(req: Request, res: Response) {

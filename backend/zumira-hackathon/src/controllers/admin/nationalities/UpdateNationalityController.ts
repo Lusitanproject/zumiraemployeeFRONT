@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { NationalityAdminService } from "../../../services/admin/NationalityAdminService";
-import { parseZodError } from "../../../utils/parseZodError";
-import { ZodError } from "zod";
+
 import { UpdateNationalitySchema } from "../../../definitions/admin/nationality";
 import { RequestParamsIdCUID } from "../../../definitions/common";
+import { NationalityAdminService } from "../../../services/admin/NationalityAdminService";
+import { parseZodError } from "../../../utils/parseZodError";
 
 class UpdateNationalityController {
   async handle(req: Request, res: Response) {
