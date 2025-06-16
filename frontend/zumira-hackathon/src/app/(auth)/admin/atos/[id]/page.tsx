@@ -1,4 +1,4 @@
-import { getActChatbot, getActConversation, newActConversation } from "@/api/acts";
+import { getActChatbot } from "@/api/acts";
 
 import { Playground } from "./components/playground";
 

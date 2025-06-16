@@ -1,16 +1,16 @@
 "use client";
 
 import { diff } from "just-diff";
-import { useEffect, useState } from "react";
+import { Plus } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
+import { getActConversation, newActConversation } from "@/api/acts";
 import { ChatUi } from "@/components/ui/act-chat/chat-ui";
 import { ActChatbot, ActConversation } from "@/types/acts";
 
 import { ManageActChatbot } from "../definitions";
 import { ActChatbotForm } from "../form";
-import { Plus } from "lucide-react";
-import { getActConversation, newActConversation } from "@/api/acts";
-import { toast } from "sonner";
 
 interface PlaygroundProps {
   data: ActChatbot | null;
@@ -20,7 +20,7 @@ export function Playground({ data }: PlaygroundProps) {
   const [saveWarning, setSaveWarning] = useState<string | undefined>();
   const [conversation, setConversation] = useState<ActConversation>();
 
-  async function newConversation() {
+  const newConversation = useCallback(async () => {
     if (!data) return;
     try {
       const response = await newActConversation(data.id, "ADMIN_TEST");
@@ -29,11 +29,11 @@ export function Playground({ data }: PlaygroundProps) {
     } catch (err) {
       if (err instanceof Error) toast.error(err.message);
     }
-  }
+  }, [data]);
 
   useEffect(() => {
     newConversation();
-  }, []);
+  }, [newConversation]);
 
   function handleFormChange(formData: ManageActChatbot, storedData: ActChatbot | null) {
     if (storedData) {
@@ -60,8 +60,8 @@ export function Playground({ data }: PlaygroundProps) {
             </div>
             <div className="flex w-full justify-center p-2 font-medium text-gray-400">
               <button
-                onClick={newConversation}
                 className="flex flex-row items-center gap-1 rounded-lg hover:bg-black/5 px-2.5 py-1 cursor-pointer"
+                onClick={newConversation}
               >
                 <Plus className="size-4" />
                 <span className="text-sm">Nova conversa</span>

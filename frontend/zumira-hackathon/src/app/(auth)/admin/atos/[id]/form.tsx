@@ -3,7 +3,7 @@
 import equal from "fast-deep-equal";
 import { IconName } from "lucide-react/dynamic";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { saveActChatbot } from "@/api/acts";

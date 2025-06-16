@@ -60,10 +60,10 @@ export function ChatUi({ actConversation, inputWarning }: ChatUiProps) {
       {showRule && <hr className="text-gray-200 bottom-0 w-full" />}
       <Messages loadingResponse={loading} messages={messages} onScroll={setShowRule} />
       <MessageInput
+        disabled={!actConversation}
         placeholder="Pergunte alguma coisa"
         warning={inputWarning}
         onSend={sendMessage}
-        disabled={!actConversation}
       />
     </section>
   );
