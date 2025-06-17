@@ -56,7 +56,7 @@ model User {
   assessmentResults         AssessmentResult[]
   assessmentQuestionAnswers AssessmentQuestionAnswer[]
   notificationRecipients    NotificationRecipient[]
-  actChapters          ActChapter[]
+  actChapters               ActChapter[]
 
   @@map("users")
 }
@@ -353,38 +353,38 @@ model ActChatbot {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  nextActChatbot   ActChatbot?       @relation("ActChatbotChain", fields: [nextActChatbotId], references: [id])
-  prevActChatbots  ActChatbot[]      @relation("ActChatbotChain")
-  actChapters ActChapter[]
-  currentUsers     User[]
+  nextActChatbot  ActChatbot?  @relation("ActChatbotChain", fields: [nextActChatbotId], references: [id])
+  prevActChatbots ActChatbot[] @relation("ActChatbotChain")
+  actChapters     ActChapter[]
+  currentUsers    User[]
 
   @@map("act_chatbots")
 }
 
 model ActChapter {
-  id           String           @id @default(cuid())
-  title        String           @default("Novo capítulo")
-  actChatbotId String           @map("act_chatbot_id")
-  userId       String           @map("user_id")
+  id           String      @id @default(cuid())
+  title        String      @default("Novo capítulo")
+  actChatbotId String      @map("act_chatbot_id")
+  userId       String      @map("user_id")
   type         ChapterType
-  createdAt    DateTime         @default(now()) @map("created_at")
-  updatedAt    DateTime         @updatedAt @map("updated_at")
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
 
-  actChatbot          ActChatbot               @relation(fields: [actChatbotId], references: [id])
-  user                User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  messages            ActChapterMessage[]
+  actChatbot   ActChatbot              @relation(fields: [actChatbotId], references: [id])
+  user         User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages     ActChapterMessage[]
   compilations ActChapterCompilation[]
 
   @@map("act_chapters")
 }
 
 model ActChapterMessage {
-  id                String           @id @default(cuid())
-  actChapterId String           @map("act_chapter_id")
-  content           String
-  role              MessageRole
-  createdAt         DateTime         @default(now()) @map("created_at")
-  updatedAt         DateTime         @updatedAt @map("updated_at")
+  id           String      @id @default(cuid())
+  actChapterId String      @map("act_chapter_id")
+  content      String
+  role         MessageRole
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
 
   actChapter ActChapter @relation(fields: [actChapterId], references: [id])
 
@@ -392,11 +392,11 @@ model ActChapterMessage {
 }
 
 model ActChapterCompilation {
-  id                String   @id @default(cuid())
-  content           String
+  id           String   @id @default(cuid())
+  content      String
   actChapterId String
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 
   actChapter ActChapter @relation(fields: [actChapterId], references: [id])
 

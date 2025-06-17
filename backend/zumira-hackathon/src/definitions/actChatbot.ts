@@ -15,8 +15,14 @@ export const CreateActChapterSchema = z.object({
   type: z.nativeEnum(ChapterType),
 });
 
+export const CompileActChapterSchema = z.object({
+  actChapterId: z.string().cuid(),
+});
+
 export type GetActChapterRequest = z.infer<typeof GetActChapterSchema> & { userId: string };
 
 export type MessageActChatbotRequest = z.infer<typeof MessageActChatbotSchema> & { userId: string };
 
 export type CreateActChapterRequest = z.infer<typeof CreateActChapterSchema> & { userId: string };
+
+export type CompileActChapterRequest = z.infer<typeof CompileActChapterSchema> & { userId: string };
