@@ -23,7 +23,7 @@ class ActChatbotAdminService {
         icon: true,
         instructions: true,
         nextActChatbotId: true,
-        actConversations: {
+        actChapters: {
           where: {
             type: "ADMIN_TEST",
           },
@@ -100,10 +100,11 @@ class ActChatbotAdminService {
         }),
 
         ...noActUsers.map((user) =>
-          prismaClient.actConversation.create({
+          prismaClient.actChapter.create({
             data: {
               actChatbotId: first.id,
               userId: user.id,
+              type: "REGULAR",
             },
           })
         ),

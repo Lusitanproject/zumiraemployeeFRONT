@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 import { decrypt } from "@/app/_lib/session";
-import { ActChatbot, ActConversation } from "@/types/acts";
+import { ActChatbot, ActChapter } from "@/types/acts";
 import { catchError } from "@/utils/error";
 
 import { ZumiraApiResponse } from "./common";
@@ -16,11 +16,11 @@ export type SaveActChatbotRequest = {
   icon: string;
 };
 
-export type GetActConversationResponse = ZumiraApiResponse<ActConversation>;
+export type GetActChapterResponse = ZumiraApiResponse<ActChapter>;
 export type GenerateResponseResponse = ZumiraApiResponse<string>;
 export type GetActChatbotResponse = ZumiraApiResponse<ActChatbot>;
 export type GetActChatbotsResponse = ZumiraApiResponse<{ items: ActChatbot[] }>;
-export type NewConversationResponse = ZumiraApiResponse<{
+export type NewChapterResponse = ZumiraApiResponse<{
   id: string;
   actChatbot: {
     name: string;
@@ -29,11 +29,11 @@ export type NewConversationResponse = ZumiraApiResponse<{
   };
 }>;
 
-export async function getActConversation(conversationId: string) {
+export async function getActChapter(chapterId: string) {
   const cookie = await cookies();
   const session = decrypt(cookie.get("session")?.value);
 
-  const url = `${process.env.API_BASE_URL}/acts/conversations?actConversationId=${conversationId}`;
+  const url = `${process.env.API_BASE_URL}/acts/chapters?actChapterId=${chapterId}`;
 
   const [error, response] = await catchError(
     fetch(url, {
@@ -52,7 +52,7 @@ export async function getActConversation(conversationId: string) {
     throw new Error(response.statusText);
   }
 
-  const parsed = (await response.json()) as GetActConversationResponse;
+  const parsed = (await response.json()) as GetActChapterResponse;
 
   if (parsed.status === "ERROR") {
     throw new Error(parsed.message);
@@ -61,7 +61,7 @@ export async function getActConversation(conversationId: string) {
   return parsed.data;
 }
 
-export async function generateResponse(body: { actConversationId: string; content: string }) {
+export async function generateResponse(body: { actChapterId: string; content: string }) {
   const cookie = await cookies();
   const session = decrypt(cookie.get("session")?.value);
 
@@ -173,11 +173,11 @@ export async function reorderChatbots(chatbots: ActChatbot[]) {
   }
 }
 
-export async function newActConversation(actChatbotId: string, type: "REGULAR" | "ADMIN_TEST") {
+export async function newActChapter(actChatbotId: string, type: "REGULAR" | "ADMIN_TEST") {
   const cookie = await cookies();
   const session = decrypt(cookie.get("session")?.value);
 
-  const url = `${process.env.API_BASE_URL}/acts/new-conversation`;
+  const url = `${process.env.API_BASE_URL}/acts/new-chapter`;
 
   const body = JSON.stringify({ actChatbotId, type });
 
@@ -196,7 +196,7 @@ export async function newActConversation(actChatbotId: string, type: "REGULAR" |
     throw new Error("Couldn't create new chapter");
   }
 
-  const parsed = (await response.json()) as NewConversationResponse;
+  const parsed = (await response.json()) as NewChapterResponse;
 
   if (parsed.status === "ERROR") {
     throw new Error(parsed.message);

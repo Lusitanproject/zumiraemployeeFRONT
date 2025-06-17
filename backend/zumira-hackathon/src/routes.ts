@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { CreateActConversationController } from "./controllers/actChatbot/CreateActConversationController";
-import { GetActConversationController } from "./controllers/actChatbot/GetActConversationController";
+import { CreateActChapterController } from "./controllers/actChatbot/CreateActChapterController";
+import { GetActChapterController } from "./controllers/actChatbot/GetActChapterController";
 import { GetActsDataController } from "./controllers/actChatbot/GetActsDataController";
 import { MessageActChatbotController } from "./controllers/actChatbot/MessageActChatbotController";
 import { MoveToNextActController } from "./controllers/actChatbot/MoveToNextActController";
@@ -175,9 +175,9 @@ router.put("/acts/admin/reorder", isAuthenticated, new ReorderActChatbotsControl
 router.put("/acts/admin/:id", isAuthenticated, new UpdateActChatbotController().handle);
 router.post("/acts/admin", isAuthenticated, new CreateActChatbotController().handle);
 router.get("/acts", isAuthenticated, new GetActsDataController().handle);
-router.get("/acts/conversations", isAuthenticated, new GetActConversationController().handle);
+router.get("/acts/chapters", isAuthenticated, new GetActChapterController().handle);
 router.put("/acts/next", isAuthenticated, new MoveToNextActController().handle);
 router.post("/acts/message", isAuthenticated, new MessageActChatbotController().handle);
-router.post("/acts/new-conversation", isAuthenticated, new CreateActConversationController().handle);
+router.post("/acts/new-chapter", isAuthenticated, new CreateActChapterController().handle);
 
 export { router };

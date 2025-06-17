@@ -1,22 +1,22 @@
-import { ConversationType } from "@prisma/client";
+import { ChapterType } from "@prisma/client";
 import { z } from "zod";
 
-export const GetActConversationSchema = z.object({
-  actConversationId: z.string().cuid(),
+export const GetActChapterSchema = z.object({
+  actChapterId: z.string().cuid(),
 });
 
 export const MessageActChatbotSchema = z.object({
-  actConversationId: z.string().cuid(),
+  actChapterId: z.string().cuid(),
   content: z.string().nonempty(),
 });
 
-export const CreateActConversationSchema = z.object({
+export const CreateActChapterSchema = z.object({
   actChatbotId: z.string().cuid(),
-  type: z.nativeEnum(ConversationType),
+  type: z.nativeEnum(ChapterType),
 });
 
-export type GetActConversationRequest = z.infer<typeof GetActConversationSchema> & { userId: string };
+export type GetActChapterRequest = z.infer<typeof GetActChapterSchema> & { userId: string };
 
 export type MessageActChatbotRequest = z.infer<typeof MessageActChatbotSchema> & { userId: string };
 
-export type CreateActConversationRequest = z.infer<typeof CreateActConversationSchema> & { userId: string };
+export type CreateActChapterRequest = z.infer<typeof CreateActChapterSchema> & { userId: string };

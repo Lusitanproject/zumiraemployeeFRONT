@@ -6,7 +6,7 @@ export interface ActsData {
     icon: string;
     nextActChatbotId: null | string;
   }[];
-  conversations: {
+  chapters: {
     id: string;
     title: string;
     actChatbotId: string;
@@ -23,7 +23,7 @@ export interface ActMessage {
   error?: boolean;
 }
 
-export interface ActConversation {
+export interface ActChapter {
   actChatbot: {
     id: string;
     description: string;
@@ -42,5 +42,5 @@ export type ActChatbot = {
   instructions: string;
   icon: string;
   nextActChatbotId: string | null;
-  actConversations: { id: string; title: string }[];
+  actChapters: { id: string; title: string }[];
 };
