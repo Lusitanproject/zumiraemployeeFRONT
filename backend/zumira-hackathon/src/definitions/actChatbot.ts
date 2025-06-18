@@ -21,7 +21,7 @@ export const CompileActChapterSchema = z.object({
 
 export const UpdateActChapterCompilationSchema = z.object({
   actChapterId: z.string().cuid(),
-  content: z.string().nonempty(),
+  compilation: z.string().nonempty(),
 });
 
 export type GetActChapterRequest = z.infer<typeof GetActChapterSchema> & { userId: string };

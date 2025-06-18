@@ -364,6 +364,7 @@ model ActChatbot {
 model ActChapter {
   id           String      @id @default(cuid())
   title        String      @default("Novo capítulo")
+  compilation  String?
   actChatbotId String      @map("act_chatbot_id")
   userId       String      @map("user_id")
   type         ChapterType
@@ -373,7 +374,6 @@ model ActChapter {
   actChatbot   ActChatbot              @relation(fields: [actChatbotId], references: [id])
   user         User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
   messages     ActChapterMessage[]
-  compilations ActChapterCompilation[]
 
   @@map("act_chapters")
 }
@@ -389,16 +389,4 @@ model ActChapterMessage {
   actChapter ActChapter @relation(fields: [actChapterId], references: [id])
 
   @@map("act_chapter_messages")
-}
-
-model ActChapterCompilation {
-  id           String   @id @default(cuid())
-  content      String
-  actChapterId String
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
-
-  actChapter ActChapter @relation(fields: [actChapterId], references: [id])
-
-  @@map("act_chatper_compilation")
 }

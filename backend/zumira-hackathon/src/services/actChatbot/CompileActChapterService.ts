@@ -25,10 +25,12 @@ class CompileActChapterService {
       instructions: "Escreva um capítulo de livro com base nessa conversa",
     });
 
-    const data = await prismaClient.actChapterCompilation.create({
+    const data = await prismaClient.actChapter.update({
+      where: {
+        id: actChapterId,
+      },
       data: {
-        content: response.output_text,
-        actChapterId,
+        compilation: response.output_text,
       },
     });
 
