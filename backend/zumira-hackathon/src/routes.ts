@@ -16,6 +16,7 @@ import { DuplicateAssessmentController } from "./controllers/admin/assessments/D
 import { FindFilteredResultsController } from "./controllers/admin/assessments/FindFilteredResultsController";
 import { FindQuestionByAssessmentController } from "./controllers/admin/assessments/FindQuestionByAssessmentController";
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
+import { GenerateExcelReportController } from "./controllers/admin/assessments/GenerateExcelReportController";
 import { UpdateAssessmentController } from "./controllers/admin/assessments/UpdateAssessmentController";
 import { UpdateResultRatingsController } from "./controllers/admin/assessments/UpdateResultRatingsController";
 import { FindAllCompaniesController } from "./controllers/admin/companies/FindAllCompaniesController";
@@ -101,6 +102,7 @@ router.put("/dimensions/:psychologicalDimensionId", isAuthenticated, new EditDim
 // ROTAS RESULTS
 router.get("/assessments/results", isAuthenticated, new ListResultsController().handle);
 router.get("/assessments/results/admin", isAuthenticated, new FindFilteredResultsController().handle);
+router.get("/assessments/results/admin/download-report", isAuthenticated, new GenerateExcelReportController().handle);
 router.get("/assessments/results/:id", isAuthenticated, new DetailResultController().handle);
 router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 

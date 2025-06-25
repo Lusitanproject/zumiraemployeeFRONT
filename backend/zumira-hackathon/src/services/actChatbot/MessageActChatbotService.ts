@@ -12,6 +12,7 @@ class MessageActChatbotService {
       },
       include: {
         actChatbot: true,
+        user: true,
       },
     });
 
@@ -41,7 +42,7 @@ class MessageActChatbotService {
     })) as GenerateOpenAiResponseRequest["messages"];
 
     const response = await generateOpenAiResponse({
-      instructions: bot.messageInstructions,
+      instructions: bot.messageInstructions + `\nO nome do usuário é: ${conv.user.name.split(" ")[0]}`,
       messages: historyAndInput,
     });
 
