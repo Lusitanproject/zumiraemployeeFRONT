@@ -1,16 +1,39 @@
+import { Download } from "lucide-react";
+import { toast } from "sonner";
+
+import { downloadAssessmentResultsReport } from "@/api/assessments";
 import { Spinner } from "@/components/custom/spinner";
 
-import { Result } from "../definitions";
+import { Filters, Result } from "../definitions";
 import { MeatballsMenu } from "./meatballs-menu";
 
 interface AlertsTableProps {
+  filters?: Filters;
   loading?: boolean;
   results?: Result[];
 }
 
-export function AlertsTable({ results, loading }: AlertsTableProps) {
+export function AlertsTable({ results, loading, filters }: AlertsTableProps) {
   function formatDate(date: Date) {
     return `${date.getDay()} / ${date.getMonth() + 1} / ${date.getFullYear()}`;
+  }
+
+  async function downloadReport() {
+    if (!filters) return;
+
+    try {
+      const { blob, filename } = await downloadAssessmentResultsReport(filters);
+      const urlBlob = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = urlBlob;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(urlBlob);
+    } catch (err) {
+      if (err instanceof Error) toast.error(err.message);
+    }
   }
 
   if (loading || results === undefined) {
@@ -46,7 +69,11 @@ export function AlertsTable({ results, loading }: AlertsTableProps) {
               ))}
             <th className="p-2">Ultima avaliação</th>
             <th className="p-2">Status</th>
-            <th />
+            <th>
+              <button className="flex size-fit cursor-pointer" title="Baixar relatório" onClick={downloadReport}>
+                <Download className="size-4.5" />
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
