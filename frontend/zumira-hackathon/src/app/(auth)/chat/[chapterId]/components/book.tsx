@@ -1,13 +1,15 @@
 "use client";
 
-import { Bookmark, Edit, LogOut, RefreshCcw, Save, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { Bookmark, Edit, LogOut, Redo, RefreshCcw, Save, Undo, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { MouseEvent } from "react";
 import { toast } from "sonner";
 
 import { compileActChapter, updateActChapter, UpdateActChapterRequest } from "@/api/acts";
 import { cn } from "@/lib/utils";
 import { ActChapter } from "@/types/acts";
+import { isMacOS } from "@/utils/is-macos";
+import { useDebounce, useDebouncedCallback } from "use-debounce";
 
 interface BookProps {
   actChapter: ActChapter;
@@ -26,7 +28,11 @@ export function Book({ actChapter, state, onExpand }: BookProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const [chapter, setChapter] = useState<ActChapter>(actChapter);
   const [recompiling, setRecompiling] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<boolean>(false);
+
+  const undoStack = useRef<ActChapter[]>([]);
+  const redoStack = useRef<ActChapter[]>([]);
+
+  const debouncedUpdate = useDebouncedCallback(update, 3000);
 
   async function update() {
     const payload = { actChapterId: chapter.id, ...chapter } as UpdateActChapterRequest;
@@ -53,40 +59,89 @@ export function Book({ actChapter, state, onExpand }: BookProps) {
     }
   }
 
+  function undo() {
+    if (undoStack.current.length === 0) return;
+    const prev = undoStack.current.pop()!;
+    redoStack.current.push(chapter);
+    setChapter(prev);
+  }
+
+  function redo() {
+    if (redoStack.current.length === 0) return;
+    const next = redoStack.current.pop()!;
+    undoStack.current.push(chapter);
+    setChapter(next);
+  }
+
+  function handleChange(key: "compilation" | "title", value: string) {
+    const lastChar = value.at(-1) ?? "";
+
+    const isSeparator = [" ", "\n"].includes(lastChar);
+    const isSameAsLast = lastChar === chapter[key]?.at(-1);
+
+    if ((isSeparator && !isSameAsLast) || !undoStack.current.length) {
+      undoStack.current.push(chapter);
+    }
+
+    redoStack.current = [];
+    setChapter((prev) => ({ ...prev, [key]: value }));
+
+    debouncedUpdate();
+  }
+
   const buttons = [
+    {
+      icon: Undo,
+      func: undo,
+      disabled: !undoStack.current.length,
+    },
+    {
+      icon: Redo,
+      func: redo,
+      disabled: !redoStack.current.length,
+    },
     {
       label: "Recompilar",
       icon: RefreshCcw,
       func: recompile,
     },
-    {
-      disabled: recompiling,
-      label: "Editar",
-      icon: Edit,
-      func: () => setEditMode(true),
-    },
-  ] as BookButton[];
-
-  const editModeButtons = [
-    {
-      label: "Cancelar",
-      icon: X,
-      func: () => setEditMode(false),
-    },
-    {
-      label: "Salvar",
-      icon: Save,
-      func: async () => {
-        await update();
-        setEditMode(false);
-      },
-    },
   ] as BookButton[];
 
   const textInputClass = cn(
-    "p-2 rounded-lg duration-200 focus:bg-white/40 outline-0 ring-black/15",
-    editMode ? "ring-2" : "ring-0"
+    "p-2 rounded-lg duration-200 focus:bg-white/40 outline-0 ring-black/15 ring-0 focus:ring-2"
   );
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      const isMac = navigator.platform.toUpperCase().includes("MAC");
+      const ctrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
+
+      const target = e.target as HTMLElement;
+      const tag = target.tagName;
+      const isEditable = tag === "INPUT" || tag === "TEXTAREA" || target.isContentEditable;
+
+      if (!isEditable) return;
+
+      if (ctrlOrCmd && e.key === "z" && !e.shiftKey) {
+        e.preventDefault();
+        undo();
+      } else if (ctrlOrCmd && e.key.toLowerCase() === "z" && e.shiftKey) {
+        e.preventDefault();
+        redo();
+      } else if (ctrlOrCmd && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        if (redoStack.current.length) {
+          update();
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      update(); // Garantir que conteúdo foi salvo
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [chapter]);
 
   return (
     <div
@@ -120,28 +175,22 @@ export function Book({ actChapter, state, onExpand }: BookProps) {
         <div className="flex bg-amber-50 flex-col items-start justify-start gap-2 text-start max-w-[27rem] size-full max-h-[36rem] rounded-lg shadow-lg p-2">
           <input
             className={cn("font-semibold text-xl field-sizing-content max-w-full", textInputClass)}
-            disabled={!editMode}
             value={chapter.title}
-            onChange={(e) => setChapter((prev) => ({ ...prev, title: e.target.value }))}
+            onChange={(e) => handleChange("title", e.target.value)}
           />
           {recompiling ? (
             <span className="flex size-full text-center justify-center items-center">Recompilando...</span>
           ) : (
             <textarea
               className={cn("flex size-full font-normal text-base resize-none", textInputClass)}
-              disabled={!editMode}
               value={chapter.compilation}
-              onChange={(e) =>
-                setChapter((prev) => {
-                  return { ...prev, compilation: e.target.value };
-                })
-              }
+              onChange={(e) => handleChange("compilation", e.target.value)}
             />
           )}
         </div>
 
         <div className="flex p-2 rounded-md bg-white shadow-lg gap-5 px-6 py-4 text-sm">
-          {(editMode ? editModeButtons : buttons).map((b, i) => (
+          {buttons.map((b, i) => (
             <button
               key={i}
               className={cn("flex flex-row gap-2 p-2 rounded-lg duration-50 font-medium", {
