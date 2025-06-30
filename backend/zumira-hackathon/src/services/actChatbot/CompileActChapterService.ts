@@ -1,6 +1,6 @@
 import { CompileActChapterRequest } from "../../definitions/actChatbot";
 import prismaClient from "../../prisma";
-import { generateOpenAiResponse } from "../../utils/generateOpenAiResponse";
+import { generateOpenAiResponse, GenerateOpenAiResponseRequest } from "../../utils/generateOpenAiResponse";
 
 class CompileActChapterService {
   async execute({ actChapterId, userId }: CompileActChapterRequest) {
@@ -18,10 +18,13 @@ class CompileActChapterService {
     });
     if (!chapter) throw new Error("Chapter not found");
 
-    const input = chapter.messages.map((m) => `${m.role}: ${m.content}`).join("\n");
+    const messages = chapter.messages.map((m) => ({
+      content: m.content,
+      role: "user",
+    })) as GenerateOpenAiResponseRequest["messages"];
 
     const response = await generateOpenAiResponse({
-      messages: [{ content: input, role: "user" }],
+      messages,
       instructions: chapter.actChatbot.compilationInstructions,
     });
 
