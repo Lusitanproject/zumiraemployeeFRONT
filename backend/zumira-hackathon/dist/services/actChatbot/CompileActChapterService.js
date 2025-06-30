@@ -22,9 +22,12 @@ class CompileActChapterService {
         });
         if (!chapter)
             throw new Error("Chapter not found");
-        const input = chapter.messages.map((m) => `${m.role}: ${m.content}`).join("\n");
+        const messages = chapter.messages.map((m) => ({
+            content: m.content,
+            role: "user",
+        }));
         const response = await (0, generateOpenAiResponse_1.generateOpenAiResponse)({
-            messages: [{ content: input, role: "user" }],
+            messages,
             instructions: chapter.actChatbot.compilationInstructions,
         });
         const data = await prisma_1.default.actChapter.update({
