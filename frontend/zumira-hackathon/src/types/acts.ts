@@ -1,17 +1,20 @@
 export interface ActsData {
+  chapters: {
+    id: string;
+    title: string;
+    actChatbotId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
   chatbots: {
     id: string;
     name: string;
     description: string;
     icon: string;
     nextActChatbotId: null | string;
-  }[];
-  conversations: {
-    id: string;
-    title: string;
-    actChatbotId: string;
-    createdAt: Date;
-    updatedAt: Date;
+    index: number;
+    locked: boolean;
+    current: boolean;
   }[];
 }
 
@@ -23,7 +26,7 @@ export interface ActMessage {
   error?: boolean;
 }
 
-export interface ActConversation {
+export interface ActChapter {
   actChatbot: {
     id: string;
     description: string;
@@ -33,14 +36,16 @@ export interface ActConversation {
   id: string;
   messages: ActMessage[];
   title: string;
+  compilation?: string;
 }
 
 export type ActChatbot = {
   id: string;
   name: string;
   description: string;
-  instructions: string;
+  messageInstructions?: string;
+  compilationInstructions?: string;
   icon: string;
-  nextActChatbotId: string | null;
-  actConversations: { id: string; title: string }[];
+  index: number;
+  actChapters: { id: string; title: string }[];
 };

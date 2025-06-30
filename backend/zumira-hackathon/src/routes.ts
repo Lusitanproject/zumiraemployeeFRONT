@@ -1,19 +1,22 @@
 import { Router } from "express";
 
-import { CreateActConversationController } from "./controllers/actChatbot/CreateActConversationController";
-import { GetActConversationController } from "./controllers/actChatbot/GetActConversationController";
+import { CompileActChapterController } from "./controllers/actChatbot/CompileActChapterController";
+import { CreateActChapterController } from "./controllers/actChatbot/CreateActChapterController";
+import { GetActChapterController } from "./controllers/actChatbot/GetActChapterController";
 import { GetActsDataController } from "./controllers/actChatbot/GetActsDataController";
 import { MessageActChatbotController } from "./controllers/actChatbot/MessageActChatbotController";
 import { MoveToNextActController } from "./controllers/actChatbot/MoveToNextActController";
+import { UpdateActChapterController } from "./controllers/actChatbot/UpdateActChapterController";
 import { CreateActChatbotController } from "./controllers/admin/act-chatbots/CreateActChatbotController";
 import { FindActChatbotController } from "./controllers/admin/act-chatbots/FindActChatbotController";
 import { FindAllActChatbotsController } from "./controllers/admin/act-chatbots/FindAllActChatbotsController";
-import { ReorderActChatbotsController } from "./controllers/admin/act-chatbots/ReorderActChatbotsController";
 import { UpdateActChatbotController } from "./controllers/admin/act-chatbots/UpdateActChatbotController";
+import { UpdateManyActChatbotsController } from "./controllers/admin/act-chatbots/UpdateManyActChatbotsController";
 import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
 import { FindFilteredResultsController } from "./controllers/admin/assessments/FindFilteredResultsController";
 import { FindQuestionByAssessmentController } from "./controllers/admin/assessments/FindQuestionByAssessmentController";
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
+import { GenerateExcelReportController } from "./controllers/admin/assessments/GenerateExcelReportController";
 import { UpdateAssessmentController } from "./controllers/admin/assessments/UpdateAssessmentController";
 import { UpdateResultRatingsController } from "./controllers/admin/assessments/UpdateResultRatingsController";
 import { FindAllCompaniesController } from "./controllers/admin/companies/FindAllCompaniesController";
@@ -99,6 +102,7 @@ router.put("/dimensions/:psychologicalDimensionId", isAuthenticated, new EditDim
 // ROTAS RESULTS
 router.get("/assessments/results", isAuthenticated, new ListResultsController().handle);
 router.get("/assessments/results/admin", isAuthenticated, new FindFilteredResultsController().handle);
+router.get("/assessments/results/admin/download-report", isAuthenticated, new GenerateExcelReportController().handle);
 router.get("/assessments/results/:id", isAuthenticated, new DetailResultController().handle);
 router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
 
@@ -171,13 +175,15 @@ router.delete("/notifications/:notificationId", isAuthenticated, new DeleteNotif
 // ROTAS ACTS
 router.get("/acts/admin", isAuthenticated, new FindAllActChatbotsController().handle);
 router.get("/acts/admin/:id", isAuthenticated, new FindActChatbotController().handle);
-router.put("/acts/admin/reorder", isAuthenticated, new ReorderActChatbotsController().handle);
+router.put("/acts/admin/update-many", isAuthenticated, new UpdateManyActChatbotsController().handle);
 router.put("/acts/admin/:id", isAuthenticated, new UpdateActChatbotController().handle);
 router.post("/acts/admin", isAuthenticated, new CreateActChatbotController().handle);
 router.get("/acts", isAuthenticated, new GetActsDataController().handle);
-router.get("/acts/conversations", isAuthenticated, new GetActConversationController().handle);
+router.get("/acts/chapters", isAuthenticated, new GetActChapterController().handle);
 router.put("/acts/next", isAuthenticated, new MoveToNextActController().handle);
 router.post("/acts/message", isAuthenticated, new MessageActChatbotController().handle);
-router.post("/acts/new-conversation", isAuthenticated, new CreateActConversationController().handle);
+router.post("/acts/new-chapter", isAuthenticated, new CreateActChapterController().handle);
+router.post("/acts/chapters/compile", isAuthenticated, new CompileActChapterController().handle);
+router.put("/acts/chapters/:actChapterId", isAuthenticated, new UpdateActChapterController().handle);
 
 export { router };

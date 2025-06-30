@@ -2,18 +2,27 @@ import prismaClient from "../../prisma";
 
 class GetActsDataService {
   async execute(userId: string) {
-    const [chatbots, conversations] = await Promise.all([
+    const [user, chatbots, chapters] = await Promise.all([
+      await prismaClient.user.findFirst({
+        where: {
+          id: userId,
+        },
+      }),
+
       await prismaClient.actChatbot.findMany({
         select: {
           id: true,
           name: true,
           description: true,
           icon: true,
-          nextActChatbotId: true,
+          index: true,
+        },
+        orderBy: {
+          index: "asc",
         },
       }),
 
-      prismaClient.actConversation.findMany({
+      prismaClient.actChapter.findMany({
         where: {
           userId,
           type: "REGULAR",
@@ -25,10 +34,27 @@ class GetActsDataService {
           createdAt: true,
           updatedAt: true,
         },
+        orderBy: {
+          updatedAt: "desc",
+        },
       }),
     ]);
 
-    return { chatbots, conversations };
+    if (!user) throw new Error("Usuário não encontrado");
+
+    let currAct = chatbots.find((bot) => bot.id === user.currentActChatbotId);
+    if (!currAct) {
+      currAct = chatbots[0];
+      await prismaClient.user.update({ where: { id: userId }, data: { currentActChatbotId: currAct.id } });
+    }
+
+    const processedChatbots = chatbots.map((bot) => ({
+      ...bot,
+      locked: bot.index > currAct.index,
+      current: bot.id === currAct.id,
+    }));
+
+    return { chatbots: processedChatbots, chapters };
   }
 }
 

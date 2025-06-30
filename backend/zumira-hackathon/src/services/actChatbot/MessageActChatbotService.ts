@@ -4,31 +4,32 @@ import prismaClient from "../../prisma";
 import { generateOpenAiResponse, GenerateOpenAiResponseRequest } from "../../utils/generateOpenAiResponse";
 
 class MessageActChatbotService {
-  async execute({ content, actConversationId, userId }: MessageActChatbotRequest) {
-    const conv = await prismaClient.actConversation.findFirst({
+  async execute({ content, actChapterId, userId }: MessageActChatbotRequest) {
+    const conv = await prismaClient.actChapter.findFirst({
       where: {
-        id: actConversationId,
+        id: actChapterId,
         userId,
       },
       include: {
         actChatbot: true,
+        user: true,
       },
     });
 
     if (!conv) throw new PublicError("Conversa não existe");
 
-    await prismaClient.actConversationMessage.create({
+    await prismaClient.actChapterMessage.create({
       data: {
-        actConversationId,
+        actChapterId,
         role: "user",
         content,
       },
     });
 
     const { actChatbot: bot } = conv;
-    const messages = await prismaClient.actConversationMessage.findMany({
+    const messages = await prismaClient.actChapterMessage.findMany({
       where: {
-        actConversationId,
+        actChapterId,
       },
       orderBy: {
         createdAt: "asc",
@@ -41,22 +42,22 @@ class MessageActChatbotService {
     })) as GenerateOpenAiResponseRequest["messages"];
 
     const response = await generateOpenAiResponse({
-      instructions: bot.instructions,
+      instructions: bot.messageInstructions + `\nO nome do usuário é: ${conv.user.name.split(" ")[0]}`,
       messages: historyAndInput,
     });
 
     await Promise.all([
-      prismaClient.actConversationMessage.create({
+      prismaClient.actChapterMessage.create({
         data: {
-          actConversationId,
+          actChapterId,
           role: "assistant",
           content: response.output_text,
         },
       }),
 
-      prismaClient.actConversation.update({
+      prismaClient.actChapter.update({
         where: {
-          id: actConversationId,
+          id: actChapterId,
         },
         data: {
           updatedAt: new Date(),

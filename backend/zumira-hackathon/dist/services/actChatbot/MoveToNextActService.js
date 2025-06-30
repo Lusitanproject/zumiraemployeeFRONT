@@ -20,11 +20,9 @@ class MoveToNextActService {
             throw new error_1.PublicError("Usuário não encontrado");
         if (!user.currentActChatbot)
             throw new error_1.PublicError("Usuário não está atribuído a nenhum ato");
-        if (!user.currentActChatbot.nextActChatbotId)
-            throw new error_1.PublicError("Não há mais atos restantes");
-        const currentActMessages = await prisma_1.default.actConversationMessage.findMany({
+        const currentActMessages = await prisma_1.default.actChapterMessage.findMany({
             where: {
-                actConversation: {
+                actChapter: {
                     userId,
                     actChatbotId: user.currentActChatbot.id,
                 },
@@ -32,31 +30,22 @@ class MoveToNextActService {
         });
         if (!currentActMessages.length)
             throw new error_1.PublicError("Usuário não iniciou o ato atual");
+        const nextAct = await prisma_1.default.actChatbot.findFirst({
+            where: {
+                index: user.currentActChatbot.index + 1,
+            },
+        });
+        if (!nextAct)
+            return { currActChatbotId: user.currentActChatbot.id };
         await prisma_1.default.user.update({
             where: {
                 id: userId,
             },
             data: {
-                currentActChatbotId: user.currentActChatbot.nextActChatbotId,
+                currentActChatbotId: nextAct.id,
             },
         });
-        const conversation = await prisma_1.default.actConversation.create({
-            data: {
-                userId,
-                actChatbotId: user.currentActChatbot.nextActChatbotId,
-            },
-            select: {
-                id: true,
-                actChatbot: {
-                    select: {
-                        name: true,
-                        icon: true,
-                        description: true,
-                    },
-                },
-            },
-        });
-        return conversation;
+        return { currActChatbotId: nextAct.id };
     }
 }
 exports.MoveToNextActService = MoveToNextActService;
