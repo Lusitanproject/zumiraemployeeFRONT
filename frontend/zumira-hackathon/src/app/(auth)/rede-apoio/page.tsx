@@ -1,15 +1,4 @@
-import {
-  Network,
-  Group,
-  BookOpen,
-  MountainSnow,
-  Lightbulb,
-  Bandage,
-  HandHelping,
-  Brain,
-  Activity,
-  Users,
-} from "lucide-react";
+import { Activity, Brain, Users } from "lucide-react";
 
 export default function RedeApoio() {
   return (
