@@ -1,14 +1,12 @@
 "use client";
-import Link from "next/link";
+import { ShieldCheck } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ActsData } from "@/types/acts";
 
 import { MainMenu, MenuLink } from "../main-menu";
 import { ActsMenu } from "./components/acts-menu";
-import { ShieldCheck } from "lucide-react";
 
 type SidebarProps = {
   menuItems: MenuLink[];

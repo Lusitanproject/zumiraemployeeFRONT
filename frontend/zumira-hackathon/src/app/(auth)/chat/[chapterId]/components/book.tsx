@@ -2,7 +2,7 @@
 
 import equal from "fast-deep-equal";
 import { startHolyLoader } from "holy-loader";
-import { Bookmark, Check, ChevronLeft, Redo, RefreshCcw, Undo } from "lucide-react";
+import { Check, ChevronLeft, Redo, RefreshCcw, Undo } from "lucide-react";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MouseEvent } from "react";
