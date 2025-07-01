@@ -48,7 +48,6 @@ export const Book = forwardRef(function Book({ actChapter, onClose }: BookProps,
     if (equal(chapter, savedChapter.current)) return;
 
     const payload = { actChapterId: chapter.id, ...chapter } as UpdateActChapterRequest;
-    console.log(payload.compilation);
 
     try {
       const result = await updateActChapter(payload);
