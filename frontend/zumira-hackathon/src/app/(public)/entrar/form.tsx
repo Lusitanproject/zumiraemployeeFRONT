@@ -14,8 +14,16 @@ export function SignUpForm() {
 
   return (
     <form action={action} className="w-full">
-      <Label htmlFor="email">Digite seu e-mail corporativo</Label>
-      <Input hasError={!!state?.errors?.email} id="email" name="email" placeholder="Ex.: nome@empresa.com" />
+      <Label htmlFor="email" className="text-text-700">
+        Digite seu e-mail corporativo
+      </Label>
+      <Input
+        hasError={!!state?.errors?.email}
+        id="email"
+        name="email"
+        placeholder="Ex.: nome@empresa.com"
+        className="text-text-700"
+      />
       {state?.errors?.email && <span className="mt-3 mb-8 text-sm text-red-400">{state.errors.email}</span>}
       <Button className="w-full mt-8" disabled={pending} size="xxl" variant="primary">
         <span>Entrar</span>

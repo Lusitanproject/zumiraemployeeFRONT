@@ -91,11 +91,14 @@ export function UserForm({ data, companies, roles }: FormProps) {
     <div className="w-full py-4 md:pt-4 md:pb-24">
       <div className="w-full md:w-[30rem]">
         <div className="pb-3">
-          <Label htmlFor="title">Nome</Label>
+          <Label htmlFor="title" className="text-text-700">
+            Nome
+          </Label>
           <Input
             id="title"
             name="title"
             value={formData.name}
+            className="text-text-700"
             onChange={(e) => {
               setFormData((current) => ({ ...current, name: e.target.value }));
             }}
@@ -103,12 +106,15 @@ export function UserForm({ data, companies, roles }: FormProps) {
           {!!errors?.name && <span className="text-sm text-error-500">{errors.name}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="title">Email</Label>
+          <Label htmlFor="title" className="text-text-700">
+            Email
+          </Label>
           <Input
             id="email"
             name="email"
             type="email"
             value={formData.email}
+            className="text-text-700"
             onChange={(e) => {
               setFormData((current) => ({ ...current, email: e.target.value }));
             }}
@@ -116,7 +122,9 @@ export function UserForm({ data, companies, roles }: FormProps) {
           {!!errors?.email && <span className="text-sm text-error-500">{errors.email}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="companyId">Empresa</Label>
+          <Label htmlFor="companyId" className="text-text-700">
+            Empresa
+          </Label>
           <Select
             defaultValue={formData.companyId}
             name="companyId"
@@ -127,12 +135,12 @@ export function UserForm({ data, companies, roles }: FormProps) {
               }))
             }
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] text-text-700">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {companies?.map((item) => (
-                <SelectItem key={item.id} value={item.id}>
+                <SelectItem key={item.id} value={item.id} className="text-text-700">
                   {item.name}
                 </SelectItem>
               ))}
@@ -141,7 +149,9 @@ export function UserForm({ data, companies, roles }: FormProps) {
           {!!errors?.email && <span className="text-sm text-error-500">{errors.email}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="roleId">Perfil</Label>
+          <Label htmlFor="roleId" className="text-text-700">
+            Perfil
+          </Label>
           <Select
             defaultValue={formData.roleId}
             name="roleId"
@@ -152,12 +162,12 @@ export function UserForm({ data, companies, roles }: FormProps) {
               }))
             }
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] text-text-700">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {roles?.map((item) => (
-                <SelectItem key={item.id} value={item.id}>
+                <SelectItem key={item.id} value={item.id} className="text-text-700">
                   {item.slug}
                 </SelectItem>
               ))}
@@ -167,7 +177,7 @@ export function UserForm({ data, companies, roles }: FormProps) {
         </div>
       </div>
       {!!formError && <span className="text-sm text-error-500">{formError}</span>}
-      <div className="md:border-t border-gray-100 md:absolute md:left-0 md:right-0 md:bottom-0 py-4 md:px-16 md:bg-gray-50 flex items-center md:justify-start gap-x-3">
+      <div className="md:border-t border-border-100 md:absolute md:left-0 md:right-0 md:bottom-0 py-4 md:px-16 md:bg-background-50 flex items-center md:justify-start gap-x-3">
         <Button size="xl" variant="outline" onClick={handleCancel}>
           Cancelar
         </Button>

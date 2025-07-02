@@ -11,14 +11,16 @@ type DimensionProps = {
 export function DimensionField({ value, onChange, options }: DimensionProps) {
   return (
     <div className="pb-3">
-      <Label htmlFor="psychologicalDimensionId">Dimensão psicológica</Label>
+      <Label htmlFor="psychologicalDimensionId" className="text-text-700">
+        Dimensão psicológica
+      </Label>
       <Select defaultValue={value} name="psychologicalDimensionId" onValueChange={onChange}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[180px] text-text-700">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {options?.map((item) => (
-            <SelectItem key={item.id} value={item.id}>
+            <SelectItem key={item.id} value={item.id} className="text-text-700">
               {item.acronym} - {item.name}
             </SelectItem>
           ))}

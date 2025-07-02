@@ -18,12 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${rawline.className} antialiased`}>
+      <body className={`${rawline.className} antialiased dark`}>
         <Toaster
           position="bottom-right"
           toastOptions={{
             unstyled: true,
-            className: "flex flex-row gap-4 bg-white border-1 border-gray-200 p-4 rounded-xl items-center shadow-xl",
+            className:
+              "flex flex-row gap-4 bg-background-0 border-1 border-border-200 p-4 rounded-xl items-center shadow-xl",
             classNames: {
               error: "text-error-500",
               success: "text-primary-400",

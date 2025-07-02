@@ -60,11 +60,14 @@ export function SelfMonitoringBlockForm({ data }: FormProps) {
     <div className="w-full py-4 md:pt-4 md:pb-24">
       <div className="w-full md:w-[30rem]">
         <div className="pb-3">
-          <Label htmlFor="title">Título</Label>
+          <Label htmlFor="title" className="text-text-700">
+            Título
+          </Label>
           <Input
             id="title"
             name="title"
             value={formData.title}
+            className="text-text-700"
             onChange={(e) => {
               setFormData((current) => ({ ...current, title: e.target.value }));
             }}
@@ -72,9 +75,11 @@ export function SelfMonitoringBlockForm({ data }: FormProps) {
           {!!errors?.title && <span className="text-sm text-error-500">{errors.title}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="summary">Resumo</Label>
+          <Label htmlFor="summary" className="text-text-700">
+            Resumo
+          </Label>
           <Textarea
-            className="h-28"
+            className="h-28 text-text-700"
             id="summary"
             name="summary"
             value={formData.summary ?? ""}
@@ -93,7 +98,7 @@ export function SelfMonitoringBlockForm({ data }: FormProps) {
         />
       </div>
       {!!formError && <span className="text-sm text-error-500">{formError}</span>}
-      <div className="md:border-t border-gray-100 md:absolute md:left-0 md:right-0 md:bottom-0 py-4 md:px-16 md:bg-gray-50 flex items-center md:justify-start gap-x-3">
+      <div className="md:border-t border-border-100 md:absolute md:left-0 md:right-0 md:bottom-0 py-4 md:px-16 md:bg-background-50 flex items-center md:justify-start gap-x-3">
         <Button size="xl" variant="outline" onClick={handleCancel}>
           Cancelar
         </Button>

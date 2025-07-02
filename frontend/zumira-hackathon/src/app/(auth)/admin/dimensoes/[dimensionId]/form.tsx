@@ -65,11 +65,14 @@ export function DimensionForm({ data, blocks }: FormProps) {
     <div className="w-full py-4 md:pt-4 md:pb-24">
       <div className="w-full md:w-[30rem]">
         <div className="pb-3">
-          <Label htmlFor="title">Sigla</Label>
+          <Label htmlFor="title" className="text-text-700">
+            Sigla
+          </Label>
           <Input
             id="acronym"
             name="acronym"
             value={formData.acronym}
+            className="text-text-700"
             onChange={(e) => {
               setFormData((current) => ({ ...current, acronym: e.target.value }));
             }}
@@ -77,11 +80,14 @@ export function DimensionForm({ data, blocks }: FormProps) {
           {!!errors?.acronym && <span className="text-sm text-error-500">{errors.acronym}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="title">Nome</Label>
+          <Label htmlFor="title" className="text-text-700">
+            Nome
+          </Label>
           <Input
             id="name"
             name="name"
             value={formData.name}
+            className="text-text-700"
             onChange={(e) => {
               setFormData((current) => ({ ...current, name: e.target.value }));
             }}
@@ -89,7 +95,9 @@ export function DimensionForm({ data, blocks }: FormProps) {
           {!!errors?.name && <span className="text-sm text-error-500">{errors.name}</span>}
         </div>
         <div className="pb-3">
-          <Label htmlFor="companyId">Bloco de Autoconhecimento</Label>
+          <Label htmlFor="companyId" className="text-text-700">
+            Bloco de Autoconhecimento
+          </Label>
           <Select
             defaultValue={formData.selfMonitoringBlockId}
             name="selfMonitoringBlockId"
@@ -100,12 +108,12 @@ export function DimensionForm({ data, blocks }: FormProps) {
               }))
             }
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] text-text-700">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {blocks?.map((item) => (
-                <SelectItem key={item.id} value={item.id}>
+                <SelectItem key={item.id} value={item.id} className="text-text-700">
                   {item.title}
                 </SelectItem>
               ))}
@@ -117,7 +125,7 @@ export function DimensionForm({ data, blocks }: FormProps) {
         </div>
       </div>
       {!!formError && <span className="text-sm text-error-500">{formError}</span>}
-      <div className="md:border-t border-gray-100 md:absolute md:left-0 md:right-0 md:bottom-0 py-4 md:px-16 md:bg-gray-50 flex items-center md:justify-start gap-x-3">
+      <div className="md:border-t border-border-100 md:absolute md:left-0 md:right-0 md:bottom-0 py-4 md:px-16 md:bg-background-50 flex items-center md:justify-start gap-x-3">
         <Button size="xl" variant="outline" onClick={handleCancel}>
           Cancelar
         </Button>

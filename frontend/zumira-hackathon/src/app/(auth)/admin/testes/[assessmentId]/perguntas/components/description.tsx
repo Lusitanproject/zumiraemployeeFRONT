@@ -11,8 +11,10 @@ type DescriptionProps = {
 export function Description({ value, onChange }: DescriptionProps) {
   return (
     <div className=" w-full flex flex-col gap-y-2">
-      <Label htmlFor="description">Descrição</Label>
-      <Textarea id="description" value={value} onChange={onChange} />
+      <Label htmlFor="description" className="text-text-700">
+        Descrição
+      </Label>
+      <Textarea id="description" value={value} onChange={onChange} className="text-text-700" />
     </div>
   );
 }
