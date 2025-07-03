@@ -38,7 +38,7 @@ export function AlertCard({ alert, selected, onClose }: AlertCardProps) {
       <section
         className={cn(
           "relative flex flex-col gap-1 p-3 rounded-md  border-border-100 border-1",
-          selected ? "bg-[#E7F8EA]" : "hover:bg-[#E7F8EA]"
+          selected ? "bg-background-50" : "hover:bg-background-50"
         )}
       >
         <h1 className="text-text-500 text-xs leading-[1.125rem] text-start">Alerta de risco</h1>
