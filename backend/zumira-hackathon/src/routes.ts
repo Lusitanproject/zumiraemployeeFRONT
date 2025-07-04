@@ -13,7 +13,6 @@ import { FindAllActChatbotsController } from "./controllers/admin/act-chatbots/F
 import { UpdateActChatbotController } from "./controllers/admin/act-chatbots/UpdateActChatbotController";
 import { UpdateManyActChatbotsController } from "./controllers/admin/act-chatbots/UpdateManyActChatbotsController";
 import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
-import { FindFilteredResultsController } from "./controllers/admin/assessments/FindFilteredResultsController";
 import { FindQuestionByAssessmentController } from "./controllers/admin/assessments/FindQuestionByAssessmentController";
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
 import { GenerateExcelReportController } from "./controllers/admin/assessments/GenerateExcelReportController";
@@ -74,6 +73,8 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { FindCompanyFeedbackController } from "./controllers/company/FindCompanyFeedbackController";
+import { FindResultsFilteredController } from "./controllers/admin/assessments/FindResultsFilteredController";
 
 const router = Router();
 
@@ -101,7 +102,7 @@ router.put("/dimensions/:psychologicalDimensionId", isAuthenticated, new EditDim
 
 // ROTAS RESULTS
 router.get("/assessments/results", isAuthenticated, new ListResultsController().handle);
-router.get("/assessments/results/admin", isAuthenticated, new FindFilteredResultsController().handle);
+router.get("/assessments/results/admin", isAuthenticated, new FindResultsFilteredController().handle);
 router.get("/assessments/results/admin/download-report", isAuthenticated, new GenerateExcelReportController().handle);
 router.get("/assessments/results/:id", isAuthenticated, new DetailResultController().handle);
 router.post("/assessments/results", isAuthenticated, new CreateResultController().handle);
@@ -150,6 +151,7 @@ router.get(
 router.get("/companies", isAuthenticated, new FindAllCompaniesController().handle);
 router.get("/companies/feedback", isAuthenticated, new FindAllFeedbacksController().handle);
 router.get("/companies/:companyId", isAuthenticated, new FindCompanyController().handle);
+router.get("/companies/:id/feedback", isAuthenticated, new FindCompanyFeedbackController().handle);
 router.post("/companies", isAuthenticated, new CreateCompanyController().handle);
 
 // ROTAS NATIONALITY
