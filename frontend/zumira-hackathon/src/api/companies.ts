@@ -55,8 +55,6 @@ export async function getCompanyFeedback(companyId: string, assessmentId: string
     })
   );
 
-  console.log(error, response);
-
   if (error) {
     throw new Error(error.message);
   }

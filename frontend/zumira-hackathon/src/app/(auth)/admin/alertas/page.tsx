@@ -14,7 +14,6 @@ export default function Alertas() {
   const [loading, setLoading] = useState<boolean>(false);
 
   async function fetchResults(data: Filters) {
-    console.log("ue poirra");
     setLoading(true);
     const newData = await getAssessmentResultsFiltered(data);
     setResults(newData);

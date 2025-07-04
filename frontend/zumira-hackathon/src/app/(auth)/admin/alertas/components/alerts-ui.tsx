@@ -21,8 +21,8 @@ export function AlertsUI({ assessments, children, companies }: AlertsUIProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <Tabs items={tabs} />
       <Filters assessments={assessments} companies={companies} />
+      <Tabs items={tabs} />
       <div className="flex flex-col gap-2">{children}</div>
     </div>
   );
