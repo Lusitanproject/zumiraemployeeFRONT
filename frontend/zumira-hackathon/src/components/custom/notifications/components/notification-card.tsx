@@ -37,8 +37,8 @@ export function NotificationCard({ notification, selected, onClose }: Notificati
     >
       <section
         className={cn(
-          "relative flex flex-col gap-1 p-3 rounded-md  border-border-100 border-1",
-          selected ? "bg-[#E7F8EA]" : "hover:bg-[#E7F8EA]"
+          "relative flex flex-col gap-1 p-3 rounded-md border-border-100 border-1",
+          selected ? "bg-background-50" : "hover:bg-background-50"
         )}
       >
         <h1 className="text-text-500 text-xs leading-[1.125rem] text-start">{notification.title}</h1>

@@ -2,7 +2,7 @@
 import {
   // ChartNoAxesColumnIncreasing,
   House,
-  LayoutGrid,
+  // LayoutGrid,
   SquarePen,
   Users,
 } from "lucide-react";
@@ -16,7 +16,7 @@ const links = [
   // { href: "/autoconhecimento", label: "Autoconhecimento", icon: ChartNoAxesColumnIncreasing },
   { href: "/autoconhecimento", label: "Autoconhecimento", icon: SquarePen },
   { href: "/rede-apoio", label: "Rede de Apoio", icon: Users },
-  { href: "/biblioteca", label: "Biblioteca", icon: LayoutGrid },
+  // { href: "/biblioteca", label: "Biblioteca", icon: LayoutGrid },
 ] as const;
 
 export function TabBar() {

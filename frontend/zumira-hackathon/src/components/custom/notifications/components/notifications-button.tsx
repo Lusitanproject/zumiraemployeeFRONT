@@ -30,6 +30,13 @@ export function NotificationsButton({ notifications, alerts }: NotificationsButt
       {isDropdownOpen && (
         <NotificationsDropdown alerts={alerts} notifications={notifications} onClose={() => setIsDropdownOpen(false)} />
       )}
+      {!!(notifications.length + alerts.length) && (
+        <div
+          className={cn("absolute size-2 rounded-full bg-red-400 top-2 right-3", {
+            "z-50": isDropdownOpen,
+          })}
+        />
+      )}
     </div>
   );
 }

@@ -43,7 +43,7 @@ export function AlertCard({ alert, id, open, onOpen, onClose }: AlertCardProps) 
     <section
       className={cn(
         "relative flex flex-col gap-1 p-3 rounded-md border-1 duration-200",
-        open ? "border-primary-300" : "border-border-100 hover:bg-[#E7F8EA]"
+        open ? "border-primary-300" : "border-border-100 hover:bg-background-50"
       )}
       id={id}
     >

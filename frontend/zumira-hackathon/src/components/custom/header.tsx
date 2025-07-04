@@ -4,11 +4,9 @@ import Link from "next/link";
 
 import logo from "../../../public/logo--green.svg";
 import { BackButton } from "../ui/back-button";
-import { Button } from "../ui/button";
 import ThemeToggle from "../ui/theme-toggle";
 import { Avatar } from "./avatar";
 import { Notifications } from "./notifications/notifications";
-import { PageTitle } from "./page-title";
 
 export function Header() {
   return (
@@ -19,16 +17,15 @@ export function Header() {
         <BackButton />
       </div>
 
-      <PageTitle />
-
       <div className="flex items-center justify-end gap-x-3">
-        <Link href="/minha-historia">
-          <Button>
-            <div className="flex flex-row gap-1 items-center">
-              <Bookmark className="text-primary-400 size-4.5" />
-              <span className="text-text-700">Minha história</span>
-            </div>
-          </Button>
+        <Link
+          className="flex justify-center items-center px-3 py-1.5 border-1 border-border-300 hover:border-primary-400 duration-200 cursor-pointer hover:bg-background-50 rounded-xl"
+          href="/minha-historia"
+        >
+          <div className="flex flex-row gap-1 items-center">
+            <Bookmark className="text-primary-400 size-4.5" />
+            <span className="text-text-700">Minha história</span>
+          </div>
         </Link>
         <Notifications />
         <Avatar />
