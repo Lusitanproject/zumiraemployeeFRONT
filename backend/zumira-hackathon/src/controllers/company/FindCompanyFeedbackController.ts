@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { FindCompanyFeedbackService } from "../../services/company/FindCompanyFeedbackService";
-import { FindCompanyFeedbackSchema } from "../../definitions/company";
-import { parseZodError } from "../../utils/parseZodError";
 import { RequestParamsIdCUID } from "../../definitions/common";
+import { FindCompanyFeedbackSchema } from "../../definitions/company";
+import { FindCompanyFeedbackService } from "../../services/company/FindCompanyFeedbackService";
+import { parseZodError } from "../../utils/parseZodError";
 
 class FindCompanyFeedbackController {
   async handle(req: Request, res: Response) {

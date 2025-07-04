@@ -15,6 +15,7 @@ import { UpdateManyActChatbotsController } from "./controllers/admin/act-chatbot
 import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
 import { FindQuestionByAssessmentController } from "./controllers/admin/assessments/FindQuestionByAssessmentController";
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
+import { FindResultsFilteredController } from "./controllers/admin/assessments/FindResultsFilteredController";
 import { GenerateExcelReportController } from "./controllers/admin/assessments/GenerateExcelReportController";
 import { UpdateAssessmentController } from "./controllers/admin/assessments/UpdateAssessmentController";
 import { UpdateResultRatingsController } from "./controllers/admin/assessments/UpdateResultRatingsController";
@@ -63,6 +64,7 @@ import { ListAssessmentsController } from "./controllers/assessment/ListAssessme
 import { ListResultsController } from "./controllers/assessment/ListResultsController";
 import { UpdateQuestionsController } from "./controllers/assessment/UpdateQuestionsController";
 import { CreateCompanyController } from "./controllers/company/CreateCompanyController";
+import { FindCompanyFeedbackController } from "./controllers/company/FindCompanyFeedbackController";
 import { ListNationalitiesController } from "./controllers/nationality/ListNationalitiesController";
 import { DetailNotificationController } from "./controllers/notification/DetailNotificationController";
 import { ListNotificationsController } from "./controllers/notification/ListNotificationsController";
@@ -73,8 +75,6 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { FindCompanyFeedbackController } from "./controllers/company/FindCompanyFeedbackController";
-import { FindResultsFilteredController } from "./controllers/admin/assessments/FindResultsFilteredController";
 
 const router = Router();
 
