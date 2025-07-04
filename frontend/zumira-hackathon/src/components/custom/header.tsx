@@ -18,8 +18,6 @@ export function Header() {
         <BackButton />
       </div>
 
-      <PageTitle />
-
       <div className="flex items-center justify-end gap-x-3">
         <Link
           className="flex justify-center items-center px-3 py-1.5 border-1 border-border-300 hover:border-primary-400 duration-200 cursor-pointer hover:bg-background-50 rounded-xl"
