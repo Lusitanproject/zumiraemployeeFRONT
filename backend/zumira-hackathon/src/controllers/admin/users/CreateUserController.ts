@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
 import { CreateUserSchema } from "../../../definitions/admin/users";
+import { PublicError } from "../../../error";
 import { CompanyAdminService } from "../../../services/admin/CompanyAdminService";
 import { RoleAdminService } from "../../../services/admin/RoleAdminService";
 import { UserAdminService } from "../../../services/admin/UserAdminService";
 import { assertPermissions } from "../../../utils/assertPermissions";
 import { parseZodError } from "../../../utils/parseZodError";
-import { PublicError } from "../../../error";
 
 class CreateUserController {
   async handle(req: Request, res: Response) {
