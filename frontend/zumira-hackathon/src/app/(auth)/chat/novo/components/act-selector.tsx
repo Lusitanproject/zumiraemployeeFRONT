@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { ActsData } from "@/types/act";
 
 import { newChapter } from "../actions";
+import { flushSync } from "react-dom";
 
 interface ActSelectorProps {
   data: ActsData;
@@ -21,10 +22,10 @@ export function ActSelector({ data }: ActSelectorProps) {
   const searchParams = useSearchParams();
   const defaultActId = searchParams.get("default") || undefined;
 
+  const findActById = (id?: string) => data.chatbots.find((c) => (id ? c.id === id : c.current)) ?? data.chatbots[0]!;
+
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
-  const [selected, setSelected] = useState<ActsData["chatbots"][0]>(
-    data.chatbots.find((c) => (defaultActId ? c.id === defaultActId : c.current)) ?? data.chatbots[0]!
-  );
+  const [selected, setSelected] = useState<ActsData["chatbots"][0]>(findActById(defaultActId));
   const [loading, setLoading] = useState<boolean>(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -46,6 +47,10 @@ export function ActSelector({ data }: ActSelectorProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openDropdown]);
+
+  useEffect(() => {
+    setSelected(findActById(defaultActId));
+  }, [defaultActId]);
 
   async function handleConfirm() {
     setLoading(true);
