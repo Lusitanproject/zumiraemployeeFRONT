@@ -1,13 +1,13 @@
 "use client";
 import { ChevronsLeftRight, ChevronsRightLeft, ShieldCheck } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { ActsData } from "@/types/act";
 
-import { MainMenu, MenuLink } from "./components/main-menu";
 import { ActsMenu } from "./components/acts-menu";
-import { useState } from "react";
+import { MainMenu, MenuLink } from "./components/main-menu";
 
 type SidebarProps = {
   menuItems: MenuLink[];

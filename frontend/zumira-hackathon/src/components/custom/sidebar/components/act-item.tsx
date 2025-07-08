@@ -3,24 +3,24 @@
 import { ChevronDown } from "lucide-react";
 import { DynamicIcon, IconName } from "lucide-react/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import { ActsData } from "@/types/act";
-import { useRouter } from "next/navigation";
 
 interface ActItemProps {
-  id: string;
   chapters: ActsData["chapters"];
   currentChapterId: string | null;
-  open: boolean;
+  expanded: boolean;
   icon: IconName;
+  id: string;
   locked: boolean;
   name: string;
-  expanded: boolean;
-  onOpen: (actChatbotId: string) => void;
+  open: boolean;
   onClose: () => void;
+  onOpen: (actChatbotId: string) => void;
 }
 
 export function ActItem({
@@ -63,7 +63,7 @@ export function ActItem({
     setDropdownHeight(
       dropdownRef.current && open && expanded && chapters.length ? dropdownRef.current.offsetHeight : 0
     );
-  }, [open, expanded, currentChapterId]);
+  }, [open, expanded, currentChapterId, chapters.length]);
 
   return (
     <div className="flex flex-col w-full ">
