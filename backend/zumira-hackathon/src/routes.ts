@@ -75,6 +75,7 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { GetFullStoryController } from "./controllers/actChatbot/GetFullStoryController";
 
 const router = Router();
 
@@ -187,5 +188,6 @@ router.post("/acts/message", isAuthenticated, new MessageActChatbotController().
 router.post("/acts/new-chapter", isAuthenticated, new CreateActChapterController().handle);
 router.post("/acts/chapters/compile", isAuthenticated, new CompileActChapterController().handle);
 router.put("/acts/chapters/:actChapterId", isAuthenticated, new UpdateActChapterController().handle);
+router.get("/acts/full-story", isAuthenticated, new GetFullStoryController().handle);
 
 export { router };
