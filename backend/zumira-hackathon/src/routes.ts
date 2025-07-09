@@ -4,6 +4,7 @@ import { CompileActChapterController } from "./controllers/actChatbot/CompileAct
 import { CreateActChapterController } from "./controllers/actChatbot/CreateActChapterController";
 import { GetActChapterController } from "./controllers/actChatbot/GetActChapterController";
 import { GetActsDataController } from "./controllers/actChatbot/GetActsDataController";
+import { GetFullStoryController } from "./controllers/actChatbot/GetFullStoryController";
 import { MessageActChatbotController } from "./controllers/actChatbot/MessageActChatbotController";
 import { MoveToNextActController } from "./controllers/actChatbot/MoveToNextActController";
 import { UpdateActChapterController } from "./controllers/actChatbot/UpdateActChapterController";
@@ -75,7 +76,6 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { GetFullStoryController } from "./controllers/actChatbot/GetFullStoryController";
 
 const router = Router();
 

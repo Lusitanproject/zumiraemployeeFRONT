@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { borel } from "@/app/fonts";
 import { HeadImage } from "@/components/custom/head-image";
 
 import logo from "../../../../public/logo--green.svg";
 import { getNationalities } from "./actions";
 import { RegisterForm } from "./form";
-import { borel } from "@/app/fonts";
 
 export default async function Registrar() {
   const nationalities = await getNationalities();

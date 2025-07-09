@@ -1,7 +1,8 @@
 import Image from "next/image";
 
-import image from "../images/zumira-picture4.png";
 import { borel } from "@/app/fonts";
+
+import image from "../images/zumira-picture4.png";
 
 export function PsychologicalAssistant() {
   return (

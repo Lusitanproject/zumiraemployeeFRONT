@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Toaster } from "sonner";
+
 import { rawline } from "./fonts";
 
 export const metadata: Metadata = {

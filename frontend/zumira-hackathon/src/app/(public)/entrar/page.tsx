@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { borel } from "@/app/fonts";
 import { HeadImage } from "@/components/custom/head-image";
 
 import logo from "../../../../public/logo--green.svg";
 import { SignUpForm } from "./form";
-import { borel } from "@/app/fonts";
 
 export default function Entrar() {
   return (

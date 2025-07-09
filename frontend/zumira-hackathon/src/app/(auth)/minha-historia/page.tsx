@@ -1,10 +1,12 @@
-import { BookOpenText, Download } from "lucide-react";
-import { BookDocument } from "./components/BookDocument";
-import { PDFDownloadLink, PDFViewer } from "@/components/custom/pdf";
-import { getFullStory } from "@/api/acts";
+import { Download } from "lucide-react";
 import { cookies } from "next/headers";
-import { decrypt } from "@/app/_lib/session";
 import Image from "next/image";
+
+import { getFullStory } from "@/api/acts";
+import { decrypt } from "@/app/_lib/session";
+import { PDFDownloadLink } from "@/components/custom/pdf";
+
+import { BookDocument } from "./components/BookDocument";
 
 export default async function MinhaHistoria() {
   const cookie = await cookies();
@@ -28,13 +30,13 @@ export default async function MinhaHistoria() {
               Descubra como transformar a sua história em uma obra literária de cura e inspiração.
             </span>
           </div>
-          <Image width={30} height={30} alt="Icon Zumira" src="/icon-green.png" />
+          <Image alt="Icon Zumira" height={30} src="/icon-green.png" width={30} />
         </div>
 
         <PDFDownloadLink
           className="flex flex-row size-fit gap-2 text-text-25 px-4 py-1 bg-primary-500 rounded-full items-center"
           document={
-            <BookDocument data={chapters} username={session?.name ?? "Usuário"} gender={session?.gender ?? "OTHER"} />
+            <BookDocument data={chapters} gender={session?.gender ?? "OTHER"} username={session?.name ?? "Usuário"} />
           }
           fileName="Minha história por Zumira"
         >

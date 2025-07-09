@@ -1,11 +1,8 @@
 "use client";
 
 import { Font } from "@react-pdf/renderer";
-import dynamic from "next/dynamic";
-
-import { pdfjs } from "react-pdf";
-import { Spinner } from "./spinner";
 import { Download } from "lucide-react";
+import dynamic from "next/dynamic";
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 

@@ -1,8 +1,9 @@
 "use client";
 
-import { GetFullStoryResponse } from "@/api/acts";
-import { Page, Text, View, Document, Image, Svg } from "@react-pdf/renderer";
+import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
+
+import { GetFullStoryResponse } from "@/api/acts";
 
 const tw = createTw({});
 
@@ -10,8 +11,8 @@ type FullStoryResponseData = Exclude<GetFullStoryResponse, { status: "ERROR" }>[
 
 interface BookDocumentProps {
   data: FullStoryResponseData;
-  username: string;
   gender: "MALE" | "FEMALE" | "OTHER";
+  username: string;
 }
 
 export function BookDocument({ data, username, gender }: BookDocumentProps) {
@@ -32,7 +33,7 @@ export function BookDocument({ data, username, gender }: BookDocumentProps) {
             Descubra como transformar a sua história em uma obra literária de cura e inspiração.
           </Text>
         </View>
-        <Image style={{ width: "2.5rem" }} src="/icon-green.png" />
+        <Image src="/icon-green.png" style={{ width: "2.5rem" }} />
       </Page>
 
       <Page size="A5" style={tw("flex flex-col p-16 items-center justify-center bg-[#F5F5EB] text-[#262626]")}>
@@ -96,7 +97,7 @@ export function BookDocument({ data, username, gender }: BookDocumentProps) {
             </Text>
           </View>
           {/* A imagem foi gerada com o fundo verde pois a biblioteca apresenta problemas ao renderizar imagens somente com a cor branca (motivo desconhecido) */}
-          <Image style={{ width: "5rem" }} src="/logo-white-green-bg.png" />
+          <Image src="/logo-white-green-bg.png" style={{ width: "5rem" }} />
         </View>
       </Page>
     </Document>
