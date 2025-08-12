@@ -16,6 +16,7 @@ export interface ActsData {
     locked: boolean;
     current: boolean;
   }[];
+  progress: number;
 }
 
 export interface ActMessage {

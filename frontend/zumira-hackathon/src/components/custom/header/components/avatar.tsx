@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 
 import { decrypt } from "@/app/_lib/session";
-
 import { AvatarThumb } from "./avatar-thumb";
 
 export async function Avatar() {
