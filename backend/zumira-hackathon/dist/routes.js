@@ -16,6 +16,7 @@ const FindAllActChatbotsController_1 = require("./controllers/admin/acts/FindAll
 const UpdateActChatbotController_1 = require("./controllers/admin/acts/UpdateActChatbotController");
 const UpdateManyActChatbotsController_1 = require("./controllers/admin/acts/UpdateManyActChatbotsController");
 const DuplicateAssessmentController_1 = require("./controllers/admin/assessments/DuplicateAssessmentController");
+const FindAllAssessmentsController_1 = require("./controllers/admin/assessments/FindAllAssessmentsController");
 const FindQuestionByAssessmentController_1 = require("./controllers/admin/assessments/FindQuestionByAssessmentController");
 const FindResultRatingsByAssessmentController_1 = require("./controllers/admin/assessments/FindResultRatingsByAssessmentController");
 const FindResultsFilteredController_1 = require("./controllers/admin/assessments/FindResultsFilteredController");
@@ -78,7 +79,6 @@ const AuthUserController_1 = require("./controllers/user/auth/AuthUserController
 const SendCodeController_1 = require("./controllers/user/auth/SendCodeController");
 const CreateUserController_2 = require("./controllers/user/CreateUserController");
 const isAuthenticated_1 = require("./middlewares/isAuthenticated");
-const FindAllAssessmentsController_1 = require("./controllers/admin/assessments/FindAllAssessmentsController");
 const router = (0, express_1.Router)();
 exports.router = router;
 // ROTAS AUTH

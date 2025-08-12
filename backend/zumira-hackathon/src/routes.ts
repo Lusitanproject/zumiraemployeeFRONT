@@ -14,6 +14,7 @@ import { FindAllActChatbotsController } from "./controllers/admin/acts/FindAllAc
 import { UpdateActChatbotController } from "./controllers/admin/acts/UpdateActChatbotController";
 import { UpdateManyActChatbotsController } from "./controllers/admin/acts/UpdateManyActChatbotsController";
 import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
+import { FindAllAssessmentsController } from "./controllers/admin/assessments/FindAllAssessmentsController";
 import { FindQuestionByAssessmentController } from "./controllers/admin/assessments/FindQuestionByAssessmentController";
 import { FindResultRatingsByAssessmentController } from "./controllers/admin/assessments/FindResultRatingsByAssessmentController";
 import { FindResultsFilteredController } from "./controllers/admin/assessments/FindResultsFilteredController";
@@ -76,7 +77,6 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { FindAllAssessmentsController } from "./controllers/admin/assessments/FindAllAssessmentsController";
 
 const router = Router();
 
