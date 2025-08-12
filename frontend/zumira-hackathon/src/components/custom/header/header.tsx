@@ -1,10 +1,10 @@
-import { Bookmark } from "lucide-react";
 import Image from "next/image";
+
+import { ActsData } from "@/types/act";
 
 import logo from "../../../../public/logo--green.svg";
 import { BackButton } from "../../ui/back-button";
 import ThemeToggle from "../../ui/theme-toggle";
-import { ActsData } from "@/types/act";
 import { Notifications } from "../notifications/notifications";
 import { Avatar } from "./components/avatar";
 import { MyStory } from "./components/my-story";

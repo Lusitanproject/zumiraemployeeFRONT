@@ -1,10 +1,11 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { ActsData } from "@/types/act";
 import { Bookmark } from "lucide-react";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
+
+import { cn } from "@/lib/utils";
+import { ActsData } from "@/types/act";
 
 type MyStoryProps = {
   data: ActsData;

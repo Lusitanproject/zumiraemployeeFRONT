@@ -90,7 +90,7 @@ class GetActsDataService {
     }));
 
     const processedChapters = chapters.map((chapter) => {
-      const { compilation, ...formatted } = chapter;
+      const { compilation: _, ...formatted } = chapter;
       return formatted;
     });
 

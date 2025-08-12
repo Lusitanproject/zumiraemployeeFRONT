@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { ListAlertsService } from "../../services/alert/ListAlertsService";
 import { ListAlertsSchema } from "../../definitions/alert";
+import { ListAlertsService } from "../../services/alert/ListAlertsService";
 import { parseZodError } from "../../utils/parseZodError";
 
 class ListAlertsController {
