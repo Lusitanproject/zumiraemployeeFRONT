@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListAlertsController = void 0;
-const ListAlertsService_1 = require("../../services/alert/ListAlertsService");
 const alert_1 = require("../../definitions/alert");
+const ListAlertsService_1 = require("../../services/alert/ListAlertsService");
 const parseZodError_1 = require("../../utils/parseZodError");
 class ListAlertsController {
     async handle(req, res) {
