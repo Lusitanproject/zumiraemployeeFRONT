@@ -12,8 +12,8 @@ export async function getSidebarContent() {
     // { href: "#", label: "Analytics", icon: "chart-no-axes-combined", role: "user" },
     { href: "/rede-apoio", label: "Rede de apoio", icon: "users", role: "user" },
     {
-      href: "/admin/testes",
-      label: "Testes",
+      href: "/admin/autoconhecimento",
+      label: "Autoconhecimento",
       icon: "chart-no-axes-column-increasing",
       role: "admin",
     },
