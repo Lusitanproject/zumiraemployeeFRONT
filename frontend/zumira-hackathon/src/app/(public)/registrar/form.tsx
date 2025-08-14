@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { Label } from "@/components/custom/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { register } from "./actions";
 import { FormState, Nationality, RegisterFormState } from "./definitions";
@@ -17,15 +17,16 @@ interface RegisterFormProps {
 }
 
 export function RegisterForm({ nationalities }: RegisterFormProps) {
+  const _ = nationalities;
   const [loading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState<FormState>();
   const [formData, setFormData] = useState<RegisterFormState>({
     name: "",
     email: "",
-    birthdate: String(new Date()),
-    nationalityId: "",
-    gender: undefined,
-    occupation: "",
+    // birthdate: String(new Date()),
+    // nationalityId: "",
+    // gender: undefined,
+    // occupation: "",
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -53,7 +54,6 @@ export function RegisterForm({ nationalities }: RegisterFormProps) {
     <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit}>
       <div>
         <Label className="text-text-700" htmlFor="name">
-          {" "}
           Nome completo
         </Label>
         <Input
@@ -82,7 +82,7 @@ export function RegisterForm({ nationalities }: RegisterFormProps) {
         />
         {state?.errors?.email && <span className="mt-3 mb-8 text-sm text-red-400">{state.errors.email}</span>}
       </div>
-      <div>
+      {/* <div>
         <Label className="text-text-700" htmlFor="birthdate">
           Data de Nascimento
         </Label>
@@ -165,7 +165,7 @@ export function RegisterForm({ nationalities }: RegisterFormProps) {
           onChange={handleChange}
         />
         {state?.errors?.occupation && <span className="mt-3 mb-8 text-sm text-red-400">{state.errors.occupation}</span>}
-      </div>
+      </div> */}
       {state?.errors?.response && <span className="text-sm text-red-400">{state.errors.response}</span>}
       <Button className="w-full mt-8" loading={loading} size="xxl" variant="primary">
         <span>Criar conta</span>

@@ -76,7 +76,7 @@ export function ActChat({ actChapter, inputWarning, onChangeMessages }: ActChatP
         <MessageInput
           disabled={!actChapter || loading}
           expandOnFocus={!!messages.length}
-          placeholder="Pergunte alguma coisa"
+          placeholder="Conte aqui a sua história"
           warning={inputWarning}
           onSend={sendMessage}
         />
