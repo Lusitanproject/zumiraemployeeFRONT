@@ -54,14 +54,14 @@ export function RegisterForm({ nationalities }: RegisterFormProps) {
     <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit}>
       <div>
         <Label className="text-text-700" htmlFor="name">
-          Nome completo
+          Nome
         </Label>
         <Input
           className="text-text-700"
           hasError={!!state?.errors?.name}
           id="name"
           name="name"
-          placeholder="Digite seu nome completo"
+          placeholder="Digite seu nome"
           value={formData.name}
           onChange={handleChange}
         />
