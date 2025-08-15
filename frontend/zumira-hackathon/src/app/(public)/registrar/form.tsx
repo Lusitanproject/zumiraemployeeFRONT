@@ -9,14 +9,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { register } from "./actions";
+import { captureLead, register } from "./actions";
 import { FormState, Nationality, RegisterFormState } from "./definitions";
+import { useSearchParams } from "next/navigation";
 
 interface RegisterFormProps {
   nationalities: Nationality[];
 }
 
 export function RegisterForm({ nationalities }: RegisterFormProps) {
+  const params = useSearchParams();
+  const plan = params.get("p");
+
   const _ = nationalities;
   const [loading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState<FormState>();
@@ -39,6 +43,7 @@ export function RegisterForm({ nationalities }: RegisterFormProps) {
     setLoading(true);
 
     try {
+      captureLead(formData.name, formData.email, plan);
       const result = await register(formData);
       setState(result);
 
