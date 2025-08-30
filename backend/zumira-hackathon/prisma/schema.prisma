@@ -244,6 +244,16 @@ model AssessmentQuestionChoice {
   @@map("assessment_question_choices")
 }
 
+model CompanyAssessment {
+  companyId    String   @map("company_id")
+  assessmentId String   @map("assessment_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@id([companyId, assessmentId])
+  @@map("companies_assessments")
+}
+
 model SelfMonitoringBlock {
   id        String   @id @default(cuid())
   title     String

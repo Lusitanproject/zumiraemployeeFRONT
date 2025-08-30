@@ -79,6 +79,7 @@ import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 
 import nodemailer from "nodemailer";
+import { SetCompanyAssessmentsController } from "./controllers/admin/companies/SetCompanyAssessmentsController";
 
 const router = Router();
 
@@ -158,6 +159,7 @@ router.get("/companies/feedback", isAuthenticated, new FindAllFeedbacksControlle
 router.get("/companies/:companyId", isAuthenticated, new FindCompanyController().handle);
 router.get("/companies/:id/feedback", isAuthenticated, new FindCompanyFeedbackController().handle);
 router.post("/companies", isAuthenticated, new CreateCompanyController().handle);
+router.post("/companies/:id/assessments", isAuthenticated, new SetCompanyAssessmentsController().handle);
 
 // ROTAS NATIONALITY
 router.get("/nationalities", new ListNationalitiesController().handle);

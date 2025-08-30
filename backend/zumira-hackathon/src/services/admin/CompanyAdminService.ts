@@ -4,6 +4,7 @@ import { z } from "zod";
 import { CreateCompanySchema } from "../../definitions/admin/company";
 import { PublicError } from "../../error";
 import prismaClient from "../../prisma";
+import { SetCompanyAssessmentsRequest } from "../../definitions/company";
 
 type CreateCompany = z.infer<typeof CreateCompanySchema>;
 
@@ -53,6 +54,53 @@ class CompanyAdminService {
   async create(data: CreateCompany) {
     const company = await prismaClient.company.create({ data });
     return company;
+  }
+
+  async setCompanyAssessments({ id: companyId, assessmentIds }: SetCompanyAssessmentsRequest) {
+    const [company, newAssessments, currentAssessments] = await Promise.all([
+      prismaClient.company.findFirst({
+        where: {
+          id: companyId,
+        },
+      }),
+
+      prismaClient.assessment.findMany({
+        where: {
+          id: {
+            in: assessmentIds,
+          },
+        },
+      }),
+
+      prismaClient.companyAssessment.findMany({ where: { companyId } }),
+    ]);
+
+    if (!company) throw new Error("Empresa não existe");
+    if (assessmentIds.find((id) => !newAssessments.find((assessment) => id === assessment.id))) {
+      throw new Error("Um ou mais testes enviados não existem");
+    }
+
+    const deletedAssessmentIds = currentAssessments
+      .filter((curr) => !assessmentIds.includes(curr.assessmentId))
+      .map((item) => item.assessmentId);
+
+    await Promise.all([
+      prismaClient.companyAssessment.createMany({
+        data: assessmentIds.map((assessmentId) => ({
+          assessmentId,
+          companyId,
+        })),
+        skipDuplicates: true,
+      }),
+
+      prismaClient.companyAssessment.deleteMany({
+        where: {
+          assessmentId: {
+            in: deletedAssessmentIds,
+          },
+        },
+      }),
+    ]);
   }
 }
 
