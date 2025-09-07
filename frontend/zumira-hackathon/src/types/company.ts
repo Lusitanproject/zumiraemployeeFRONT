@@ -4,6 +4,9 @@ export interface Company {
   id: string;
   name: string;
   updatedAt: Date;
+  companyAvailableAssessments: {
+    assessmentId: string;
+  }[];
 }
 
 export interface CompanyFeedback {

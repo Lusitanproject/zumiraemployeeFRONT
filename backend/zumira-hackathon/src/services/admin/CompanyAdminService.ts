@@ -12,7 +12,15 @@ class CompanyAdminService {
   async find(companyId: string) {
     const company = await prismaClient.company.findFirst({
       where: { id: companyId },
+      include: {
+        companyAvailableAssessments: {
+          select: {
+            assessmentId: true,
+          },
+        },
+      },
     });
+
     return company;
   }
 
@@ -72,7 +80,7 @@ class CompanyAdminService {
         },
       }),
 
-      prismaClient.companyAssessment.findMany({ where: { companyId } }),
+      prismaClient.companyAvailableAssessment.findMany({ where: { companyId } }),
     ]);
 
     if (!company) throw new Error("Empresa não existe");
@@ -85,7 +93,7 @@ class CompanyAdminService {
       .map((item) => item.assessmentId);
 
     await Promise.all([
-      prismaClient.companyAssessment.createMany({
+      prismaClient.companyAvailableAssessment.createMany({
         data: assessmentIds.map((assessmentId) => ({
           assessmentId,
           companyId,
@@ -93,7 +101,7 @@ class CompanyAdminService {
         skipDuplicates: true,
       }),
 
-      prismaClient.companyAssessment.deleteMany({
+      prismaClient.companyAvailableAssessment.deleteMany({
         where: {
           assessmentId: {
             in: deletedAssessmentIds,
