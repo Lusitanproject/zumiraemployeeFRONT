@@ -10,8 +10,7 @@ import { PDFDownloadLink } from "@/components/custom/pdf";
 import { BookDocument } from "./components/BookDocument";
 
 export default async function MinhaHistoria() {
-  const actsData = await getActsData();
-  if (actsData.progress < 1) redirect("/chat");
+  // const actsData = await getActsData();
 
   const cookie = await cookies();
   const session = decrypt(cookie.get("session")?.value);
