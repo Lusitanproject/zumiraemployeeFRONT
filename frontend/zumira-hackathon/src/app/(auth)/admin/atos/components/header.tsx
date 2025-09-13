@@ -1,10 +1,11 @@
 "use client";
 
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trail } from "@/types/trail";
-import { CirclePlus, Footprints } from "lucide-react";
-import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
 
 interface ActsHeaderProps {
   trails: Trail[];

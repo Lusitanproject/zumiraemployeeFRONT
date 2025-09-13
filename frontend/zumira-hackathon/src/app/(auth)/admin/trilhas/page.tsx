@@ -1,4 +1,5 @@
 import { getTrailsAdmin } from "@/api/trails";
+
 import { Header } from "../components/header";
 import { TrailList } from "./components/trail-list";
 

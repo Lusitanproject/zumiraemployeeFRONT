@@ -6,11 +6,11 @@ import { useCallback, useState } from "react";
 import { Label } from "@/components/custom/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { RichTextArea } from "@/components/ui/rich-text-area";
+import { Trail } from "@/types/trail";
 
 import { FormErrors, INITIAL_VALUE, ManageTrail, ManageTrailSchema } from "./definitions";
-import { Trail } from "@/types/trail";
 import { saveTrail } from "./form-actions";
-import { RichTextArea } from "@/components/ui/rich-text-area";
 
 type FormProps = {
   data: Trail | null;

@@ -1,5 +1,6 @@
-import { ActsList } from "./components/list";
 import { getTrailsAdmin } from "@/api/trails";
+
+import { ActsList } from "./components/list";
 
 export default async function Atos({ searchParams }: { searchParams: { trailId?: string } }) {
   const trails = await getTrailsAdmin();

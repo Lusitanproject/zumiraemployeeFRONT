@@ -3,12 +3,10 @@
 import { cookies } from "next/headers";
 
 import { decrypt } from "@/app/_lib/session";
-import { CompanyFeedback } from "@/app/(auth)/admin/components/assistant/definitions";
-import { Company } from "@/types/company";
+import { Trail } from "@/types/trail";
 import { catchError } from "@/utils/error";
 
 import { ZumiraApiResponse } from "./common";
-import { Trail } from "@/types/trail";
 
 type GetTrailsAdminResponse = ZumiraApiResponse<{ items: Trail[] }>;
 type GetTrailDataResponse = ZumiraApiResponse<Trail>;

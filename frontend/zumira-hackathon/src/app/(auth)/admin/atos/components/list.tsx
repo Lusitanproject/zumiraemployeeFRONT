@@ -3,6 +3,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { DynamicIcon, IconName } from "lucide-react/dynamic";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
@@ -11,10 +12,9 @@ import { getActChatbotsByTrail, updateManyActChatbots } from "@/api/acts";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ActChatbot } from "@/types/act";
-import { ActsHeader } from "./header";
 import { Trail } from "@/types/trail";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { redirect } from "next/navigation";
+
+import { ActsHeader } from "./header";
 
 type ActsListProps = {
   trailId?: string;

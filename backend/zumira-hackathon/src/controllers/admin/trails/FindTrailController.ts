@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { TrailAdminService } from "../../../services/admin/TrailAdminService";
 import { RequestParamsIdCUID } from "../../../definitions/common";
+import { TrailAdminService } from "../../../services/admin/TrailAdminService";
 
 class FindTrailController {
   async handle(req: Request, res: Response) {

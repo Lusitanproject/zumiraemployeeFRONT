@@ -1,4 +1,5 @@
 import { getTrailData } from "@/api/trails";
+
 import { TrailForm } from "./form";
 
 export default async function ManageNationality({ params }: { params: Promise<{ id: string }> }) {

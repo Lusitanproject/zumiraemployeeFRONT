@@ -10,13 +10,13 @@ import { saveActChatbot } from "@/api/acts";
 import { Label } from "@/components/custom/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ActChatbot } from "@/types/act";
+import { Trail } from "@/types/trail";
 
 import { IconField } from "../../components/icons";
 import { FormErrors, INITIAL_VALUE, ManageActChatbot, ManageActChatbotSchema } from "./definitions";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trail } from "@/types/trail";
 
 type FormProps = {
   defaultTrailId: string;

@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+
 import { FindByTrailSchema } from "../../../definitions/admin/act-chatbot";
-import { parseZodError } from "../../../utils/parseZodError";
 import { ActChatbotAdminService } from "../../../services/admin/ActChatbotAdminService";
+import { parseZodError } from "../../../utils/parseZodError";
 
 class FindByTrailController {
   async handle(req: Request, res: Response) {

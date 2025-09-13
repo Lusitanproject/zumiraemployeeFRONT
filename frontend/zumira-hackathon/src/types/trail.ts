@@ -1,6 +1,6 @@
 export interface Trail {
-  id: string;
-  title: string;
-  subtitle: string;
   description: string;
+  id: string;
+  subtitle: string;
+  title: string;
 }

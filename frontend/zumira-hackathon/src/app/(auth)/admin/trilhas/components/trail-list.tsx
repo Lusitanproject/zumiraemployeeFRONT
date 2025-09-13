@@ -1,7 +1,6 @@
-import { Nationality } from "@/types/nationality";
+import { Trail } from "@/types/trail";
 
 import { TrailCard } from "./trail-card";
-import { Trail } from "@/types/trail";
 
 type TrailListProps = {
   data: Trail[];

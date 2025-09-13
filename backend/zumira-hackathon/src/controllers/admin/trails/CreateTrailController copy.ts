@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import { parseZodError } from "../../../utils/parseZodError";
-import { TrailAdminService } from "../../../services/admin/TrailAdminService";
 import { CreateTrailSchema } from "../../../definitions/admin/trail";
+import { TrailAdminService } from "../../../services/admin/TrailAdminService";
+import { parseZodError } from "../../../utils/parseZodError";
 
 class CreateTrailController {
   async handle(req: Request, res: Response) {

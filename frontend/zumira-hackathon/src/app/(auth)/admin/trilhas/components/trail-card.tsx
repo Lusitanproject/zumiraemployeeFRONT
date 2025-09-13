@@ -1,7 +1,6 @@
-import { Earth, Footprints } from "lucide-react";
+import { Footprints } from "lucide-react";
 import Link from "next/link";
 
-import { Nationality } from "@/types/nationality";
 import { Trail } from "@/types/trail";
 
 export type CardProps = {

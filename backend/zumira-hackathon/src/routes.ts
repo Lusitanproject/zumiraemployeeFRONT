@@ -12,6 +12,7 @@ import { UpdateActChapterController } from "./controllers/act/UpdateActChapterCo
 import { CreateActChatbotController } from "./controllers/admin/acts/CreateActChatbotController";
 import { FindActChatbotController } from "./controllers/admin/acts/FindActChatbotController";
 import { FindAllActChatbotsController } from "./controllers/admin/acts/FindAllActChatbotsController";
+import { FindByTrailController } from "./controllers/admin/acts/FindByTrailController";
 import { UpdateActChatbotController } from "./controllers/admin/acts/UpdateActChatbotController";
 import { UpdateManyActChatbotsController } from "./controllers/admin/acts/UpdateManyActChatbotsController";
 import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
@@ -48,6 +49,10 @@ import { CreateSelfMonitoringBlocksController } from "./controllers/admin/self-m
 import { EditSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/EditSelfMonitoringBlockController";
 import { ListAllSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindAllSelfMonitoringBlocksController";
 import { FindSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindSelfMonitoringBlockController";
+import { CreateTrailController } from "./controllers/admin/trails/CreateTrailController copy";
+import { FindAllTrailsController } from "./controllers/admin/trails/FindAllTrailsController";
+import { FindTrailController } from "./controllers/admin/trails/FindTrailController";
+import { UpdateTrailController } from "./controllers/admin/trails/UpdateTrailController";
 import { CreateUserController as AdminCreateUserController } from "./controllers/admin/users/CreateUserController";
 import { DeleteUserController } from "./controllers/admin/users/DeleteUserController";
 import { FindUserController } from "./controllers/admin/users/FindUserController";
@@ -79,12 +84,6 @@ import { AuthUserController } from "./controllers/user/auth/AuthUserController";
 import { SendCodeController } from "./controllers/user/auth/SendCodeController";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { CreateTrailController } from "./controllers/admin/trails/CreateTrailController copy";
-import { FindAllTrailsController } from "./controllers/admin/trails/FindAllTrailsController";
-import { FindTrailController } from "./controllers/admin/trails/FindTrailController";
-import { UpdateTrailController } from "./controllers/admin/trails/UpdateTrailController";
-import { FindByTrailSchema } from "./definitions/admin/act-chatbot";
-import { FindByTrailController } from "./controllers/admin/acts/FindByTrailController";
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { getActChatbot } from "@/api/acts";
+import { getTrailsAdmin } from "@/api/trails";
 
 import { Playground } from "./components/playground";
-import { getTrailsAdmin } from "@/api/trails";
 
 export default async function ActsEdit({
   params,
@@ -20,7 +20,7 @@ export default async function ActsEdit({
       <div className="flex items-center justify-between pb-4 border-b border-border-100">
         <h3 className="font-bold text-2xl text-text-700">{id === "novo" ? "Novo " : "Editar "}Ato</h3>
       </div>
-      <Playground defaultTrailId={trailId} data={data} trails={trails} />
+      <Playground data={data} defaultTrailId={trailId} trails={trails} />
     </div>
   );
 }
