@@ -12,6 +12,7 @@ import { UpdateActChapterController } from "./controllers/act/UpdateActChapterCo
 import { CreateActChatbotController } from "./controllers/admin/acts/CreateActChatbotController";
 import { FindActChatbotController } from "./controllers/admin/acts/FindActChatbotController";
 import { FindAllActChatbotsController } from "./controllers/admin/acts/FindAllActChatbotsController";
+import { FindByTrailController } from "./controllers/admin/acts/FindByTrailController";
 import { UpdateActChatbotController } from "./controllers/admin/acts/UpdateActChatbotController";
 import { UpdateManyActChatbotsController } from "./controllers/admin/acts/UpdateManyActChatbotsController";
 import { DuplicateAssessmentController } from "./controllers/admin/assessments/DuplicateAssessmentController";
@@ -22,10 +23,12 @@ import { FindResultsFilteredController } from "./controllers/admin/assessments/F
 import { GenerateExcelReportController } from "./controllers/admin/assessments/GenerateExcelReportController";
 import { UpdateAssessmentController } from "./controllers/admin/assessments/UpdateAssessmentController";
 import { UpdateResultRatingsController } from "./controllers/admin/assessments/UpdateResultRatingsController";
+import { CreateCompanyController } from "./controllers/admin/companies/CreateCompanyController";
 import { FindAllCompaniesController } from "./controllers/admin/companies/FindAllCompaniesController";
 import { FindAllFeedbacksController } from "./controllers/admin/companies/FindAllFeedbacksController";
 import { FindCompanyController } from "./controllers/admin/companies/FindCompanyController";
 import { SetCompanyAssessmentsController } from "./controllers/admin/companies/SetCompanyAssessmentsController";
+import { UpdateCompanyController } from "./controllers/admin/companies/UpdateCompanyController";
 import { CreateDimensionController } from "./controllers/admin/dimensions/CreateDimensionController";
 import { EditDimensionController } from "./controllers/admin/dimensions/EditDimensionController";
 import { FindAllDimensionsController } from "./controllers/admin/dimensions/FindAllDimensionController";
@@ -48,6 +51,10 @@ import { CreateSelfMonitoringBlocksController } from "./controllers/admin/self-m
 import { EditSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/EditSelfMonitoringBlockController";
 import { ListAllSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindAllSelfMonitoringBlocksController";
 import { FindSelfMonitoringBlocksController } from "./controllers/admin/self-monitoring/FindSelfMonitoringBlockController";
+import { CreateTrailController } from "./controllers/admin/trails/CreateTrailController copy";
+import { FindAllTrailsController } from "./controllers/admin/trails/FindAllTrailsController";
+import { FindTrailController } from "./controllers/admin/trails/FindTrailController";
+import { UpdateTrailController } from "./controllers/admin/trails/UpdateTrailController";
 import { CreateUserController as AdminCreateUserController } from "./controllers/admin/users/CreateUserController";
 import { DeleteUserController } from "./controllers/admin/users/DeleteUserController";
 import { FindUserController } from "./controllers/admin/users/FindUserController";
@@ -67,7 +74,6 @@ import { GenerateUserFeedbackController } from "./controllers/assessment/Generat
 import { ListAssessmentsController } from "./controllers/assessment/ListAssessmentsController";
 import { ListResultsController } from "./controllers/assessment/ListResultsController";
 import { UpdateQuestionsController } from "./controllers/assessment/UpdateQuestionsController";
-import { CreateCompanyController } from "./controllers/company/CreateCompanyController";
 import { FindCompanyFeedbackController } from "./controllers/company/FindCompanyFeedbackController";
 import { ListNationalitiesController } from "./controllers/nationality/ListNationalitiesController";
 import { DetailNotificationController } from "./controllers/notification/DetailNotificationController";
@@ -157,8 +163,9 @@ router.get("/companies", isAuthenticated, new FindAllCompaniesController().handl
 router.get("/companies/feedback", isAuthenticated, new FindAllFeedbacksController().handle);
 router.get("/companies/:companyId", isAuthenticated, new FindCompanyController().handle);
 router.get("/companies/:id/feedback", isAuthenticated, new FindCompanyFeedbackController().handle);
-router.post("/companies", isAuthenticated, new CreateCompanyController().handle);
 router.post("/companies/:id/assessments", isAuthenticated, new SetCompanyAssessmentsController().handle);
+router.post("/companies/admin", isAuthenticated, new CreateCompanyController().handle);
+router.put("/companies/admin/:id", isAuthenticated, new UpdateCompanyController().handle);
 
 // ROTAS NATIONALITY
 router.get("/nationalities", new ListNationalitiesController().handle);
@@ -182,6 +189,7 @@ router.delete("/notifications/:notificationId", isAuthenticated, new DeleteNotif
 
 // ROTAS ACTS
 router.get("/acts/admin", isAuthenticated, new FindAllActChatbotsController().handle);
+router.get("/acts/admin/by-trail", isAuthenticated, new FindByTrailController().handle);
 router.get("/acts/admin/:id", isAuthenticated, new FindActChatbotController().handle);
 router.put("/acts/admin/update-many", isAuthenticated, new UpdateManyActChatbotsController().handle);
 router.put("/acts/admin/:id", isAuthenticated, new UpdateActChatbotController().handle);
@@ -194,6 +202,11 @@ router.post("/acts/new-chapter", isAuthenticated, new CreateActChapterController
 router.post("/acts/chapters/compile", isAuthenticated, new CompileActChapterController().handle);
 router.put("/acts/chapters/:actChapterId", isAuthenticated, new UpdateActChapterController().handle);
 router.get("/acts/full-story", isAuthenticated, new GetFullStoryController().handle);
+
+router.post("/trails/admin", isAuthenticated, new CreateTrailController().handle);
+router.get("/trails/admin", isAuthenticated, new FindAllTrailsController().handle);
+router.get("/trails/admin/:id", isAuthenticated, new FindTrailController().handle);
+router.put("/trails/admin/:id", isAuthenticated, new UpdateTrailController().handle);
 
 router.post("/leads", async (req: Request, res: Response) => {
   const { name, email, phone, company, message, plan } = req.body;

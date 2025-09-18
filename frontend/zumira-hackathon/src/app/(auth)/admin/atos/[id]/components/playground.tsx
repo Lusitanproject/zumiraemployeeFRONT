@@ -8,15 +8,18 @@ import { toast } from "sonner";
 import { getActChapter, newActChapter } from "@/api/acts";
 import { ActChat } from "@/components/ui/act-chat/act-chat";
 import { ActChapter, ActChatbot } from "@/types/act";
+import { Trail } from "@/types/trail";
 
 import { ManageActChatbot } from "../definitions";
 import { ActChatbotForm } from "../form";
 
 interface PlaygroundProps {
   data: ActChatbot | null;
+  defaultTrailId: string;
+  trails: Trail[];
 }
 
-export function Playground({ data }: PlaygroundProps) {
+export function Playground({ data, trails, defaultTrailId }: PlaygroundProps) {
   const [saveWarning, setSaveWarning] = useState<string | undefined>();
   const [chapter, setChapter] = useState<ActChapter>();
 
@@ -50,7 +53,7 @@ export function Playground({ data }: PlaygroundProps) {
   return (
     <div className="flex md:flex-row flex-col size-full gap-4 overflow-y-scroll px-2">
       <div className="flex size-full">
-        <ActChatbotForm data={data} onChange={handleFormChange} />
+        <ActChatbotForm data={data} defaultTrailId={defaultTrailId} trails={trails} onChange={handleFormChange} />
       </div>
       <div className="flex size-full py-4">
         {data ? (

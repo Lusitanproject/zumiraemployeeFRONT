@@ -17,6 +17,7 @@ const UpdateActChapterController_1 = require("./controllers/act/UpdateActChapter
 const CreateActChatbotController_1 = require("./controllers/admin/acts/CreateActChatbotController");
 const FindActChatbotController_1 = require("./controllers/admin/acts/FindActChatbotController");
 const FindAllActChatbotsController_1 = require("./controllers/admin/acts/FindAllActChatbotsController");
+const FindByTrailController_1 = require("./controllers/admin/acts/FindByTrailController");
 const UpdateActChatbotController_1 = require("./controllers/admin/acts/UpdateActChatbotController");
 const UpdateManyActChatbotsController_1 = require("./controllers/admin/acts/UpdateManyActChatbotsController");
 const DuplicateAssessmentController_1 = require("./controllers/admin/assessments/DuplicateAssessmentController");
@@ -27,10 +28,12 @@ const FindResultsFilteredController_1 = require("./controllers/admin/assessments
 const GenerateExcelReportController_1 = require("./controllers/admin/assessments/GenerateExcelReportController");
 const UpdateAssessmentController_1 = require("./controllers/admin/assessments/UpdateAssessmentController");
 const UpdateResultRatingsController_1 = require("./controllers/admin/assessments/UpdateResultRatingsController");
+const CreateCompanyController_1 = require("./controllers/admin/companies/CreateCompanyController");
 const FindAllCompaniesController_1 = require("./controllers/admin/companies/FindAllCompaniesController");
 const FindAllFeedbacksController_1 = require("./controllers/admin/companies/FindAllFeedbacksController");
 const FindCompanyController_1 = require("./controllers/admin/companies/FindCompanyController");
 const SetCompanyAssessmentsController_1 = require("./controllers/admin/companies/SetCompanyAssessmentsController");
+const UpdateCompanyController_1 = require("./controllers/admin/companies/UpdateCompanyController");
 const CreateDimensionController_1 = require("./controllers/admin/dimensions/CreateDimensionController");
 const EditDimensionController_1 = require("./controllers/admin/dimensions/EditDimensionController");
 const FindAllDimensionController_1 = require("./controllers/admin/dimensions/FindAllDimensionController");
@@ -53,6 +56,10 @@ const CreateSelfMonitoringBlockController_1 = require("./controllers/admin/self-
 const EditSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/EditSelfMonitoringBlockController");
 const FindAllSelfMonitoringBlocksController_1 = require("./controllers/admin/self-monitoring/FindAllSelfMonitoringBlocksController");
 const FindSelfMonitoringBlockController_1 = require("./controllers/admin/self-monitoring/FindSelfMonitoringBlockController");
+const CreateTrailController_copy_1 = require("./controllers/admin/trails/CreateTrailController copy");
+const FindAllTrailsController_1 = require("./controllers/admin/trails/FindAllTrailsController");
+const FindTrailController_1 = require("./controllers/admin/trails/FindTrailController");
+const UpdateTrailController_1 = require("./controllers/admin/trails/UpdateTrailController");
 const CreateUserController_1 = require("./controllers/admin/users/CreateUserController");
 const DeleteUserController_1 = require("./controllers/admin/users/DeleteUserController");
 const FindUserController_1 = require("./controllers/admin/users/FindUserController");
@@ -72,7 +79,6 @@ const GenerateUserFeedbackController_1 = require("./controllers/assessment/Gener
 const ListAssessmentsController_1 = require("./controllers/assessment/ListAssessmentsController");
 const ListResultsController_1 = require("./controllers/assessment/ListResultsController");
 const UpdateQuestionsController_1 = require("./controllers/assessment/UpdateQuestionsController");
-const CreateCompanyController_1 = require("./controllers/company/CreateCompanyController");
 const FindCompanyFeedbackController_1 = require("./controllers/company/FindCompanyFeedbackController");
 const ListNationalitiesController_1 = require("./controllers/nationality/ListNationalitiesController");
 const DetailNotificationController_1 = require("./controllers/notification/DetailNotificationController");
@@ -143,8 +149,9 @@ router.get("/companies", isAuthenticated_1.isAuthenticated, new FindAllCompanies
 router.get("/companies/feedback", isAuthenticated_1.isAuthenticated, new FindAllFeedbacksController_1.FindAllFeedbacksController().handle);
 router.get("/companies/:companyId", isAuthenticated_1.isAuthenticated, new FindCompanyController_1.FindCompanyController().handle);
 router.get("/companies/:id/feedback", isAuthenticated_1.isAuthenticated, new FindCompanyFeedbackController_1.FindCompanyFeedbackController().handle);
-router.post("/companies", isAuthenticated_1.isAuthenticated, new CreateCompanyController_1.CreateCompanyController().handle);
 router.post("/companies/:id/assessments", isAuthenticated_1.isAuthenticated, new SetCompanyAssessmentsController_1.SetCompanyAssessmentsController().handle);
+router.post("/companies/admin", isAuthenticated_1.isAuthenticated, new CreateCompanyController_1.CreateCompanyController().handle);
+router.put("/companies/admin/:id", isAuthenticated_1.isAuthenticated, new UpdateCompanyController_1.UpdateCompanyController().handle);
 // ROTAS NATIONALITY
 router.get("/nationalities", new ListNationalitiesController_1.ListNationalitiesController().handle);
 router.post("/nationalities/admin", isAuthenticated_1.isAuthenticated, new CreateNationalityController_1.CreateNationalityController().handle);
@@ -165,6 +172,7 @@ router.post("/notifications/admin/types", isAuthenticated_1.isAuthenticated, new
 router.delete("/notifications/:notificationId", isAuthenticated_1.isAuthenticated, new DeleteNotificationController_1.DeleteNotificationController().handle);
 // ROTAS ACTS
 router.get("/acts/admin", isAuthenticated_1.isAuthenticated, new FindAllActChatbotsController_1.FindAllActChatbotsController().handle);
+router.get("/acts/admin/by-trail", isAuthenticated_1.isAuthenticated, new FindByTrailController_1.FindByTrailController().handle);
 router.get("/acts/admin/:id", isAuthenticated_1.isAuthenticated, new FindActChatbotController_1.FindActChatbotController().handle);
 router.put("/acts/admin/update-many", isAuthenticated_1.isAuthenticated, new UpdateManyActChatbotsController_1.UpdateManyActChatbotsController().handle);
 router.put("/acts/admin/:id", isAuthenticated_1.isAuthenticated, new UpdateActChatbotController_1.UpdateActChatbotController().handle);
@@ -177,6 +185,10 @@ router.post("/acts/new-chapter", isAuthenticated_1.isAuthenticated, new CreateAc
 router.post("/acts/chapters/compile", isAuthenticated_1.isAuthenticated, new CompileActChapterController_1.CompileActChapterController().handle);
 router.put("/acts/chapters/:actChapterId", isAuthenticated_1.isAuthenticated, new UpdateActChapterController_1.UpdateActChapterController().handle);
 router.get("/acts/full-story", isAuthenticated_1.isAuthenticated, new GetFullStoryController_1.GetFullStoryController().handle);
+router.post("/trails/admin", isAuthenticated_1.isAuthenticated, new CreateTrailController_copy_1.CreateTrailController().handle);
+router.get("/trails/admin", isAuthenticated_1.isAuthenticated, new FindAllTrailsController_1.FindAllTrailsController().handle);
+router.get("/trails/admin/:id", isAuthenticated_1.isAuthenticated, new FindTrailController_1.FindTrailController().handle);
+router.put("/trails/admin/:id", isAuthenticated_1.isAuthenticated, new UpdateTrailController_1.UpdateTrailController().handle);
 router.post("/leads", async (req, res) => {
     var _a;
     const { name, email, phone, company, message, plan } = req.body;
