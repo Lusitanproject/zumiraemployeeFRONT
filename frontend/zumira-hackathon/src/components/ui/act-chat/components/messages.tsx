@@ -42,7 +42,6 @@ export function Messages({ messages, loadingResponse, onScroll }: MessagesProps)
             </>
           ) : (
             <>
-              <hr className="text-text-200 w-full" />
               <div className="flex flex-col w-full items-start markdown sm:px-5" style={{ overflowWrap: "anywhere" }}>
                 <Markdown>{m.content}</Markdown>
               </div>
@@ -55,7 +54,6 @@ export function Messages({ messages, loadingResponse, onScroll }: MessagesProps)
       {/* Chat bubble com 3 pontos flutuando */}
       {loadingResponse && (
         <>
-          <hr className="text-text-200 -mx-5" />
           <div ref={lastDivRef} className="flex flex-col w-full items-start">
             <span className="relative flex flex-row rounded-xl px-[1.375rem] py-4 bg-background-50 gap-1">
               {Array.from({ length: 3 }, (_, i) => (
