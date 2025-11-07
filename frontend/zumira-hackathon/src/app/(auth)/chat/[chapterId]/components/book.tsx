@@ -2,7 +2,7 @@
 
 import equal from "fast-deep-equal";
 import { startHolyLoader } from "holy-loader";
-import { Check, ChevronLeft, Redo, RefreshCcw, Undo } from "lucide-react";
+import { Check, Redo, RefreshCcw, Undo } from "lucide-react";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MouseEvent } from "react";
@@ -33,7 +33,7 @@ export type BookRef = {
   recompile: () => Promise<void>;
 };
 
-export const Book = forwardRef(function Book({ actChapter, onClose }: BookProps, ref) {
+export const Book = forwardRef(function Book({ actChapter }: BookProps, ref) {
   const divRef = useRef<HTMLDivElement>(null);
   const savedChapter = useRef<ActChapter>(actChapter);
   const [chapter, setChapter] = useState<ActChapter>(actChapter);
@@ -210,7 +210,7 @@ export const Book = forwardRef(function Book({ actChapter, onClose }: BookProps,
           ))}
         </div>
 
-        <div className="flex bg-[#f5f5eb] flex-col items-center justify-start gap-2 text-start w-full max-w-[40rem] rounded-xs shadow-xl py-10 px-14">
+        <div className="flex bg-[#f5f5eb] flex-col items-center justify-start gap-2 text-start w-full max-w-[40rem] rounded-xs shadow-xl sm:py-10 sm:px-14 py-3 px-6">
           <input
             className={cn("font-semibold text-xl field-sizing-content max-w-full", textInputClass)}
             disabled={finishing}
@@ -234,15 +234,6 @@ export const Book = forwardRef(function Book({ actChapter, onClose }: BookProps,
           )}
         </div>
       </div>
-
-      {onClose && (
-        <button className="absolute flex left-4 top-4 z-20">
-          <ChevronLeft
-            className={cn("flex flex-none size-6 text-500 cursor-pointer text-text-700")}
-            onClick={onClose}
-          />
-        </button>
-      )}
 
       <button
         className="absolute z-20 right-5 text-xs top-1/2 -translate-y-1/2 rounded-full p-2 bg-primary-200 cursor-pointer hover:bg-primary-300 duration-200"
