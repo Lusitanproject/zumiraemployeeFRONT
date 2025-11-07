@@ -117,6 +117,8 @@ export const Book = forwardRef(function Book({ actChapter }: BookProps, ref) {
     setFinishing(true);
 
     try {
+      await update();
+      debouncedUpdate();
       startHolyLoader();
       await moveToNext(actChapter.actChatbot.id);
     } catch (err) {
@@ -175,13 +177,6 @@ export const Book = forwardRef(function Book({ actChapter }: BookProps, ref) {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
-
-  useEffect(() => {
-    return () => {
-      update();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div ref={divRef} className={cn("relative flex h-full left-0 top-0 duration-500 w-full")}>
