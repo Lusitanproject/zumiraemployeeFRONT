@@ -210,7 +210,7 @@ export const Book = forwardRef(function Book({ actChapter }: BookProps, ref) {
           ))}
         </div>
 
-        <div className="flex bg-[#f5f5eb] flex-col md:min-h-auto min-h-0 items-center justify-start gap-2 text-start w-full max-w-[40rem] rounded-xs shadow-xl sm:py-10 sm:px-14 py-3 px-6">
+        <div className="flex bg-[#f5f5eb] flex-col md:min-h-auto min-h-0 h-full md:h-auto items-center justify-start gap-2 text-start w-full max-w-[40rem] rounded-xs shadow-xl sm:py-10 sm:px-14 py-3 px-6">
           <input
             className={cn("font-semibold text-xl field-sizing-content max-w-full", textInputClass)}
             disabled={finishing}
