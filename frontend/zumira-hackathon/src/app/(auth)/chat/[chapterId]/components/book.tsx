@@ -224,7 +224,7 @@ export const Book = forwardRef(function Book({ actChapter }: BookProps, ref) {
           ) : (
             <textarea
               className={cn(
-                "flex size-full sm:min-h-[60rem] min-h-0 font-normal text-base resize-y field-sizing-content text-justify sm:overflow-y-scroll",
+                "flex size-full md:min-h-[60rem] min-h-0 font-normal text-base resize-y field-sizing-content text-justify sm:overflow-y-scroll",
                 textInputClass
               )}
               disabled={finishing}
