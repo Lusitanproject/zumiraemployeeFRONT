@@ -12,6 +12,8 @@ export type CreateSessionProps = {
 };
 
 export function decrypt(data: string | undefined): CreateSessionProps | null {
+  console.log("decrypting data:", data);
+
   if (!data) {
     return null;
   }
